@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-02T11:43:30.660206Z",
+  "title": "Design System: 어흥!한자",
+  "extensions": {
+    "source": {
+      "document": "docs/DESIGN.md",
+      "files": [
+        "public/styles.css",
+        "public/index.html",
+        "public/app.js",
+        "docs/PRODUCT.md",
+        "docs/surfaces/home.md"
+      ],
+      "mode": "scan",
+      "visualAuthority": "Final source CSS; Phi captures contained browser-injected blue theme.",
+      "sidecarLocation": "docs/DESIGN.md.json replaces the default .impeccable/design.json to keep project documentation under docs/.",
+      "tonalRamps": "Synthesized OKLCH preview metadata only. No generated ramp is a shipped design token.",
+      "previewBehavior": "Snippets reproduce source presentation. JavaScript learning interactions and locally hosted font loading remain in the shipped page."
+    },
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "크림 종이",
+        "tonalRamp": [
+          "oklch(15.00% 0.01706 84.59)",
+          "oklch(26.43% 0.01706 84.59)",
+          "oklch(37.86% 0.01706 84.59)",
+          "oklch(49.29% 0.01706 84.59)",
+          "oklch(60.71% 0.01706 84.59)",
+          "oklch(72.14% 0.01706 84.59)",
+          "oklch(83.57% 0.01706 84.59)",
+          "oklch(95.00% 0.01706 84.59)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "먹빛 초록",
+        "tonalRamp": [
+          "oklch(15.00% 0.03865 169.21)",
+          "oklch(26.43% 0.03865 169.21)",
+          "oklch(37.86% 0.03865 169.21)",
+          "oklch(49.29% 0.03865 169.21)",
+          "oklch(60.71% 0.03865 169.21)",
+          "oklch(72.14% 0.03865 169.21)",
+          "oklch(83.57% 0.03865 169.21)",
+          "oklch(95.00% 0.03865 169.21)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "설명 초록",
+        "tonalRamp": [
+          "oklch(15.00% 0.02437 151.73)",
+          "oklch(26.43% 0.02437 151.73)",
+          "oklch(37.86% 0.02437 151.73)",
+          "oklch(49.29% 0.02437 151.73)",
+          "oklch(60.71% 0.02437 151.73)",
+          "oklch(72.14% 0.02437 151.73)",
+          "oklch(83.57% 0.02437 151.73)",
+          "oklch(95.00% 0.02437 151.73)"
+        ]
+      },
+      "orange": {
+        "role": "primary",
+        "displayName": "주홍",
+        "tonalRamp": [
+          "oklch(15.00% 0.16699 35.58)",
+          "oklch(26.43% 0.16699 35.58)",
+          "oklch(37.86% 0.16699 35.58)",
+          "oklch(49.29% 0.16699 35.58)",
+          "oklch(60.71% 0.16699 35.58)",
+          "oklch(72.14% 0.16699 35.58)",
+          "oklch(83.57% 0.16699 35.58)",
+          "oklch(95.00% 0.16699 35.58)"
+        ]
+      },
+      "mint": {
+        "role": "secondary",
+        "displayName": "연한 잎색",
+        "tonalRamp": [
+          "oklch(15.00% 0.03033 129.75)",
+          "oklch(26.43% 0.03033 129.75)",
+          "oklch(37.86% 0.03033 129.75)",
+          "oklch(49.29% 0.03033 129.75)",
+          "oklch(60.71% 0.03033 129.75)",
+          "oklch(72.14% 0.03033 129.75)",
+          "oklch(83.57% 0.03033 129.75)",
+          "oklch(95.00% 0.03033 129.75)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "종이 경계",
+        "tonalRamp": [
+          "oklch(15.00% 0.02029 109.91)",
+          "oklch(26.43% 0.02029 109.91)",
+          "oklch(37.86% 0.02029 109.91)",
+          "oklch(49.29% 0.02029 109.91)",
+          "oklch(60.71% 0.02029 109.91)",
+          "oklch(72.14% 0.02029 109.91)",
+          "oklch(83.57% 0.02029 109.91)",
+          "oklch(95.00% 0.02029 109.91)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "종이 흰색",
+        "tonalRamp": [
+          "oklch(15.00% 0.00666 97.35)",
+          "oklch(26.43% 0.00666 97.35)",
+          "oklch(37.86% 0.00666 97.35)",
+          "oklch(49.29% 0.00666 97.35)",
+          "oklch(60.71% 0.00666 97.35)",
+          "oklch(72.14% 0.00666 97.35)",
+          "oklch(83.57% 0.00666 97.35)",
+          "oklch(95.00% 0.00666 97.35)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "학습 노랑",
+        "tonalRamp": [
+          "oklch(15.00% 0.11072 88.88)",
+          "oklch(26.43% 0.11072 88.88)",
+          "oklch(37.86% 0.11072 88.88)",
+          "oklch(49.29% 0.11072 88.88)",
+          "oklch(60.71% 0.11072 88.88)",
+          "oklch(72.14% 0.11072 88.88)",
+          "oklch(83.57% 0.11072 88.88)",
+          "oklch(95.00% 0.11072 88.88)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "첫 제목",
+        "purpose": "Jua의 큰 첫 화면 제목. 미디어 쿼리에서 크기 조정."
+      },
+      "headline": {
+        "displayName": "구간 제목",
+        "purpose": "Jua h2 기본 계층. 구간별 크기 조정 가능."
+      },
+      "title": {
+        "displayName": "학습 주제",
+        "purpose": "Jua h3 기본 계층."
+      },
+      "body": {
+        "displayName": "본문",
+        "purpose": "SUIT 설명과 서술. 한국어 keep-all 줄바꿈."
+      },
+      "action": {
+        "displayName": "기본 행동",
+        "purpose": "기본 큰 버튼의 굵은 SUIT."
+      },
+      "note": {
+        "displayName": "작은 안내",
+        "purpose": "체험 범위·출처·출시 안내."
+      },
+      "hanja-piece": {
+        "displayName": "한자 조각",
+        "purpose": "日·月 연결 체험의 큰 명조 한자. 시스템 폰트에 따라 자형 차이."
+      }
+    },
+    "shadows": [
+      {
+        "name": "character-piece",
+        "value": "0 7px 16px #233f3510",
+        "purpose": "체험의 한자 종이 조각."
+      },
+      {
+        "name": "primary-hover",
+        "value": "0 6px 15px #4b28121c",
+        "purpose": "주홍 버튼의 호버 상태."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "버튼·한자 조각·캐릭터의 변형 전환."
+      },
+      {
+        "name": "button",
+        "value": "180ms",
+        "purpose": "배경·그림자·변형 반응."
+      },
+      {
+        "name": "answer",
+        "value": "150ms",
+        "purpose": "답 보기 배경·눌림."
+      },
+      {
+        "name": "disclosure",
+        "value": "200ms",
+        "purpose": "근거·FAQ 표시 회전."
+      },
+      {
+        "name": "friend-hover",
+        "value": "300ms",
+        "purpose": "친구 그림의 가벼운 들림과 회전."
+      },
+      {
+        "name": "piece-transform",
+        "value": "550ms",
+        "purpose": "日·月 조각의 결합 이동; 불투명도는 230ms."
+      },
+      {
+        "name": "combined-transform",
+        "value": "600ms",
+        "purpose": "明의 나타남; 불투명도는 350ms."
+      },
+      {
+        "name": "stroke",
+        "value": "420ms",
+        "purpose": "버튼으로 요청한 木의 한 획. 모션 감소 설정에서는 즉시 완성."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "CSS 전환·애니메이션·호버 이동·부드러운 스크롤을 제거하고 획순을 즉시 표시."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1600px",
+        "query": "(min-width: 1600px)"
+      },
+      {
+        "name": "compact-desktop",
+        "value": "1100px",
+        "query": "(max-width: 1100px)"
+      },
+      {
+        "name": "tablet",
+        "value": "800px",
+        "query": "(max-width: 800px)"
+      },
+      {
+        "name": "mobile",
+        "value": "560px",
+        "query": "(max-width: 560px)"
+      },
+      {
+        "name": "narrow",
+        "value": "360px",
+        "query": "(max-width: 360px)"
+      }
+    ],
+    "accessibility": {
+      "focus": "3px solid var(--orange), offset 5px; canvas offset -4px.",
+      "keyboard": [
+        "Skip link",
+        "Demo focus transfer",
+        "Tab list ArrowLeft/ArrowRight/Home/End with roving tabindex",
+        "Four-step stroke control as drawing alternative",
+        "Native details/summary"
+      ],
+      "status": "Hero and handwriting status announcements; descriptive image alternatives; hidden decorative SVG."
+    },
+    "notCanonized": [
+      "Unused --orange-bright",
+      "Text arrow, FAQ plus, and mobile response glyph icons are existing exceptions, not reusable icon rules."
+    ]
+  },
+  "components": [
+    {
+      "name": "웹 시작 버튼",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "실제 웹 베타를 여는 기본 주 행동.",
+      "html": "<a class=\"ds-button-primary\" href=\"https://bryannamd.github.io/hanja-web/\">웹에서 먼저 써보기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--orange,#be411f);color:var(--white,#fffef9);}.ds-button-primary:hover{background:#a33416;transform:translateY(-2px);box-shadow:0 6px 15px #4b28121c;}.ds-button-primary:active{transform:scale(0.97);}.ds-button-primary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-primary svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-primary:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}.ds-button-primary:hover{transform:none;}}"
+    },
+    {
+      "name": "먹빛 동작 버튼",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "기본 버튼 스타일. 체험 내부 버튼은 화면 폭에 따른 작은 크기 조정이 추가된다. 미리보기는 앱 동작을 실행하지 않는다.",
+      "html": "<button type=\"button\" class=\"ds-button-ink\">두 글자 연결해 보기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button>",
+      "css": ".ds-button-ink{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--ink,#233f35);color:var(--white,#fffef9);}.ds-button-ink:hover{background:#355647;transform:translateY(-2px);}.ds-button-ink:active{transform:scale(0.97);}.ds-button-ink:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-ink svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-ink:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-ink{transition:none;}.ds-button-ink:hover{transform:none;}}"
+    },
+    {
+      "name": "텍스트 도구 버튼",
+      "kind": "button",
+      "refersTo": "text-button",
+      "description": "획순·지우기·다시 시작처럼 체험을 보조하는 동작.",
+      "html": "<button class=\"ds-text-button\" type=\"button\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9a8 8 0 1 1 0 6M4 4v5h5\"/></svg>지우기</button>",
+      "css": ".ds-text-button{min-height:44px;display:inline-flex;gap:8px;align-items:center;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:15px;line-height:1.75;font-weight:750;background:transparent;color:var(--ink,#233f35);padding:8px 5px;border:0;border-radius:6px;cursor:pointer;touch-action:manipulation;}.ds-text-button:hover{color:var(--orange,#be411f);}.ds-text-button:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-text-button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;width:19px;height:19px;}.ds-text-button:disabled{cursor:wait;opacity:0.65;}"
+    },
+    {
+      "name": "뜻 답 보기",
+      "kind": "button",
+      "refersTo": "answer-option",
+      "description": "뜻을 고르는 버튼. 선택 속성은 오답 힌트 상태를 표시한다.",
+      "html": "<div class=\"ds-answer-options\" role=\"group\" aria-label=\"明은 어떤 뜻일까요?\"><button type=\"button\">밝다</button><button type=\"button\" aria-pressed=\"true\">쉬다</button><button type=\"button\">숲</button></div>",
+      "css": ".ds-answer-options{display:flex;gap:8px;margin-top:17px;}.ds-answer-options button{min-width:65px;min-height:48px;background:var(--white,#fffef9);color:var(--ink,#233f35);border:0;border-radius:10px;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;line-height:1.75;font-weight:750;cursor:pointer;transition:background-color 150ms,transform 150ms;}.ds-answer-options button:hover{background:var(--yellow,#f7d681);}.ds-answer-options button:active{transform:scale(0.95);}.ds-answer-options button[aria-pressed=\"true\"]{background:#f1ceaf;}.ds-answer-options button:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}@media(max-width:560px){.ds-answer-options{gap:7px;}.ds-answer-options button{min-width:55px;min-height:45px;font-size:14px;}}@media(prefers-reduced-motion:reduce){.ds-answer-options button{transition:none;}}"
+    },
+    {
+      "name": "구간 탐색",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "헤더 내부의 세 구간 링크. 800px 이하에서 숨겨지고 별도 브랜드·웹 시작 버튼은 남는다.",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"주요 메뉴\"><a href=\"#learn\">배우는 재미</a><a href=\"#memory\">기억의 설계</a><a href=\"#story\">만든 이야기</a></nav>",
+      "css": ".ds-navigation{display:flex;gap:32px;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;color:var(--ink,#233f35);}.ds-navigation a{font-size:15px;font-weight:700;line-height:1.75;text-decoration:none;color:inherit;padding-block:12px;touch-action:manipulation;}.ds-navigation a:hover{color:var(--orange,#be411f);}.ds-navigation a:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}@media(max-width:1100px){.ds-navigation{gap:20px;}}@media(max-width:800px){.ds-navigation{display:none;}}"
+    },
+    {
+      "name": "한자 조각",
+      "kind": "card",
+      "refersTo": "character-card",
+      "description": "日·月을 연결하는 체험의 작은 종이 조각. 데스크톱 기준 모양.",
+      "html": "<div class=\"ds-character-card\"><span lang=\"zh-Hant\">日</span><small>날 일</small></div>",
+      "css": ".ds-character-card{width:132px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--white,#fffef9);color:var(--orange,#be411f);border-radius:13px;padding:7px 5px 14px;box-shadow:0 7px 16px #233f3510;transform:rotate(-7deg);transition:transform 550ms var(--ease,cubic-bezier(0.16,1,0.3,1)),opacity 230ms;}.ds-character-card>span{font-family:\"Songti SC\",\"Noto Serif CJK KR\",\"Batang\",serif;font-size:106px;line-height:1.2;}.ds-character-card small{font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:14px;line-height:1.6;font-weight:700;}@media(prefers-reduced-motion:reduce){.ds-character-card{transition:none;}}"
+    },
+    {
+      "name": "손글씨 연습장",
+      "kind": "custom",
+      "refersTo": "writing-workspace",
+      "description": "연습장 시각 구조. 포인터 입력·획순 시연은 public/app.js가 제공하며 이 정적 미리보기에는 포함되지 않는다.",
+      "html": "<div class=\"ds-writing-workspace\"><div class=\"ds-practice-heading\"><span><b lang=\"zh-Hant\">木</b> 나무 목</span><span class=\"ds-quiet-label\">손글씨 맛보기</span></div><div class=\"ds-writing-board\"><span class=\"ds-writing-guide\" aria-hidden=\"true\" lang=\"zh-Hant\">木</span><canvas width=\"600\" height=\"600\" tabindex=\"0\" role=\"img\" aria-label=\"나무 목 연습장의 시각 미리보기\"></canvas></div><p class=\"ds-practice-status\">연한 글자를 따라 써 보세요. 여기서는 채점하지 않아요.</p></div>",
+      "css": ".ds-writing-workspace{background:var(--white,#fffef9);color:var(--ink,#233f35);padding:26px;border:1px solid #cacbbd;border-radius:16px;max-width:470px;width:100%;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;line-height:1.75;}.ds-practice-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;}.ds-practice-heading b{font-family:serif;font-size:27px;margin-right:7px;font-weight:400;}.ds-quiet-label{font-size:12px;color:var(--muted,#57655a);}.ds-writing-board{position:relative;overflow:hidden;width:100%;aspect-ratio:1;margin-top:15px;background:linear-gradient(90deg,transparent calc(50% - 0.5px),#d8ddcf calc(50% - 0.5px),#d8ddcf calc(50% + 0.5px),transparent calc(50% + 0.5px)),linear-gradient(transparent calc(50% - 0.5px),#d8ddcf calc(50% - 0.5px),#d8ddcf calc(50% + 0.5px),transparent calc(50% + 0.5px));border:1px solid #d8ddcf;}.ds-writing-guide{position:absolute;pointer-events:none;inset:0;display:grid;place-items:center;line-height:1;font-size:clamp(240px,29vw,360px);font-family:\"Songti SC\",\"Batang\",serif;color:#e9ebdf;user-select:none;}.ds-writing-board canvas{display:block;position:relative;z-index:1;width:100%;height:100%;touch-action:none;cursor:crosshair;}.ds-writing-board canvas:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;outline-offset:-4px;}.ds-practice-status{font-size:12px;color:var(--muted,#57655a);min-height:42px;margin:8px 0 0;}"
+    },
+    {
+      "name": "어휘 종이",
+      "kind": "custom",
+      "refersTo": "vocabulary-page",
+      "description": "기본 선택된 설명 탭의 시각 미리보기. 탭 전환·방향키 처리는 public/app.js가 제공한다.",
+      "html": "<div class=\"ds-vocabulary\"><div class=\"ds-word-tabs\" role=\"tablist\" aria-label=\"한자 어휘 예시\"><button id=\"ds-word-0\" type=\"button\" role=\"tab\" aria-selected=\"true\" aria-controls=\"ds-word-panel\" tabindex=\"0\">설명</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">명확</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">문명</button></div><div class=\"ds-word-panel\" id=\"ds-word-panel\" role=\"tabpanel\" tabindex=\"0\" aria-labelledby=\"ds-word-0\"><div class=\"ds-word-hanja\" lang=\"zh-Hant\">說<span>明</span></div><h4>설명</h4><p class=\"ds-word-definition\">어떤 내용을 잘 알 수 있도록 밝혀 말하는 것.</p><p class=\"ds-example\">친구에게 문제 풀이를 <strong>설명</strong>했어요.</p></div><p class=\"ds-word-source\">소개용 풀이·예문 · 국립국어원 사전 수록 어휘</p></div>",
+      "css": ".ds-vocabulary{background:#fae4ab;color:var(--ink,#233f35);border-radius:14px;overflow:hidden;max-width:510px;width:100%;transform:rotate(-2deg);font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;line-height:1.75;word-break:keep-all;}.ds-word-tabs{display:flex;border-bottom:1px solid #c4a974;padding:10px 20px 0;gap:8px;}.ds-word-tabs button{min-height:49px;background:transparent;border:0;font:inherit;font-weight:800;color:#605139;flex:1;position:relative;cursor:pointer;}.ds-word-tabs button[aria-selected=\"true\"]{color:var(--ink,#233f35);}.ds-word-tabs button[aria-selected=\"true\"]::after{content:\"\";position:absolute;bottom:-1px;left:16px;right:16px;height:3px;background:var(--ink,#233f35);}.ds-word-tabs button:focus-visible,.ds-word-panel:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-word-panel{padding:24px 32px 20px;}.ds-word-hanja{font-family:\"Songti SC\",\"Batang\",serif;font-size:92px;line-height:1.3;}.ds-word-hanja span{color:var(--orange,#be411f);}.ds-word-panel h4{font-family:Jua,SUIT,sans-serif;font-size:25px;font-weight:400;line-height:1.25;margin:6px 0 10px;}.ds-word-definition{font-size:16px;min-height:56px;color:#544832;margin:0;}.ds-example{font-size:17px;padding-top:18px;margin:18px 0 0;border-top:1px solid #c4a974;min-height:81px;}.ds-example strong{text-decoration:underline;text-decoration-color:var(--orange,#be411f);text-decoration-thickness:2px;text-underline-offset:5px;}.ds-word-source{font-size:12px;padding:0 32px 22px;color:#665434;margin:0;}"
+    },
+    {
+      "name": "근거 펼치기",
+      "kind": "custom",
+      "description": "기억 설계 면의 네이티브 details/summary. SVG 화살표가 열림 상태에 반응한다.",
+      "html": "<div class=\"ds-memory-surface\"><details class=\"ds-science-details\"><summary>학습 원리, 근거가 궁금하다면<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></summary><div>회상 연습의 장기 기억 효과는 학습 연구에서 다뤄져 왔습니다. FSRS는 기억 상태를 추정해 복습 일정을 계산하는 알고리즘입니다.</div></details></div>",
+      "css": ".ds-memory-surface{background:var(--ink,#233f35);color:var(--paper,#fff9ed);font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;line-height:1.75;}.ds-science-details{font-size:14px;}.ds-science-details summary{display:flex;gap:15px;align-items:center;justify-content:space-between;min-height:48px;cursor:pointer;list-style:none;}.ds-science-details summary::-webkit-details-marker{display:none;}.ds-science-details summary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-science-details summary svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;width:20px;height:20px;transition:transform 200ms;}.ds-science-details[open] summary svg{transform:rotate(180deg);}.ds-science-details>div{padding-top:15px;color:#d5dfcf;}@media(prefers-reduced-motion:reduce){.ds-science-details summary svg{transition:none;}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "문방구 학습 놀이터",
+    "overview": "학교 앞 문방구의 큰 글자 포스터, 학습 도장, 실제 앱 캐릭터의 온기를 가져온다. 넉넉한 크림색 바탕 위에 둥근 한국어 제목과 명확한 한자 획을 놓고, 직접 눌러 보는 체험으로 친근함을 전달한다. 본문과 근거는 차분한 먹빛 초록으로 읽힌다.",
+    "keyCharacteristics": [
+      "크림·먹빛 초록을 바탕으로 주홍 행동과 노란 강조를 구분한다.",
+      "Jua 제목, SUIT 설명, 명조 계열 한자의 역할을 나눈다.",
+      "학습 도구에는 둥근 면을, 설명 구간에는 여백과 구분선을 사용한다.",
+      "캐릭터는 실제 앱 자산을 재사용하고 체험·설명을 보조한다."
+    ],
+    "rules": [
+      {
+        "name": "The Source Palette Rule",
+        "body": "색상 수정과 비교는 CSS 토큰을 기준으로 한다. 브라우저가 주입한 미리보기 테마를 브랜드 색으로 옮기지 않는다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Script Roles Rule",
+        "body": "한국어 안내는 Jua·SUIT, 학습할 한자는 명조 계열을 유지한다. 본문은 `word-break: keep-all`, 제목은 균형 줄바꿈을 사용한다. 폰트가 서브셋이므로 문구를 늘릴 때 새 글자의 포함 여부를 확인한다.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "**Do** 소스의 색·서체 역할과 실제 앱 자산을 재사용한다.",
+      "**Do** 320px 화면에서 설명과 캐릭터의 분리, 세 체험 상태, 키보드 포커스를 확인한다.",
+      "**Do** 상태 전환·탭·획순의 키보드 동작과 모션 감소 처리를 유지한다."
+    ],
+    "donts": [
+      "**Don't** 브라우저 주입 색이나 미리보기용 색조 램프를 사이트 토큰으로 채택한다.",
+      "**Don't** 작은 화면의 쓰기·이야기 캐릭터를 텍스트 위의 절대 위치로 되돌린다.",
+      "**Don't** 사용하지 않는 토큰이나 일회성 장식을 공통 규칙으로 늘린다."
+    ]
+  }
+}

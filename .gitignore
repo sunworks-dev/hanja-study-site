@@ -42,3 +42,7 @@ playwright-report/
 test-results/
 .tmp/
 tmp/
+
+# Local browser evidence and Impeccable working state
+docs/review/*.png
+.impeccable/build/
