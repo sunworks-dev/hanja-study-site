@@ -2,6 +2,18 @@
 
 `hanja-study-app` 출시 안내와 제품 소개를 위한 웹사이트 저장소입니다.
 
+## 사이트 주소
+
+Sunworks에서 새로 만드는 서비스와 소개 사이트는 `sunw.kr`의 하위 도메인을 사용합니다.
+
+| 대상 | 주소 | 상태 |
+| --- | --- | --- |
+| 한자 앱 소개 사이트 | `https://hanja-app.sunw.kr` | 구축 및 도메인 연결 예정 |
+| 기존 한자 웹 앱 | [bryannamd.github.io/hanja-web](https://bryannamd.github.io/hanja-web/) | 현재 배포 유지 |
+
+소개 사이트의 **웹에서 시작하기** 링크는 기존 한자 웹 앱으로 연결합니다.
+웹 앱 빌드 결과물은 계속 [`bryannamd/hanja-web`](https://github.com/bryannamd/hanja-web)에 배포합니다.
+
 ## 예정 콘텐츠
 
 - 앱 소개와 주요 기능
