@@ -8,7 +8,7 @@ Sunworks에서 새로 만드는 서비스와 소개 사이트는 `sunw.kr`의 �
 
 | 대상 | 주소 | 상태 |
 | --- | --- | --- |
-| 한자 앱 소개 사이트 | `https://hanja-app.sunw.kr` | 구축 및 도메인 연결 예정 |
+| 한자 앱 소개 사이트 | [hanja-app.sunw.kr](https://hanja-app.sunw.kr/) | 출시 준비 안내 페이지 |
 | 기존 한자 웹 앱 | [bryannamd.github.io/hanja-web](https://bryannamd.github.io/hanja-web/) | 현재 배포 유지 |
 
 소개 사이트의 **웹에서 시작하기** 링크는 기존 한자 웹 앱으로 연결합니다.
@@ -22,16 +22,25 @@ Sunworks에서 새로 만드는 서비스와 소개 사이트는 `sunw.kr`의 �
 
 ## 현재 상태
 
-저장소 초기 설정 단계입니다. 사이트 구현, 기술 스택, 배포 방식은 후속 개발에서 결정합니다.
+`sunworks-dev` 조직의 공개 저장소입니다. `public/`에 출시 준비 안내와 기존 웹 앱 링크를 담은 임시 정적 페이지를 제공합니다. 정식 소개 콘텐츠와 기술 스택은 후속 개발에서 결정합니다.
 
 ## 시작하기
 
 ```sh
-git clone https://github.com/bryannamd/hanja-study-site.git
+git clone https://github.com/sunworks-dev/hanja-study-site.git
 cd hanja-study-site
+python3 -m http.server 4322 --directory public
 ```
 
-개발 서버와 빌드 명령은 기술 스택을 정한 뒤 추가합니다.
+로컬 확인 주소는 `http://localhost:4322`입니다. 임시 페이지는 별도 빌드나 패키지 설치가 필요하지 않습니다.
+
+## 배포와 도메인
+
+- `main`에 푸시하면 GitHub Actions가 `public/`을 GitHub Pages로 배포합니다.
+- 커스텀 도메인은 GitHub Pages 설정과 `public/CNAME`에서 관리합니다.
+- 아이티이지 DNS: `sunw.kr`의 `hanja-app` CNAME은 `sunworks-dev.github.io`를 가리킵니다.
+- 기존 한자 웹 앱의 저장소와 배포 주소는 유지합니다.
+- 앱 아이콘은 Sunworks가 제공한 기존 앱 자산이며, 회사 소개 사이트의 `public/assets/hanja-icon.webp`를 재사용합니다.
 
 ## 작업 규칙
 
