@@ -31,3 +31,10 @@ Phi 공식 runner, `hanja-site-build` Agent Space. 로컬 정적 서버에서 �
 ## 독립 검수 수정
 
 첫 독립 검수 `fix`: 320px에서 쓰기·제작자 이야기의 그림이 문구를 가림. 560px 이하에서 쓰기 설명은 텍스트/그림 그리드, 이야기 그림은 제목 다음 행으로 배치했다. 동일 5개 폭 재촬영, scrollY=0·이미지 로딩 완료·가로 넘침 없음 확인. 320px의 쓰기 문구 오른쪽 165px, 그림 왼쪽 179px(14px 분리); 이야기 제목 하단 6138.5px, 그림 상단 6156.5px(18px 분리). 독립 검수의 최종 수정 판정은 `resolved`, disposition은 `ship`. [검수 기록](finish-review.md) 참조.
+
+## 운영 배포 확인 · 20:46 KST
+
+- 구현 커밋 `857fd9a`의 [GitHub Pages 배포](https://github.com/sunworks-dev/hanja-study-site/actions/runs/37002685093) 성공.
+- `http://hanja-app.sunw.kr/`에서 공개 파일 31개 모두 HTTP 200, 로컬 파일과 SHA-256 일치.
+- 동일 Phi Agent Space의 새 운영 탭에서 제목·첫 화면·기존 웹앱으로 연결되는 CTA 3개·글꼴 로딩 확인. 1428px에서 가로 넘침 없음, console warning/error 0, 실패 요청 0. `production.png`에 해당 화면 기록.
+- HTTPS는 인증서 `new`, 강제 HTTPS `false`로 발급 대기. HTTP 확인을 TLS 검증으로 취급하지 않았다.
