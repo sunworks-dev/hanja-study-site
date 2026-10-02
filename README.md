@@ -37,7 +37,7 @@ python3 -m http.server 4322 --directory public
 ## 배포와 도메인
 
 - `main`에 푸시하면 GitHub Actions가 `public/`을 GitHub Pages로 배포합니다.
-- 커스텀 도메인은 GitHub Pages 설정과 `public/CNAME`에서 관리합니다.
+- 커스텀 도메인은 저장소의 GitHub Pages 설정에서 관리합니다. `public/CNAME`은 도메인 기록용이며, Actions 배포에서는 이 파일만 바꿔도 설정이 변경되지는 않습니다.
 - 아이티이지 DNS: `sunw.kr`의 `hanja-app` CNAME은 `sunworks-dev.github.io`를 가리킵니다.
 - 기존 한자 웹 앱의 저장소와 배포 주소는 유지합니다.
 - 앱 아이콘은 Sunworks가 제공한 기존 앱 자산이며, 회사 소개 사이트의 `public/assets/hanja-icon.webp`를 재사용합니다.
