@@ -1,0 +1,44 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment; examples must contain placeholders only
+.env
+.env.*
+!.env.example
+!.env.*.example
+.direnv/
+
+# Dependencies and package manager output
+node_modules/
+.pnpm-store/
+.npm/
+*.log
+
+# Build output and caches
+dist/
+build/
+out/
+.astro/
+.next/
+.nuxt/
+.output/
+.cache/
+.turbo/
+*.tsbuildinfo
+
+# Hosting configuration generated locally
+.vercel/
+.netlify/
+.wrangler/
+
+# Test output and local scratch files
+coverage/
+playwright-report/
+test-results/
+.tmp/
+tmp/
