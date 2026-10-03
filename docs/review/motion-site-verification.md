@@ -32,4 +32,8 @@ Space `hanja-product-film`, kind `agent`, ID `3C4C9B8E-FBB8-4E43-9CC4-6BBFBADD15
 - 새 독립 검수자 `/root/motion_site_finish_review`: 필수 캡처15개 유효, 내용 순서·모바일·새영상의 시각 근거 적합. 유일한 material fix는 DESIGN 문서 동기화. 음악 청취·실시간 영상 감상은 독립 검수 범위 밖.
 - 기능 보완 검증: 같은 해시로 재방문해도 FAQ가 다시 열림. 실제 화면 크게 보기를 눌러 Agent Space 새 탭의 원본 WebP 로드 확인.
 - 독립 documenter의 문서 동기화 후 동일 검수자가 유일한 수정 항목 resolved, remaining clear, disposition ship으로 판정. 이 후속 판정 범위는 문서 동기화에 한정.
-- 배포 근거는 완료 시 추가한다.
+- 배포 커밋 `9496882be914806aa5cd5cdf87aaf06cdb51e896`. [GitHub Actions run37104552390](https://github.com/sunworks-dev/hanja-study-site/actions/runs/37104552390) success.
+- 공개 HTTP 사이트의 HTML/CSS2종/쇼케이스JS/자막이 로컬 배포본과 byte 단위로 일치. 가로·세로 MP4 모두 Range 요청206, 파일 전체 크기 일치.
+- 공개 사이트 Phi 모바일 재생:1080×1920,duration32,currentTime1.819558,playingtrue. 장면 이동 정상, 콘솔 오류·경고0, 실패 네트워크0. `motion-production.png`, `motion-production-film.png` 확인.
+- 작업 Agent Space는 `complete()`로 정리함.
+- 별도 잔여 사항: GitHub Pages HTTPS certificate state `new`, `https_enforced:false`. 맞춤 도메인의 인증서 발급은 완료되지 않았으며 HTTPS 복구를 주장하지 않음.
