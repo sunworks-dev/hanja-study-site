@@ -79,6 +79,56 @@
 .price-promise { font-size: 18px; font-weight: 750; line-height: 1.7; margin-block: 26px; }
 .price-offer .button { width: 100%; padding-inline: 15px; }
 .price-note { font-size: 12px; line-height: 1.8; margin-top: 18px; color: #4b5137; }
+.hero-price { display: flex; width: fit-content; align-items: center; gap: 6px; min-height: 44px; font-size: 13px; color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.hero-price strong { color: var(--ink); }
+.hero-founder { margin-top: 12px; }
+.hero-screen { border-width: 3px; border-radius: 17px; box-shadow: 0 8px 12px rgb(35 63 53 / 6%), 0 22px 40px rgb(35 63 53 / 10%); }
+.hero-screen img { border-radius: 13px; }
+.showcase-visual > img { border-radius: 16px; }
+.screen-enlarge { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 13px; font-weight: 750; text-underline-offset: 4px; }
+.screen-enlarge:hover, .hero-price:hover { color: var(--orange); }
+.film-play-symbol svg { transform: translateX(1px); }
+.film-cover:active .film-play-symbol { transform: scale(.96); }
+.start-section { border-top: 1px solid var(--line); }
+.start-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; list-style: none; padding: 0; margin: 48px 0 34px; }
+.start-steps li { border-top: 1px solid var(--line); padding-top: 22px; }
+.step-number { font-family: Jua, sans-serif; color: var(--orange); font-size: 30px; }
+.start-steps h3 { margin-block: 14px 12px; font-size: 25px; }
+.start-steps p { color: var(--muted); font-size: 15px; line-height: 1.8; }
+.start-footer { display: flex; align-items: center; gap: 28px; padding-top: 20px; }
+.start-footer p { font-size: 13px; color: var(--muted); line-height: 1.8; }
+.start-footer p a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 3px; }
+.deep-dive { padding-bottom: 68px; }
+.deep-heading { margin-bottom: 32px; }
+.deep-heading h2 { font-size: clamp(32px, 3.5vw, 44px); }
+.deep-heading p { margin-top: 12px; color: var(--muted); }
+.deep-details { border-block-start: 1px solid var(--line); }
+.deep-details:last-child { border-block-end: 1px solid var(--line); }
+.deep-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; cursor: pointer; list-style: none; padding-block: 26px; }
+.deep-details > summary::-webkit-details-marker { display: none; }
+.deep-details summary strong { display: block; font-size: 20px; }
+.deep-details summary small { display: block; color: var(--muted); margin-top: 7px; font-size: 14px; }
+.deep-details > summary > svg { flex-shrink: 0; width: 24px; height: 24px; transition: transform 180ms var(--ease); }
+.deep-details[open] > summary > svg { transform: rotate(45deg); }
+.deep-details > summary:hover strong { color: var(--orange); }
+.deep-body .exam-section { margin-bottom: 60px; }
+@media (max-width: 800px) {
+  .start-steps { gap: 20px; }
+  .start-steps h3 { font-size: 22px; }
+  .start-footer { align-items: flex-start; flex-direction: column; gap: 16px; }
+}
+@media (max-width: 560px) {
+  .start-steps { grid-template-columns: 1fr; margin-top: 32px; gap: 22px; }
+  .start-steps li { display: grid; grid-template-columns: 44px 1fr; gap: 0 12px; }
+  .step-number { grid-row: span 2; line-height: 1.4; }
+  .start-steps h3 { margin-block: 0 8px; }
+  .start-steps p { grid-column: 2; }
+  .start-footer { padding-top: 0; }
+  .deep-details summary strong { font-size: 17px; }
+  .deep-details summary small { font-size: 12px; line-height: 1.7; }
+  .hero-price { font-size: 12px; }
+  .deep-dive { padding-bottom: 44px; }
+}
 @media (min-width: 801px) and (max-width: 1100px) {
   .product-hero { gap: 10px; }
   .product-hero h1 { font-size: 62px; }
@@ -174,7 +224,7 @@
   .hero-stage-caption { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .film-play-symbol { transition: none; }
+  .film-play-symbol, .deep-details > summary > svg { transition: none; }
   .film-cover:hover .film-play-symbol { transform: none; }
 }
 @media print {

@@ -22,7 +22,7 @@ const showcaseContent = {
   home: {
     image: "home", alt: "새 한자와 복습 분량, 이어서 풀기를 안내하는 앱 홈 화면",
     heading: ["오늘 뭘 할지,", "고민은 줄여 주세요."],
-    description: "새로 만날 한자와 다시 볼 한자를 오늘의 학습으로 모아 줍니다. FSRS가 답변 기록에 맞춰 복습 간격을 조절하고, 잠깐 멈춘 공부는 이어서 시작할 수 있어요.",
+    description: "새로 만날 한자와 다시 볼 한자를 오늘의 학습으로 모아 줍니다. 답변 기록에 맞춰 다시 볼 시점을 조절하고, 잠깐 멈춘 공부는 이어서 시작할 수 있어요.",
     benefits: ["내 기록에 맞춰 조절되는 복습 간격", "직접 정하는 하루 신규 학습량", "풀던 학습을 이어 가는 세션 저장"],
   },
 };
@@ -38,6 +38,9 @@ function showFeature(tab, focus = false) {
   });
   showcaseImage.src = `assets/screens/${item.image}.webp`;
   showcaseImage.alt = item.alt;
+  const enlarge = document.querySelector("#showcase-enlarge");
+  enlarge.href = showcaseImage.src;
+  enlarge.setAttribute("aria-label", `${item.alt} 크게 보기, 새 탭`);
   const title = document.querySelector("#showcase-heading");
   title.replaceChildren(document.createTextNode(item.heading[0]), document.createElement("br"), document.createTextNode(item.heading[1]));
   document.querySelector("#showcase-description").textContent = item.description;
@@ -76,8 +79,8 @@ function chooseFilm() {
   // Never swap a loaded film during playback or restart a user's position.
   if (filmStarted) return;
   const orientation = portraitFilm.matches ? "portrait" : "landscape";
-  productFilm.querySelector("source").src = `assets/video/hanja-film-${orientation}.mp4`;
-  productFilm.poster = `assets/video/poster-${orientation}.webp`;
+  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4`;
+  productFilm.poster = `assets/video/poster-motion-${orientation}.webp`;
 }
 chooseFilm();
 portraitFilm.addEventListener("change", chooseFilm);
@@ -113,7 +116,7 @@ productFilm.addEventListener("play", () => filmPlayer.classList.add("is-started"
 productFilm.addEventListener("timeupdate", () => {
   const time = productFilm.currentTime;
   filmChapters.forEach((button, index) => {
-    const active = time >= Number(button.dataset.filmTime) && time < Number(filmChapters[index + 1]?.dataset.filmTime || 32);
+    const active = time >= Number(button.dataset.filmTime) && time < Number(button.dataset.filmEnd);
     button.classList.toggle("is-current", active);
   });
 });
@@ -130,3 +133,22 @@ if ("IntersectionObserver" in window) {
     if (!entry.isIntersecting) productFilm.pause();
   }, { threshold: 0 }).observe(productFilm);
 }
+
+// Preserve links into collapsed learning details and individual FAQ answers.
+function revealLinkedDetail() {
+  if (!location.hash) return;
+  let target;
+  try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch { return; }
+  if (!target) return;
+  let opened = false;
+  for (let element = target; element; element = element.parentElement) {
+    if (element.tagName === "DETAILS" && !element.open) { element.open = true; opened = true; }
+  }
+  if (opened) requestAnimationFrame(() => target.scrollIntoView({ block: "start", behavior: "instant" }));
+}
+window.addEventListener("hashchange", revealLinkedDetail);
+document.addEventListener("click", (event) => {
+  const link = event.target.closest('a[href^="#"]');
+  if (link && link.hash === location.hash) revealLinkedDetail();
+});
+revealLinkedDetail();

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-03T05:06:28.334297Z",
+  "generatedAt": "2026-10-03T06:50:45.830716Z",
   "title": "Design System: 어흥!한자",
   "extensions": {
     "source": {
@@ -12,13 +12,16 @@
         "public/app.js",
         "public/showcase.js",
         "docs/PRODUCT.md",
-        "docs/surfaces/home.md"
+        "docs/surfaces/home.md",
+        "docs/surfaces/product-film.md",
+        "docs/review/site-content-audit-2026-10-03.md"
       ],
       "mode": "scan",
       "visualAuthority": "Final source CSS; Phi captures contained browser-injected blue theme.",
       "sidecarLocation": "docs/DESIGN.md.json replaces the default .impeccable/design.json to keep project documentation under docs/.",
       "tonalRamps": "Synthesized OKLCH preview metadata only. No generated ramp is a shipped design token.",
-      "previewBehavior": "Snippets reproduce source presentation. JavaScript learning, showcase switching, video playback, and locally hosted font loading remain in the shipped page."
+      "previewBehavior": "Snippets reproduce source presentation. JavaScript learning, showcase switching, video playback, hash disclosure opening, and locally hosted font loading remain in the shipped page. Native details previews open directly.",
+      "visualWorldSeed": "0436a9ef"
     },
     "colorMeta": {
       "paper": {
@@ -178,7 +181,12 @@
       {
         "name": "hero-character",
         "value": "drop-shadow(0 8px 8px rgb(35 63 53 / 12%))",
-        "purpose": "제품 첫 화면의 투명 호랑 이미지에만 적용하는 filter. 앱 화면 프레임에는 그림자를 더하지 않는다."
+        "purpose": "제품 첫 화면의 투명 호랑 이미지에만 적용하는 filter."
+      },
+      {
+        "name": "hero-screen",
+        "value": "0 8px 12px rgb(35 63 53 / 6%), 0 22px 40px rgb(35 63 53 / 10%)",
+        "purpose": "제품 첫 화면의 실제 앱 이미지 프레임에 적용하는 지역 그림자."
       }
     ],
     "motion": [
@@ -190,7 +198,7 @@
       {
         "name": "button",
         "value": "180ms",
-        "purpose": "버튼의 배경·그림자·변형 및 영상 재생 버튼/장면 선택의 180ms 반응."
+        "purpose": "버튼의 배경·그림자·변형 및 영상 재생 버튼/장면 선택, 상세 묶음 표시 회전의 180ms 반응. 기본 버튼과 영상 재생 버튼의 눌림은 scale(0.96)."
       },
       {
         "name": "answer",
@@ -225,7 +233,7 @@
       {
         "name": "reduced-motion",
         "value": "prefers-reduced-motion: reduce",
-        "purpose": "CSS 전환·애니메이션·호버 이동·부드러운 스크롤을 제거하고 획순을 즉시 표시."
+        "purpose": "CSS 전환·애니메이션·호버 이동·부드러운 스크롤을 제거하고 획순을 즉시 표시. 사전 렌더링 영상의 모션은 바꾸지 않으며 정지 표지와 사용자 재생을 유지."
       }
     ],
     "breakpoints": [
@@ -262,13 +270,16 @@
         "Demo focus transfer",
         "Tab list ArrowLeft/ArrowRight/Home/End with roving tabindex",
         "Four-step stroke control as drawing alternative",
-        "Native details/summary"
+        "Native details/summary",
+        "Hash links reveal every containing details element, including repeated same-hash clicks."
       ],
       "status": "Hero and handwriting status announcements; descriptive image alternatives; hidden decorative SVG."
     },
     "notCanonized": [
       "Unused --orange-bright",
-      "Text arrow, FAQ plus, and mobile response glyph icons are existing exceptions, not reusable icon rules."
+      "Browser-injected blue theme and synthesized preview tonal ramps are not site tokens.",
+      "Section-local type sizes, surface colors, and app-frame radii are not global primitives.",
+      "The next-learning demo link still carries a text arrow; it is a local exception, not a reusable icon rule."
     ]
   },
   "components": [
@@ -277,8 +288,8 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "실제 웹 베타를 여는 기본 주 행동.",
-      "html": "<a class=\"ds-button-primary\" href=\"https://bryannamd.github.io/hanja-web/\">웹에서 먼저 써보기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
-      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--orange,#be411f);color:var(--white,#fffef9);}.ds-button-primary:hover{background:#a33416;transform:translateY(-2px);box-shadow:0 6px 15px #4b28121c;}.ds-button-primary:active{transform:scale(0.97);}.ds-button-primary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-primary svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-primary:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}.ds-button-primary:hover{transform:none;}}"
+      "html": "<a class=\"ds-button-primary\" href=\"https://bryannamd.github.io/hanja-web/\">웹에서 체험하기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--orange,#be411f);color:var(--white,#fffef9);}.ds-button-primary:hover{background:#a33416;transform:translateY(-2px);box-shadow:0 6px 15px #4b28121c;}.ds-button-primary:active{transform:scale(0.96);}.ds-button-primary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-primary svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-primary:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}.ds-button-primary:hover{transform:none;}}"
     },
     {
       "name": "먹빛 동작 버튼",
@@ -286,7 +297,7 @@
       "refersTo": "button-ink",
       "description": "기본 버튼 스타일. 체험 내부 버튼은 화면 폭에 따른 작은 크기 조정이 추가된다. 미리보기는 앱 동작을 실행하지 않는다.",
       "html": "<button type=\"button\" class=\"ds-button-ink\">두 글자 연결해 보기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></button>",
-      "css": ".ds-button-ink{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--ink,#233f35);color:var(--white,#fffef9);}.ds-button-ink:hover{background:#355647;transform:translateY(-2px);}.ds-button-ink:active{transform:scale(0.97);}.ds-button-ink:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-ink svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-ink:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-ink{transition:none;}.ds-button-ink:hover{transform:none;}}"
+      "css": ".ds-button-ink{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--ink,#233f35);color:var(--white,#fffef9);}.ds-button-ink:hover{background:#355647;transform:translateY(-2px);}.ds-button-ink:active{transform:scale(0.96);}.ds-button-ink:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-ink svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-ink:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-ink{transition:none;}.ds-button-ink:hover{transform:none;}}"
     },
     {
       "name": "텍스트 도구 버튼",
@@ -309,7 +320,7 @@
       "kind": "nav",
       "refersTo": "navigation",
       "description": "헤더 내부의 세 구간 링크. 800px 이하에서 숨겨지고 별도 브랜드·웹 시작 버튼은 남는다.",
-      "html": "<nav class=\"ds-navigation\" aria-label=\"주요 메뉴\"><a href=\"#showcase\">앱 둘러보기</a><a href=\"#memory\">기억의 설계</a><a href=\"#pricing\">이용 안내</a></nav>",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"주요 메뉴\"><a href=\"#showcase\">앱 둘러보기</a><a href=\"#pricing\">가격·이용 안내</a><a href=\"#start\">시작 방법</a></nav>",
       "css": ".ds-navigation{display:flex;gap:32px;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;color:var(--ink,#233f35);}.ds-navigation a{font-size:15px;font-weight:700;line-height:1.75;text-decoration:none;color:inherit;padding-block:12px;touch-action:manipulation;}.ds-navigation a:hover{color:var(--orange,#be411f);}.ds-navigation a:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}@media(max-width:1100px){.ds-navigation{gap:20px;}}@media(max-width:800px){.ds-navigation{display:none;}}"
     },
     {
@@ -340,7 +351,7 @@
       "name": "앱 기능 탐색",
       "kind": "nav",
       "refersTo": "showcase-tab",
-      "description": "4개 기능의 실제 앱 화면과 설명을 고르는 2열 탭. 시각 미리보기이며 선택·방향키 동작은 public/showcase.js가 제공한다. 모바일에서는 바로 아래 실제 화면을 놓는다.",
+      "description": "4개 기능의 실제 앱 화면·설명을 고르는 2열 탭. 선택 때 크게 보기 링크도 현재 이미지로 바뀌고 새 탭으로 열린다. 이 미리보기는 탭 모양만 표시하며 선택·방향키 동작은 public/showcase.js가 제공한다. 모바일에서는 탭 바로 아래 실제 화면을 놓는다.",
       "html": "<div class=\"ds-showcase-tabs\" role=\"tablist\" aria-label=\"앱의 학습 흐름\"><button type=\"button\" role=\"tab\" aria-selected=\"true\">한 글자 깊게</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">이야기 속으로</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">성장이 눈앞에</button><button type=\"button\" role=\"tab\" aria-selected=\"false\" tabindex=\"-1\">오늘도 가볍게</button></div>",
       "css": ".ds-showcase-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;margin-bottom:32px;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;}.ds-showcase-tabs button{background:transparent;border:0;border-bottom:1px solid var(--line,#d5d6c7);padding:13px 0;min-height:48px;text-align:left;font:inherit;font-size:15px;font-weight:700;color:var(--muted,#57655a);cursor:pointer;}.ds-showcase-tabs button[aria-selected=\"true\"]{color:var(--orange,#be411f);border-color:var(--orange,#be411f);font-weight:900;}.ds-showcase-tabs button:hover{color:var(--orange,#be411f);}.ds-showcase-tabs button:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}@media(max-width:800px){.ds-showcase-tabs{gap:0 10px;}.ds-showcase-tabs button{font-size:13px;}}@media(max-width:560px){.ds-showcase-tabs{margin-bottom:25px;}.ds-showcase-tabs button{font-size:14px;}}"
     },
@@ -348,9 +359,25 @@
       "name": "영상 장면 선택",
       "kind": "custom",
       "refersTo": "film-chapter",
-      "description": "실제 필름의 4개 장면으로 이동하는 버튼. 기본 4열·모바일 2열, 현재 장면은 학습 노랑이다. 이 미리보기는 영상을 불러오지 않는다.",
-      "html": "<div class=\"ds-film-surface\"><div class=\"ds-film-chapters\" aria-label=\"영상 장면 바로 보기\"><button type=\"button\"><span>00:03</span>스스로 떠올리기</button><button type=\"button\"><span>00:10</span>획순과 어휘</button><button type=\"button\" class=\"ds-current\"><span>00:18</span>이야기 마당</button><button type=\"button\"><span>00:25</span>나의 한자 도감</button></div></div>",
+      "description": "32초 1080p 가로·세로 모션 필름의 실제 장면으로 이동한다. 표시 00:07/13/17/21, 이동 7.25/13.25/17.25/21.25초, 현재 표시 종료 10/17/21/25초. 4열·모바일 2열, 현재 장면은 학습 노랑. 이 미리보기는 영상을 불러오지 않는다.",
+      "html": "<div class=\"ds-film-surface\"><div class=\"ds-film-chapters\" aria-label=\"영상 장면 바로 보기\"><button type=\"button\" data-film-time=\"7.25\" data-film-end=\"10\"><span>00:07</span>스스로 떠올리기</button><button type=\"button\" data-film-time=\"13.25\" data-film-end=\"17\"><span>00:13</span>획순과 어휘</button><button type=\"button\" class=\"ds-current\" data-film-time=\"17.25\" data-film-end=\"21\"><span>00:17</span>이야기 마당</button><button type=\"button\" data-film-time=\"21.25\" data-film-end=\"25\"><span>00:21</span>나의 한자 도감</button></div></div>",
       "css": ".ds-film-surface{background:var(--ink,#233f35);color:var(--paper,#fff9ed);padding:24px;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;}.ds-film-chapters{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}.ds-film-chapters button{background:transparent;border:0;border-top:1px solid #708a78;color:var(--paper,#fff9ed);text-align:left;padding:14px 0 8px;min-height:52px;font:inherit;font-size:15px;font-weight:750;cursor:pointer;transition:color 180ms,border-color 180ms;}.ds-film-chapters button span{display:block;color:#bbceb8;font-size:12px;font-variant-numeric:tabular-nums;margin-bottom:5px;}.ds-film-chapters button:hover,.ds-film-chapters button.ds-current{color:var(--yellow,#f7d681);border-color:var(--yellow,#f7d681);}.ds-film-chapters button:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}@media(max-width:560px){.ds-film-chapters{grid-template-columns:1fr 1fr;gap:10px 20px;}.ds-film-chapters button{font-size:13px;}.ds-film-chapters button span{margin-bottom:2px;}}@media(prefers-reduced-motion:reduce){.ds-film-chapters button{transition:none;}}"
+    },
+    {
+      "name": "시작 3단계",
+      "kind": "custom",
+      "refersTo": "start-step",
+      "description": "윗선·번호·제목·설명으로 구성한 순서 목록. 3열에서 모바일 1열로 바뀌며 각 모바일 단계는 번호 열을 유지한다. 아래 웹 체험·기록 안내는 실제 페이지에 있다.",
+      "html": "<ol class=\"ds-start-steps\"><li><span class=\"ds-step-number\" aria-hidden=\"true\">01</span><h3>배울 급수 고르기</h3><p>처음이라면 8급부터.<br>목표에 맞춰 출발점을 정해요.</p></li><li><span class=\"ds-step-number\" aria-hidden=\"true\">02</span><h3>하루 분량 정하기</h3><p>새로 배울 한자의 수를 정해요.<br>부담 없이 이어 갈 만큼만.</p></li><li><span class=\"ds-step-number\" aria-hidden=\"true\">03</span><h3>오늘의 학습 시작</h3><p>새 한자와 다시 볼 한자를 만나며,<br>나만의 공부를 쌓아 가요.</p></li></ol>",
+      "css": ".ds-start-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;list-style:none;padding:0;margin:48px 0 34px;color:var(--ink,#233f35);font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;line-height:1.75;word-break:keep-all;}.ds-start-steps li{border-top:1px solid var(--line,#d5d6c7);padding-top:22px;}.ds-step-number{font-family:Jua,sans-serif;color:var(--orange,#be411f);font-size:30px;}.ds-start-steps h3{margin:14px 0 12px;font-family:Jua,SUIT,sans-serif;font-size:25px;font-weight:400;line-height:1.25;letter-spacing:-0.02em;text-wrap:balance;}.ds-start-steps p{margin:0;color:var(--muted,#57655a);font-size:15px;line-height:1.8;}@media(max-width:800px){.ds-start-steps{gap:20px;}.ds-start-steps h3{font-size:22px;}}@media(max-width:560px){.ds-start-steps{grid-template-columns:1fr;margin-top:32px;gap:22px;}.ds-start-steps li{display:grid;grid-template-columns:44px 1fr;gap:0 12px;}.ds-step-number{grid-row:span 2;line-height:1.4;}.ds-start-steps h3{margin:0 0 8px;}.ds-start-steps p{grid-column:2;}}"
+    },
+    {
+      "name": "상세 묶음 펼치기",
+      "kind": "custom",
+      "refersTo": "deep-summary",
+      "description": "두 개의 네이티브 details를 처음에는 접어 두며 열면 SVG 더하기를 45도 돌린다. 실제 페이지의 summary와 동일하고 본문은 미리보기 안내로 축약했다. 실제 학습·익명 후기 콘텐츠와 조상 details를 여는 해시 처리는 public/index.html과 public/showcase.js에 있다.",
+      "html": "<div class=\"ds-deep-list\"><details class=\"ds-deep-details\"><summary><span><strong>재미를 넘어, 오래 기억하는 공부</strong><small>연상·회상·복습의 설계, 친구들, 시험 준비</small></span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5v14\"/></svg></summary><div class=\"ds-deep-preview\"><p>전체 학습 설계·친구·시험 콘텐츠는 실제 페이지에서 확인할 수 있습니다.</p></div></details><details class=\"ds-deep-details\"><summary><span><strong>다른 앱의 아쉬움에서 배운 점</strong><small>공개 후기를 읽고, 어흥!한자가 선택한 방향</small></span><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14M12 5v14\"/></svg></summary><div class=\"ds-deep-preview\"><p>전체 A/B/C 익명 후기와 대응 방향은 실제 페이지에서 확인할 수 있습니다.</p></div></details></div>",
+      "css": ".ds-deep-list{color:var(--ink,#233f35);font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;line-height:1.75;word-break:keep-all;}.ds-deep-details{border-block-start:1px solid var(--line,#d5d6c7);}.ds-deep-details:last-child{border-block-end:1px solid var(--line,#d5d6c7);}.ds-deep-details>summary{display:flex;align-items:center;justify-content:space-between;gap:24px;cursor:pointer;list-style:none;padding:26px 0;}.ds-deep-details>summary::-webkit-details-marker{display:none;}.ds-deep-details summary strong{display:block;font-size:20px;font-weight:700;}.ds-deep-details summary small{display:block;color:var(--muted,#57655a);margin-top:7px;font-size:14px;}.ds-deep-details>summary>svg{flex-shrink:0;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1));}.ds-deep-details[open]>summary>svg{transform:rotate(45deg);}.ds-deep-details>summary:hover strong{color:var(--orange,#be411f);}.ds-deep-details>summary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-deep-preview{padding-bottom:24px;color:var(--muted,#57655a);font-size:15px;}.ds-deep-preview p{margin:0;}@media(max-width:560px){.ds-deep-details summary strong{font-size:17px;}.ds-deep-details summary small{font-size:12px;line-height:1.7;}}@media(prefers-reduced-motion:reduce){.ds-deep-details>summary>svg{transition:none;}}"
     }
   ],
   "narrative": {

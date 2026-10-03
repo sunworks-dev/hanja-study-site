@@ -1,12 +1,12 @@
 @font-face {
   font-family: Jua;
-  src: url("assets/fonts/Jua-subset.woff2") format("woff2");
+  src: url("assets/fonts/Jua-subset.woff2?v=20261003-motion") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: SUIT;
-  src: url("assets/fonts/SUIT-subset.woff2") format("woff2");
+  src: url("assets/fonts/SUIT-subset.woff2?v=20261003-motion") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -226,7 +226,7 @@ nav a:hover {
   transform: translateY(-2px);
 }
 .button:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 .button-primary {
   background: var(--orange);
