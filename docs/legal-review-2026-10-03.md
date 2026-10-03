@@ -65,6 +65,14 @@
 - Phi가 여전히 원본 제목·링크 색상에 자체 테마를 덧씌움. 임의 스타일 변경 없이 해당 환경에서 검증. 캡처는 `docs/review/legal-*.png` (Git 제외).
 - 권한 DNS `ns1.ksdom.kr`, `ns2.ksdom.kr` 모두 동일 CNAME 응답. 공개 A/AAAA도 GitHub 공식 IP 4개씩으로 일치.
 
+## 배포 확인
+
+- 구현 커밋: `f3e6b8f` (`feat: add source-backed legal notices and policies`). [GitHub Actions 배포](https://github.com/sunworks-dev/hanja-study-site/actions/runs/37128925162) 성공.
+- 운영 HTTP 주소에서 index, legal.css, 정책 4페이지, sitemap, 두 폰트 총 9개 파일이 배포 커밋의 파일과 바이트 단위로 일치함을 확인. 동시에 진행 중인 손글씨 체험의 로컬 미커밋 변경은 비교 대상에서 제외하고 보존.
+- Phi Agent Space에서 운영 개인정보 안내 페이지의 글꼴 로드·본문 16px·가로 넘침 없음, 환불 안내로 실제 링크 이동과 현재 문서 표시를 확인. 이번 운영 페이지 확인 중 console warning/error 및 실패 요청 0.
+- 사업자 실명 정보와 문의 메일의 실제 수신·처리 기준은 사용자 답변 대기. 이 배포로 법률상 모든 필수 고지가 완성된 것으로 보지 않음.
+- 2026-10-03 23:21 KST 최종 확인도 인증서 발급 `new`, 강제 HTTPS `false`, 검증을 켠 curl은 도메인 불일치 오류 60. DNS 설정 오류를 발견하지 못했으며 GitHub 인증서 발급 절차 지연이 의심됨(추정). 재요청 후 발급 완료는 확인되지 않음. 자동 감시 작업은 실행 중이지 않음.
+
 ## GitHub 지원 요청 초안 · 아직 전송하지 않음
 
 외부 지원팀에 메시지를 보내라는 지시는 없으므로 아래 내용을 자동 발송하지 않는다. 재요청 후에도 발급이 진행되지 않으면 사용할 수 있는 진단 초안이다.
