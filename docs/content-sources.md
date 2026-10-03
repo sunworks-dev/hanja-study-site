@@ -30,7 +30,7 @@ Apple 공식 한국 App Store 공개 customerreviews RSS에서 평점·게시 �
 - https://itunes.apple.com/kr/rss/customerreviews/id=1189447095/sortBy=mostRecent/json
 - https://itunes.apple.com/kr/rss/customerreviews/id=1437928040/sortBy=mostRecent/json
 
-사이트는 해당 앱의 전체 리뷰 페이지로 연결한다. RSS는 새 리뷰가 추가되면 위 항목을 더 이상 반환하지 않을 수 있다. 게시 후 개선 가능성을 사이트에 명시했다. 경쟁 앱의 업데이트 기록에서 이미 고쳐졌다고 나온 현상을 현재 결함으로 주장하지 않는다.
+공개 사이트에서는 앱명을 A·B·C로 익명 처리하고 작성자와 원문 링크를 노출하지 않는다. 위 표와 피드는 내부 검증 근거로 보존한다. RSS는 새 리뷰가 추가되면 위 항목을 더 이상 반환하지 않을 수 있다. 게시 후 개선 가능성을 사이트에 명시했다. 경쟁 앱의 업데이트 기록에서 이미 고쳐졌다고 나온 현상을 현재 결함으로 주장하지 않는다.
 
 ## 이미지와 글꼴
 
@@ -41,3 +41,8 @@ Apple 공식 한국 App Store 공개 customerreviews RSS에서 평점·게시 �
 - Jua: https://github.com/google/fonts/tree/main/ofl/jua
 - SUIT: https://github.com/sun-typeface/SUIT
 - 글꼴은 SIL OFL 1.1이며 라이선스 전문을 `public/assets/fonts/`에 함께 배포한다. 문서/스크립트에 필요한 문자로 WOFF2 서브셋을 만들었다.
+
+
+## 실제 앱 화면과 제품 영상 · 2026-10-03
+
+공개 웹 베타의 실제 8급 체험 세션을 Phi Agent Space에서 직접 조작·촬영했다. 퀴즈, 획순/연상/어휘, 이야기, 도감, 홈 화면 5종과 36초 가로·세로 영상을 배포한다. 학습 결과를 합성하지 않았다. 배경 음악은 제작 스크립트의 수식으로 만든 원본이며 외부 음원을 사용하지 않았다. 세부 제작·검증 근거는 [제품 쇼케이스 기록](review/product-showcase-2026-10-03.md)을 참조한다.

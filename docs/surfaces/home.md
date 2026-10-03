@@ -7,7 +7,7 @@ target: public/index.html
 
 ## THESIS
 
-한자를 친구와 함께 만지고, 연결하고, 기억하는 학습 놀이터. 첫 체험이 설명보다 먼저 제품의 태도를 증명한다.
+부모가 학습의 깊이를 확인하고 아이가 직접 써보고 싶어지는 실제 앱 쇼케이스. 기존 연결·쓰기·어휘 체험은 제품을 확인한 뒤 직접 경험하는 흐름으로 유지한다.
 
 ## OWN-WORLD
 
@@ -15,11 +15,11 @@ target: public/index.html
 
 ## STORY
 
-연결하는 한 글자 → 직접 쓰기와 어휘 → FSRS 기억 설계 → 친구와 성취 → 중2 아들과 만든 이야기 → 다른 앱 후기에서 배운 점 → 출시 안내와 시작.
+제품과 어휘 학습의 가치 → 실제 작동 필름 → 화면별 학습 이점 → 연결하는 한 글자와 직접 쓰기·어휘 → FSRS 기억 설계 → 친구와 성취 → 중2 아들과 만든 이야기 → 익명 후기에서 배운 점 → 가격·출시 조건과 웹 체험.
 
 ## FIRST VIEWPORT
 
-한쪽은 큰 한국어 제목, 다른 쪽은 日·月을 明으로 합치는 넓은 체험 무대. 호랑이와 말풍선이 안내한다. 버튼을 누르면 결합하고, 의미를 스스로 고르면 즉시 따뜻한 피드백을 준다. 모바일에서도 첫 화면에 체험 진입이 보인다.
+왼쪽은 큰 한국어 제목과 웹 체험·영상 보기, 오른쪽은 실제 학습 화면 두 장과 호랑. 바로 아래 제품 필름을 둔다. 모바일에서는 설명·웹 체험·영상 진입 후 실제 화면을 보여 준다. 대표 상호작용은 영상의 장면 바로 보기이며 감소 모션을 포함해 정지 표지와 사용자 재생으로 시작한다.
 
 ## FORM
 
@@ -28,3 +28,18 @@ Seed 0436a9ef, assigned 5. 일곱 후보: 민화 책거리 / 청소년 과학잡
 ## FINISH
 
 unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+
+## Direction contract · 2026-10-03 확장
+
+THESIS: 부모가 학습의 깊이를 확인하고 아이가 직접 써보고 싶어지는 실제 앱 쇼케이스.
+
+OWN-WORLD: 기존 문방구 학습 놀이터를 계승. 크림·먹빛 초록·주홍, Jua·SUIT, 실제 캐릭터와 앱 화면.
+
+STORY: 첫 화면에서 제품과 어휘 학습의 가치 이해, 실제 작동 필름으로 확인, 화면별 학습 이점 탐색, 가격·출시 조건 확인 후 웹 체험.
+
+FIRST VIEWPORT: 왼쪽 큰 한글 제목과 웹 체험·영상 보기, 오른쪽 실제 학습 화면 두 장과 호랑. 바로 아래 제품 필름. 대표 상호작용은 영상의 장면 바로 보기이며 감소 모션에서는 정지 표지와 사용자 재생으로 시작.
+
+FORM: 기존 표면 확장, seed 0436a9ef의 5번 문방구 학습 놀이터 계승. 코드 우선. 부모의 구매 판단을 먼저 돕되 아이의 재미를 실제 화면으로 증명. 기존 세 체험·제작자 이야기·익명 후기 보존.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

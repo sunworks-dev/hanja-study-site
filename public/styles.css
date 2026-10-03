@@ -2071,18 +2071,6 @@ canvas {
     font-size: 12px;
     min-height: 39px;
   }
-  .review-response > div:last-child {
-    padding-left: 18px;
-    position: relative;
-  }
-  .review-response > div:last-child::before {
-    content: "↳";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--orange);
-    font-size: 18px;
-  }
   .review-response h3 {
     font-size: 24px;
   }

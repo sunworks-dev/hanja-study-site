@@ -1,0 +1,11 @@
+{
+  "prompt": "Real screenshot captured in Phi Agent Space hanja-product-film from https://bryannamd.github.io/hanja-web/ on 2026-10-03. study screen at 430x860 CSS pixels, 2x DPR. Unaltered app UI; WebP encoding only. Demo session created by the agent; not a customer outcome.",
+  "source": "https://bryannamd.github.io/hanja-web/",
+  "capturedAt": "2026-10-03",
+  "screen": "study",
+  "viewport": {
+    "width": 430,
+    "height": 860,
+    "dpr": 2
+  }
+}

@@ -39,7 +39,9 @@
       crossorigin
     />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="showcase.css" />
     <script src="app.js" defer></script>
+    <script src="showcase.js" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -69,8 +71,8 @@
           /><span>어흥!한자<span class="brand-dot">.</span></span></a
         >
         <nav aria-label="주요 메뉴">
-          <a href="#learn">배우는 재미</a><a href="#memory">기억의 설계</a
-          ><a href="#story">만든 이야기</a>
+          <a href="#showcase">앱 둘러보기</a><a href="#memory">기억의 설계</a
+          ><a href="#pricing">이용 안내</a>
         </nav>
         <a
           class="button button-small button-ink"
@@ -82,28 +84,77 @@
       </div>
     </header>
     <main id="main">
-      <section class="hero section-wrap" aria-labelledby="hero-title">
+      <section class="product-hero section-wrap" aria-labelledby="hero-title">
+        <div class="product-hero-copy">
+          <h1 id="hero-title">한자를 알면,<br>읽는 세상이<br><em>달라지니까.</em></h1>
+          <p class="product-hero-lead">오늘 배운 한 글자가, 교과서 속 낱말로.</p>
+          <p class="product-hero-description">직접 쓰고, 이야기로 만나고, 나에게 맞춰 복습해요. <br>아이의 호기심에 공부의 깊이를 더한 <strong>어흥!한자.</strong></p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://bryannamd.github.io/hanja-web/">웹에서 먼저 써보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            <a class="film-link" href="#film"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg>36초 앱 영상</a>
+          </div>
+          <p class="product-hero-note">설치 없이 웹 체험 · iOS·Android 정식 출시 준비 중</p>
+          <a class="hero-founder" href="#story">중2 아들을 위해, 아빠가 수없이 고쳐 만들었습니다.<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        </div>
+        <div class="product-hero-stage" aria-label="실제 웹 앱의 한자 퀴즈와 획순·어휘 학습 화면">
+          <div class="hero-stage-disc" aria-hidden="true"></div>
+          <figure class="hero-screen hero-screen-back"><img src="assets/screens/recall.webp" alt="호랑과 함께 학교 교의 음을 맞히는 실제 앱 화면" width="860" height="1720" fetchpriority="high"></figure>
+          <figure class="hero-screen hero-screen-front"><img src="assets/screens/study.webp" alt="학교 교의 획순과 연상 설명, 학교·대학교·중학교 어휘를 함께 익히는 실제 앱 화면" width="860" height="1720" fetchpriority="high"></figure>
+          <img class="hero-stage-horang" src="assets/horang-welcome.webp" alt="" width="512" height="512">
+          <p class="hero-stage-caption">한 글자가, 아는 낱말이 되는 순간.</p>
+        </div>
+      </section>
+      <section id="film" class="film-section" aria-labelledby="film-title">
+        <div class="section-wrap">
+          <div class="film-heading"><h2 id="film-title">공부가 이렇게 생겼다면.</h2><p>읽고, 쓰고, 이야기를 완성하는 36초.<br>실제 어흥!한자를 만나 보세요.</p></div>
+          <div class="film-player" id="film-player">
+            <video id="product-film" playsinline controls preload="none" poster="assets/video/poster-landscape.webp" aria-label="어흥!한자 실제 웹 앱 시연 영상, 약 36초" aria-describedby="film-description">
+              <source src="assets/video/hanja-film-landscape.mp4" type="video/mp4">
+              <track kind="captions" src="assets/video/hanja-film-ko.vtt" srclang="ko" label="한국어 장면 설명">
+              <p>이 브라우저에서는 영상을 재생할 수 없습니다. <a href="assets/video/hanja-film-landscape.mp4">시연 영상 내려받기</a></p>
+            </video>
+            <button class="film-cover" type="button" id="film-play" aria-label="36초 앱 시연 영상 재생"><span class="film-play-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg></span><span>어흥!한자 만나보기 <small>00:36</small></span></button>
+          </div>
+          <div class="film-chapters" aria-label="영상 장면 바로 보기">
+            <button type="button" data-film-time="2.6"><span>00:03</span>스스로 떠올리기</button>
+            <button type="button" data-film-time="9.7"><span>00:10</span>획순과 어휘</button>
+            <button type="button" data-film-time="17.8"><span>00:18</span>이야기 마당</button>
+            <button type="button" data-film-time="24.9"><span>00:25</span>나의 한자 도감</button>
+          </div>
+          <p class="film-note" id="film-description">실제 웹 베타를 촬영·편집한 영상입니다. 화면과 기능은 출시 과정에서 달라질 수 있습니다. 소리를 켜면 배경 음악이 함께 재생됩니다.</p>
+          <p class="film-status" id="film-status" role="status"></p>
+        </div>
+      </section>
+      <section id="showcase" class="showcase-section section-wrap section-space" aria-labelledby="showcase-title">
+        <div class="section-heading"><h2 id="showcase-title">‘외웠다’에서 끝나지 않는<br>한자 공부.</h2><p>배우고, 써먹고, 다시 만나는 흐름.<br>앱 안에서는 이렇게 이어집니다.</p></div>
+        <div class="showcase-layout">
+          <div class="showcase-visual">
+            <img id="showcase-image" src="assets/screens/study.webp" width="860" height="1720" alt="학교 교의 획순·연상·연결 어휘 학습 화면" loading="lazy">
+            <span class="showcase-image-note">실제 웹 앱 화면</span>
+          </div>
+          <div class="showcase-copy">
+            <div class="showcase-tabs" role="tablist" aria-label="앱의 학습 흐름">
+              <button type="button" id="showcase-tab-learn" role="tab" aria-selected="true" aria-controls="showcase-panel" data-showcase="learn">한 글자 깊게</button>
+              <button type="button" id="showcase-tab-story" role="tab" aria-selected="false" aria-controls="showcase-panel" tabindex="-1" data-showcase="story">이야기 속으로</button>
+              <button type="button" id="showcase-tab-collection" role="tab" aria-selected="false" aria-controls="showcase-panel" tabindex="-1" data-showcase="collection">성장이 눈앞에</button>
+              <button type="button" id="showcase-tab-home" role="tab" aria-selected="false" aria-controls="showcase-panel" tabindex="-1" data-showcase="home">오늘도 가볍게</button>
+            </div>
+            <div id="showcase-panel" role="tabpanel" aria-labelledby="showcase-tab-learn" tabindex="0">
+              <h3 id="showcase-heading">校 하나를 배웠는데,<br>학교가 새롭게 보여요.</h3>
+              <p id="showcase-description">획순으로 모양을 익히고, 연상으로 뜻을 연결해요. 학교·대학교·중학교처럼 같은 한자를 쓰는 단어를 함께 만나니, 한 글자의 배움이 우리말로 넓어집니다.</p>
+              <ul id="showcase-benefits"><li>획순·훈음·부수·연상 설명을 한곳에서</li><li>단어와 예문으로 넓히는 이해</li><li>정답을 보기 전, 직접 떠올리는 연습</li></ul>
+            </div>
+            <a class="text-link" href="https://bryannamd.github.io/hanja-web/">내가 배울 한자 만나보기 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+            <p class="showcase-data">8급부터 1급까지 한자 3,500자, 단어 14,425개 항목을 담았습니다. 급수에 따라 제공되는 학습 유형·삽화·음성 범위는 다릅니다.</p>
+          </div>
+        </div>
+      </section>
+      <section id="try" class="hero try-section section-wrap" aria-labelledby="try-title">
         <div class="hero-copy">
-          <h1 id="hero-title">어? 한자가<br /><span>기억난다!</span></h1>
-          <p class="hero-intro">
-            한 글자에서 시작해,<br />우리말까지 깊어지는 한자 공부.
-          </p>
-          <p class="hero-description">
-            함께 웃는 친구, 손끝으로 익히는 한자,<br class="desktop-break" />
-            나를 아는 복습. 오늘, 어흥!한자와 친해져요.
-          </p>
-          <a
-            class="button button-primary"
-            href="https://bryannamd.github.io/hanja-web/"
-            >웹에서 먼저 써보기
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 12h14m-6-6 6 6-6 6" /></svg
-          ></a>
-          <p class="cta-note">설치 없이 웹 베타 체험 · 앱 정식 출시 준비 중</p>
-          <a class="story-link" href="#story"
-            ><span class="handwritten">중2 아들과, 아빠가.</span
-            ><span>수없이 고쳐 만든 이야기 ↗</span></a
-          >
+          <h2 id="try-title">설명보다 먼저,<br>한 글자만 만나 볼까요?</h2>
+          <p class="hero-intro">지금 이 자리에서, 밝을 명.</p>
+          <p class="hero-description">아는 모양 두 개가 만나 새로운 뜻이 돼요.<br>이렇게 연결하면 다시 떠올릴 단서가 생깁니다.</p>
+          <a class="text-link" href="#learn">손글씨도 직접 해보기 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
         </div>
         <div class="hero-playground" id="hero-demo" data-step="connect">
           <div class="demo-topline">
@@ -341,7 +392,7 @@
               어휘까지 차곡차곡.
             </p>
             <a class="text-link" href="https://bryannamd.github.io/hanja-web/"
-              >앱에서 다른 낱말도 만나기 ↗</a
+              >앱에서 다른 낱말도 만나기<svg class="external-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a
             >
           </div>
         </div>
@@ -413,12 +464,12 @@
                     href="https://pubmed.ncbi.nlm.nih.gov/16507066/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >Roediger &amp; Karpicke (2006), 회상 연습 연구 ↗</a
+                    >Roediger &amp; Karpicke (2006), 회상 연습 연구<svg class="external-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a
                   ><br /><a
                     href="https://github.com/open-spaced-repetition/awesome-fsrs/wiki/ABC-of-FSRS"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >FSRS 공식 설명 ↗</a
+                    >FSRS 공식 설명<svg class="external-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a
                   >
                 </p>
                 <p class="source-note">
@@ -656,6 +707,21 @@
           어흥!한자도 완성으로 단정하지 않고 계속 다듬겠습니다.
         </p>
       </section>
+      <section id="pricing" class="pricing-section section-wrap section-space" aria-labelledby="pricing-title">
+        <div class="pricing-message">
+          <h2 id="pricing-title">매달의 결제 대신,<br>매일의 한 글자.</h2>
+          <p>아이가 직접 써보고, 우리 집 공부에 맞는지 확인하세요.<br>정식 앱은 한 번 구매해 계속 사용하는 방식으로 준비합니다.</p>
+          <ul class="pricing-reasons"><li><strong>광고 없이</strong><span>공부하던 흐름 그대로.</span></li><li><strong>가입 부담 없이</strong><span>학습 기록은 기기에 저장.</span></li><li><strong>한 앱 안에서</strong><span>한자·어휘·복습·모의시험·이야기까지.</span></li></ul>
+        </div>
+        <div class="price-offer">
+          <h3>3일 먼저, 충분히 만나 보세요.</h3>
+          <p class="price-amount">29,900<span>원</span></p>
+          <p class="price-model">정식 앱 출시 예정 가격 · 일회 구매</p>
+          <p class="price-promise">카드 등록 없는 3일 체험.<br>자동 갱신 구독은 없습니다.</p>
+          <a class="button button-primary" href="https://bryannamd.github.io/hanja-web/">지금 웹에서 먼저 써보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+          <p class="price-note">현재는 웹 베타입니다. 스토어 출시·결제는 준비 중이며, 최종 판매 범위와 이용 조건은 출시 때 안내합니다.</p>
+        </div>
+      </section>
       <section
         class="faq-section section-wrap section-space"
         aria-labelledby="faq-title"
@@ -664,7 +730,7 @@
         <div class="faq-list">
           <details>
             <summary>
-              지금 바로 사용할 수 있나요?<span aria-hidden="true">+</span>
+              지금 바로 사용할 수 있나요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -678,9 +744,7 @@
           </details>
           <details>
             <summary>
-              한자를 처음 배우는 아이도 괜찮나요?<span aria-hidden="true"
-                >+</span
-              >
+              한자를 처음 배우는 아이도 괜찮나요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -693,9 +757,7 @@
           </details>
           <details>
             <summary>
-              이용 요금과 자동 결제는 어떻게 되나요?<span aria-hidden="true"
-                >+</span
-              >
+              이용 요금과 자동 결제는 어떻게 되나요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -709,7 +771,7 @@
           </details>
           <details>
             <summary>
-              FSRS가 무엇인가요?<span aria-hidden="true">+</span>
+              FSRS가 무엇인가요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -722,9 +784,7 @@
           </details>
           <details>
             <summary>
-              시험 알림은 웹에서도 받을 수 있나요?<span aria-hidden="true"
-                >+</span
-              >
+              시험 알림은 웹에서도 받을 수 있나요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -737,9 +797,7 @@
           </details>
           <details>
             <summary>
-              잘못된 내용이나 불편을 발견했어요?<span aria-hidden="true"
-                >+</span
-              >
+              잘못된 내용이나 불편을 발견했어요?<span aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg></span>
             </summary>
             <div>
               <p>
@@ -785,7 +843,7 @@
         <p>중2 아들과 함께 만들고, 계속 자라는 한자 앱.</p>
       </div>
       <div class="footer-links">
-        <a href="https://www.sunworks.kr/">만드는 곳, 썬웍스 ↗</a
+        <a href="https://www.sunworks.kr/">만드는 곳, 썬웍스<svg class="external-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg></a
         ><a href="mailto:support@sunworks.kr">문의·피드백</a
         ><a href="assets/fonts/licenses.html">글꼴 라이선스</a
         ><small>© 2026 Sunworks. All rights reserved.</small>
