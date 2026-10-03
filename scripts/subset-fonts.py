@@ -12,7 +12,8 @@ SOURCES = {
     'Jua': 'https://raw.githubusercontent.com/google/fonts/main/ofl/jua/Jua-Regular.ttf',
     'SUIT': 'https://raw.githubusercontent.com/sun-typeface/SUIT/main/fonts/variable/woff2/SUIT-Variable.woff2',
 }
-text = ''.join((PUBLIC / path).read_text() for path in ('index.html', 'styles.css', 'app.js', 'showcase.css', 'showcase.js'))
+text = ''.join(path.read_text() for path in sorted(PUBLIC.rglob('*'))
+               if path.is_file() and path.suffix in {'.html', '.css', '.js', '.vtt'})
 with TemporaryDirectory(prefix='hanja-fonts-') as temporary:
     for family, url in SOURCES.items():
         original = Path(temporary) / url.rsplit('/', 1)[-1]
