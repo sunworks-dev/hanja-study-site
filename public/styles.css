@@ -1,12 +1,12 @@
 @font-face {
   font-family: Jua;
-  src: url("assets/fonts/Jua-subset.woff2?v=20261003-motion") format("woff2");
+  src: url("assets/fonts/Jua-subset.woff2?v=20261003-writing") format("woff2");
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: SUIT;
-  src: url("assets/fonts/SUIT-subset.woff2?v=20261003-motion") format("woff2");
+  src: url("assets/fonts/SUIT-subset.woff2?v=20261003-writing") format("woff2");
   font-weight: 100 900;
   font-display: swap;
 }
@@ -652,18 +652,7 @@ nav a:hover {
     );
   border: 1px solid #d8ddcf;
 }
-.writing-guide {
-  position: absolute;
-  pointer-events: none;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  line-height: 1;
-  font-size: clamp(240px, 29vw, 360px);
-  font-family: "Songti SC", "Batang", serif;
-  color: #e9ebdf;
-  user-select: none;
-}
+
 canvas {
   display: block;
   position: relative;
@@ -2341,3 +2330,24 @@ canvas:focus-visible {
     text-align: left;
   }
 }
+
+/* App-derived writing demo: preserve the site's paper and ink palette. */
+.writing-characters, .writing-modes { display: flex; gap: 8px; margin-top: 12px; }
+.writing-characters button, .writing-modes button { min-height: 44px; padding: 8px 10px; background: transparent; color: var(--ink); border: 1px solid var(--line); border-radius: 9px; font: inherit; font-size: 14px; }
+.writing-modes button { flex: 1; padding-inline: 4px; }
+.writing-characters button[aria-pressed="true"], .writing-modes button[aria-pressed="true"] { background: var(--ink); color: var(--white); border-color: var(--ink); }
+.writing-workspace button:active { transform: scale(0.96); }
+.writing-workspace button:disabled { opacity: .55; cursor: wait; }
+.writing-tools { flex-wrap: wrap; gap: 4px 12px; }
+.writing-tools [hidden] { display: none; }
+.writing-tools .text-button { font-size: 14px; }
+.writing-speed { display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.writing-speed select { min-height: 44px; font: inherit; background: var(--white); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; }
+.writing-workspace .practice-status { font-size: 14px; min-height: 74px; color: var(--ink); }
+.writing-note, .writing-license { font-size: 12px; color: var(--muted); }
+.writing-license { display: inline-flex; min-height: 44px; align-items: center; text-decoration: underline; }
+#writing-progress { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.writing-workspace[data-mode="watch"] canvas { cursor: default; touch-action: pan-y; }
+@media (prefers-reduced-motion: reduce) { .writing-workspace button:active { transform: none; } }
+
+#writing-demo { scroll-margin-top: 110px; }

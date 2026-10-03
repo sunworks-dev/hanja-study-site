@@ -13,7 +13,8 @@ SOURCES = {
     'SUIT': 'https://raw.githubusercontent.com/sun-typeface/SUIT/main/fonts/variable/woff2/SUIT-Variable.woff2',
 }
 text = ''.join(path.read_text() for path in sorted(PUBLIC.rglob('*'))
-               if path.is_file() and path.suffix in {'.html', '.css', '.js', '.vtt'})
+               if path.is_file() and (path.suffix in {'.html', '.css', '.js', '.mjs', '.vtt'}
+                   or (path.parent == PUBLIC / 'assets/hanzi' and path.suffix == '.json')))
 with TemporaryDirectory(prefix='hanja-fonts-') as temporary:
     for family, url in SOURCES.items():
         original = Path(temporary) / url.rsplit('/', 1)[-1]

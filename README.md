@@ -76,3 +76,13 @@ python3 -m venv /tmp/hanja-fonts
 - `.gitattributes`: Git 줄바꿈 규칙
 - `.gitignore`: 환경 변수, 의존성, 빌드 결과물, 로컬 설정 제외
 - `.github/pull_request_template.md`: 변경 내용과 검증 기록 양식
+
+## 손글씨 체험 검증
+
+앱에서 가져온 明·木 획순과 같은 채점 기준을 사용합니다. 입력·재생은 `public/writing-demo.mjs`, 순수 채점은 `public/stroke-scorer.mjs`입니다.
+
+```sh
+node --test tests/writing.test.mjs
+```
+
+앱과의 대조 결과·fixture 재생성은 [손글씨 검증 기록](docs/review/writing-demo-2026-10-03.md), 포팅 결정은 [ADR](docs/decisions/adr-app-writing-demo-2026-10-03.md)에 있습니다.

@@ -46,3 +46,7 @@ Apple 공식 한국 App Store 공개 customerreviews RSS에서 평점·게시 �
 ## 실제 앱 화면과 제품 영상 · 2026-10-03
 
 공개 웹 베타의 실제 8급 체험 세션을 Phi Agent Space에서 직접 조작·촬영했다. 퀴즈, 획순/연상/어휘, 이야기, 도감, 홈 화면 5종과 36초 가로·세로 영상을 배포한다. 학습 결과를 합성하지 않았다. 배경 음악은 제작 스크립트의 수식으로 만든 원본이며 외부 음원을 사용하지 않았다. 세부 제작·검증 근거는 [제품 쇼케이스 기록](review/product-showcase-2026-10-03.md)을 참조한다.
+
+## 앱 손글씨 체험 재사용 · 2026-10-03
+
+`flutter_app/assets/hanzi/明.json`·`木.json`의 획 윤곽·중심선을 그대로 사용한다. `hanzi_painter.dart`의 GlyphFit 값을 실제 Flutter 테스트에서 추출했다. `stroke_scorer.dart`의 32점 리샘플링·이산 Fréchet·방향·0.22 허용치를 JS로 옮기고 60개 사례를 실행 결과와 대조했다. ARPHIC Public License 전문과 원본 출처는 `public/assets/hanzi/`에 함께 배포한다. 앱의 사용자 기록·FSRS·구매 상태는 연결하지 않는다.
