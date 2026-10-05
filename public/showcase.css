@@ -18,7 +18,7 @@
 .film-link { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 800; min-height: 44px; text-decoration: none; }
 .film-link:hover, .hero-founder:hover { color: var(--orange); }
 .product-hero-note { font-size: 12px; color: var(--muted); margin-top: 12px; }
-.hero-founder { display: inline-flex; gap: 4px; align-items: center; margin-top: 32px; font-size: 13px; text-decoration: none; border-bottom: 1px solid var(--line); padding-block: 8px; }
+.hero-founder { display: inline-flex; gap: 4px; align-items: center; min-height: 44px; margin-top: 32px; font-size: 13px; text-decoration: none; border-bottom: 1px solid var(--line); padding-block: 8px; }
 .hero-founder svg { width: 17px; height: 17px; }
 .product-hero-stage { position: relative; height: 610px; isolation: isolate; }
 .hero-stage-disc { position: absolute; background: var(--mint); border-radius: 50%; width: 540px; height: 540px; max-width: 100%; top: 40px; left: 0; z-index: -1; }
@@ -66,6 +66,7 @@
 .try-section { padding-top: 20px; padding-bottom: 100px; }
 .try-section .hero-copy > .text-link { display: inline-block; margin-top: 28px; }
 .pricing-section { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; border-top: 1px solid var(--line); }
+.story-section + .pricing-section { border-top: 0; }
 .pricing-message > p { color: var(--muted); margin-top: 26px; line-height: 1.9; }
 .pricing-reasons { list-style: none; margin: 34px 0 0; padding: 0; }
 .pricing-reasons li { display: flex; align-items: baseline; gap: 20px; padding-block: 16px; border-bottom: 1px solid var(--line); }
@@ -77,9 +78,10 @@
 .price-amount span { font-size: 28px; font-weight: 750; margin-left: 8px; }
 .price-model { font-size: 13px; margin-top: 8px; }
 .price-promise { font-size: 18px; font-weight: 750; line-height: 1.7; margin-block: 26px; }
+.price-now { font-size: 15px; line-height: 1.6; margin: -10px 0 16px; padding-top: 14px; border-top: 1px dashed rgb(35 63 53 / 35%); }
 .price-offer .button { width: 100%; padding-inline: 15px; }
 .price-note { font-size: 12px; line-height: 1.8; margin-top: 18px; color: #4b5137; }
-.hero-price { display: flex; width: fit-content; align-items: center; gap: 6px; min-height: 44px; font-size: 13px; color: var(--muted); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.hero-price { display: flex; width: fit-content; align-items: center; gap: 6px; min-height: 44px; font-size: 13px; color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--line); }
 .hero-price strong { color: var(--ink); }
 .hero-founder { margin-top: 12px; }
 .hero-screen { border-width: 3px; border-radius: 17px; box-shadow: 0 8px 12px rgb(35 63 53 / 6%), 0 22px 40px rgb(35 63 53 / 10%); }
@@ -176,8 +178,8 @@
   .hero-actions .button { font-size: 15px; padding: 12px 17px; min-height: 52px; }
   .film-link { font-size: 14px; gap: 4px; }
   .film-link svg { width: 20px; height: 20px; }
-  .product-hero-note { font-size: 11px; }
-  .hero-founder { margin-top: 16px; font-size: 11px; }
+  .product-hero-note { font-size: 12px; }
+  .hero-founder { margin-top: 16px; font-size: 12px; }
   .product-hero-stage { height: 410px; }
   .hero-screen { width: 48%; border-width: 4px; border-radius: 14px; }
   .hero-screen-back { left: 7px; top: 28px; }

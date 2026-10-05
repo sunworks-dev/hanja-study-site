@@ -74,6 +74,8 @@ const filmChapters = [...document.querySelectorAll("[data-film-time]")];
 const portraitFilm = window.matchMedia("(max-width: 560px)");
 let pendingFilmTime = null;
 let filmStarted = false;
+// The cover is the only play control until playback starts; native controls stay in HTML as the no-JS fallback.
+productFilm.controls = false;
 
 function chooseFilm() {
   // Never swap a loaded film during playback or restart a user's position.
@@ -97,10 +99,12 @@ async function playFilm(time) {
     pendingFilmTime = null;
   }
   filmPlayer.classList.add("is-started");
+  productFilm.controls = true;
   try {
     await productFilm.play();
   } catch {
     filmPlayer.classList.remove("is-started");
+    productFilm.controls = false;
     filmStatus.textContent = "영상을 재생하지 못했어요. 재생 버튼을 다시 눌러 주세요.";
   }
 }
@@ -112,7 +116,10 @@ productFilm.addEventListener("loadedmetadata", () => {
 });
 document.querySelector("#film-play").addEventListener("click", () => playFilm());
 filmChapters.forEach((button) => button.addEventListener("click", () => playFilm(Number(button.dataset.filmTime))));
-productFilm.addEventListener("play", () => filmPlayer.classList.add("is-started"));
+productFilm.addEventListener("play", () => {
+  filmPlayer.classList.add("is-started");
+  productFilm.controls = true;
+});
 productFilm.addEventListener("timeupdate", () => {
   const time = productFilm.currentTime;
   filmChapters.forEach((button, index) => {
@@ -122,6 +129,7 @@ productFilm.addEventListener("timeupdate", () => {
 });
 productFilm.addEventListener("error", () => {
   filmPlayer.classList.remove("is-started");
+  productFilm.controls = false;
   filmStatus.textContent = "영상 연결을 확인하지 못했어요. 잠시 후 다시 재생해 주세요.";
 });
 // Playback is user initiated. Pause it when the document or player is out of view.
