@@ -5,19 +5,19 @@ const showcaseContent = {
     image: "study", alt: "학교 교의 획순·연상·연결 어휘 학습 화면",
     heading: ["校 하나를 배웠는데,", "학교가 새롭게 보여요."],
     description: "획순으로 모양을 익히고, 연상으로 뜻을 연결해요. 학교·대학교·중학교처럼 같은 한자를 쓰는 단어를 함께 만나니, 한 글자의 배움이 우리말로 넓어집니다.",
-    benefits: ["획순·훈음·부수·연상 설명을 한곳에서", "단어와 예문으로 넓히는 이해", "정답을 보기 전, 직접 떠올리는 연습"],
+    benefits: ["획순·훈음·부수·연상 설명을 한곳에서", "뜻을 떠올리기 쉬운 그림과 단어·예문", "정답을 보기 전, 직접 떠올리는 연습"],
   },
   story: {
     image: "story", alt: "흥부와 놀부 이야기의 빈칸에 농촌을 맞힌 실제 앱 화면",
     heading: ["한자를 맞혔더니,", "이야기가 이어져요."],
-    description: "흥부와 놀부, 해와 달이 된 오누이. 익숙한 옛이야기 속 빈칸을 채우며 한자를 문맥으로 만나요. 다음 마당을 여는 재미가 한 번 더 읽을 이유가 됩니다.",
-    benefits: ["흥부와 놀부·심청 등 이야기 11편", "문장 속에서 생각하는 한자어의 뜻", "마당별 진도를 저장해 이어서 학습"],
+    description: "흥부와 놀부, 해와 달이 된 오누이. 익숙한 옛이야기 속 빈칸을 채우며 한자를 문맥으로 만나요. 한자어를 글 속에서 많이 읽을수록 기억의 연결 고리가 늘어나요. 국어 문해력까지 함께 자라도록 만들었습니다.",
+    benefits: ["흥부전·심청전·홍길동전 등 고전을 바탕으로 한 이야기 11편", "문장 속에서 생각하는 한자어의 뜻", "마당별 진도를 저장해 이어서 학습"],
   },
   collection: {
     image: "collection", alt: "8급의 읽기·훈음·쓰기·부수 학습 현황과 한자 도감 화면",
     heading: ["얼마나 했는지보다,", "무엇을 익혔는지."],
-    description: "읽기·뜻·쓰기·부수를 따로 살펴요. 한 번 본 글자와 여러 번 떠올린 글자를 구분하고, 한자 도감에서 배운 흔적을 확인합니다. 약한 유형은 골라 연습할 수 있어요.",
-    benefits: ["네 가지 방향으로 확인하는 숙련 상태", "급수별 도감과 학습 기록", "모의시험·오답 복습·유형별 연습"],
+    description: "읽기·뜻·쓰기·부수를 따로 살펴요. 12시간 넘게 지난 뒤 다시 맞혀야 칸이 켜지니, 한 번 본 글자와 정말 익힌 글자가 구분돼요. 만난 한자가 도감에 하나씩 모이는 재미도 있어요.",
+    benefits: ["12시간 뒤 다시 맞혀야 켜지는 네 개의 칸", "30일 안에 다시 확인해 오래 남기는 기억", "급수별 도감·모의시험·유형별 연습"],
   },
   home: {
     image: "home", alt: "새 한자와 복습 분량, 이어서 풀기를 안내하는 앱 홈 화면",
@@ -81,8 +81,8 @@ function chooseFilm() {
   // Never swap a loaded film during playback or restart a user's position.
   if (filmStarted) return;
   const orientation = portraitFilm.matches ? "portrait" : "landscape";
-  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4`;
-  productFilm.poster = `assets/video/poster-motion-${orientation}.webp`;
+  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4?v=20261006`;
+  productFilm.poster = `assets/video/poster-motion-${orientation}.webp?v=20261006`;
 }
 chooseFilm();
 portraitFilm.addEventListener("change", chooseFilm);
@@ -140,6 +140,37 @@ if ("IntersectionObserver" in window) {
   new IntersectionObserver(([entry]) => {
     if (!entry.isIntersecting) productFilm.pause();
   }, { threshold: 0 }).observe(productFilm);
+}
+
+// 익힘 도장판: 시간 단계 버튼이 칸 상태와 안내 문장을 바꾼다.
+const stampCard = document.querySelector(".stamp-card");
+const masteryButtons = [...document.querySelectorAll("[data-mastery]")];
+const masteryStatus = {
+  today: "오늘 맞혔어요. 칸은 12시간 뒤에 켤 수 있어요.",
+  lit: "네 칸이 모두 켜졌어요.",
+  fade: "다시 확인할 때예요. 30일이 지나면 칸이 꺼져요.",
+};
+function showMastery(state) {
+  stampCard.dataset.state = state;
+  masteryButtons.forEach((button) => button.setAttribute("aria-pressed", String(button.dataset.mastery === state)));
+  document.querySelector("#mastery-status").textContent = masteryStatus[state];
+}
+let masteryTouched = false;
+masteryButtons.forEach((button) => button.addEventListener("click", () => {
+  masteryTouched = true;
+  // 직접 누른 뒤부터만 화면 낭독기에 상태 변화를 알린다.
+  document.querySelector("#mastery-status").setAttribute("role", "status");
+  showMastery(button.dataset.mastery);
+}));
+// 처음 화면에 들어올 때 한 번만 도장이 찍히는 장면을 보여 준다.
+if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  showMastery("today");
+  const stampObserver = new IntersectionObserver(([entry]) => {
+    if (!entry.isIntersecting) return;
+    stampObserver.disconnect();
+    setTimeout(() => { if (!masteryTouched) showMastery("lit"); }, 700);
+  }, { threshold: 0.6 });
+  stampObserver.observe(stampCard);
 }
 
 // Preserve links into collapsed learning details and individual FAQ answers.

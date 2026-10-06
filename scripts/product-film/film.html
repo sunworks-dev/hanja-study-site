@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="ko">
+<!--
+  어흥!한자 38초 제품 필름의 원본 장면.
+  모든 움직임은 seek(초)가 계산한다. CSS 시간 애니메이션을 쓰지 않으므로 프레임 단위로 똑같이 다시 그릴 수 있다.
+  저장소 루트를 정적 서버로 열고 /scripts/product-film/film.html?o=landscape|portrait 로 본다.
+  ?t=12.5 를 붙이면 그 시각에 멈춘 장면을, ?play=1 을 붙이면 실시간 미리보기를 보여 준다.
+-->
+<head>
+<meta charset="utf-8">
+<title>어흥!한자 제품 필름</title>
+<style>
+@font-face { font-family: Jua; src: url("/.tmp/product-film-captures/Jua-Regular.ttf"); }
+@font-face { font-family: Body; font-weight: 400; src: url("/.tmp/product-film-captures/fonts/Pretendard-Medium.otf"); }
+@font-face { font-family: Body; font-weight: 700; src: url("/.tmp/product-film-captures/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: Hanja; src: url("/.tmp/product-film-captures/fonts/NotoSerifKR-SemiBold.otf"); }
+:root { --paper: #fff9ed; --ink: #233f35; --muted: #57655a; --orange: #be411f; --mint: #dfead5; --line: #d5d6c7; --white: #fffef9; --yellow: #f7d681; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: #111; overflow: hidden; }
+#stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--paper); color: var(--ink); font-family: Body, sans-serif; font-weight: 400; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+.portrait #stage { width: 1080px; height: 1920px; }
+#cam { position: absolute; inset: 0; }
+.sc { position: absolute; inset: 0; overflow: hidden; visibility: hidden; }
+.fill { position: absolute; inset: 0; }
+.j { font-family: Jua, sans-serif; line-height: 1.16; letter-spacing: -0.02em; }
+.h { font-family: Hanja, serif; line-height: 1; }
+.a { will-change: transform, opacity; }
+.mask { display: block; overflow: hidden; padding-block: 0.08em; }
+.mask > span { display: inline-block; }
+.note { position: absolute; right: 60px; bottom: 34px; font-size: 24px; color: var(--muted); }
+.portrait .note { right: auto; left: 56px; bottom: 40px; font-size: 26px; }
+.on-dark { color: var(--paper); }
+
+/* 1 훅 */
+#s1 .big { position: absolute; left: 0; right: 0; top: 270px; text-align: center; font-size: 400px; }
+#s1 .pre { position: absolute; left: 0; right: 0; top: 170px; text-align: center; font-size: 72px; color: var(--muted); }
+#s1 .sub { position: absolute; left: 0; right: 0; top: 800px; text-align: center; font-size: 54px; font-weight: 700; }
+#s1 svg.ring { position: absolute; left: 50%; top: 505px; width: 1280px; height: 620px; margin: -310px 0 0 -640px; fill: none; stroke: var(--orange); stroke-width: 14; stroke-linecap: round; }
+#s1 .flip { background: var(--ink); }
+#s1 .ghost { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-size: 400px; color: #35584a; }
+#s1 .q { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font-size: 170px; color: var(--paper); }
+#s1 .q em { font-style: normal; color: var(--yellow); }
+.portrait #s1 .big, .portrait #s1 .ghost { font-size: 300px; top: 620px; }
+.portrait #s1 .ghost { top: 420px; }
+.portrait #s1 .pre { top: 500px; font-size: 76px; }
+.portrait #s1 .sub { top: 1060px; font-size: 56px; }
+.portrait #s1 svg.ring { top: 800px; width: 1000px; height: 520px; margin: -260px 0 0 -500px; }
+.portrait #s1 .q { top: 760px; font-size: 150px; line-height: 1.25; }
+
+/* 2 브랜드 */
+#s2 { background: var(--mint); }
+#s2 .lock { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 64px; padding-bottom: 90px; }
+#s2 .icon { width: 330px; height: 330px; border-radius: 74px; box-shadow: 0 2px 4px rgba(35,63,53,.12), 0 44px 70px -30px rgba(35,63,53,.5); }
+#s2 .name { font-size: 230px; white-space: nowrap; }
+#s2 .name i { font-style: normal; display: inline-block; }
+#s2 .name .dot { color: var(--orange); }
+#s2 .tag { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 62px; font-weight: 700; }
+#s2 .tag b { color: var(--orange); }
+.portrait #s2 .lock { flex-direction: column; gap: 56px; padding-bottom: 260px; }
+.portrait #s2 .icon { width: 380px; height: 380px; border-radius: 86px; }
+.portrait #s2 .name { font-size: 210px; }
+.portrait #s2 .tag { top: 1300px; font-size: 62px; line-height: 1.5; padding-inline: 60px; }
+
+/* 3 네 가지 */
+#s3 .title { position: absolute; left: 130px; top: 110px; font-size: 128px; }
+#s3 .title b { font-weight: 400; color: var(--orange); }
+#s3 .ways { position: absolute; left: 130px; top: 300px; width: 900px; display: grid; gap: 0; }
+.way { display: grid; grid-template-columns: 230px 1fr; align-items: baseline; padding: 20px 0 22px; border-top: 3px solid var(--line); }
+.way strong { font-family: Jua, sans-serif; font-weight: 400; font-size: 92px; line-height: 1.1; }
+.way span { font-size: 54px; color: var(--muted); }
+.way.on strong { color: var(--orange); }
+.way.on span { color: var(--ink); font-weight: 700; }
+.phone { position: absolute; width: 400px; height: 800px; border-radius: 52px; background: #10281f; padding: 13px; box-shadow: 0 3px 6px rgba(35,63,53,.2), 0 60px 90px -36px rgba(35,63,53,.55); }
+.phone canvas, .phone img { display: block; width: 100%; height: 100%; border-radius: 40px; background: var(--white); }
+.persp { position: absolute; inset: 0; perspective: 2200px; }
+#s3 .phone { left: 1260px; top: 150px; }
+#s3 .disc { position: absolute; left: 1090px; top: 180px; width: 740px; height: 740px; border-radius: 50%; background: var(--mint); }
+#s3 .cap { position: absolute; left: 130px; top: 948px; font-size: 54px; font-weight: 700; }
+.portrait #s3 .title { left: 70px; top: 110px; font-size: 124px; }
+.portrait #s3 .ways { left: 70px; top: 300px; width: 940px; grid-template-columns: 1fr 1fr; gap: 0 40px; }
+.portrait .way { grid-template-columns: 1fr; padding: 18px 0 20px; }
+.portrait .way strong { font-size: 84px; }
+.portrait .way span { font-size: 42px; }
+.portrait #s3 .phone { left: 315px; top: 800px; width: 450px; height: 900px; }
+.portrait #s3 .disc { left: 110px; top: 860px; width: 860px; height: 860px; }
+.portrait #s3 .cap { left: 0; right: 0; top: 1740px; text-align: center; font-size: 48px; }
+
+/* 4·5 도장판 */
+#s4 { background: var(--paper); }
+#s4 .water { position: absolute; right: -120px; top: -230px; font-size: 1500px; color: #f6efdd; }
+#s4 .heads { position: absolute; left: 130px; top: 250px; width: 800px; }
+#s4 .heads .j { position: absolute; left: 0; top: 0; font-size: 122px; white-space: nowrap; }
+#s4 .heads .l2 { top: 156px; }
+#s4 .heads .o { color: var(--orange); }
+#s4 .sub { position: absolute; left: 134px; top: 620px; width: 820px; font-size: 56px; line-height: 1.5; color: var(--muted); }
+#s4 .sub b { color: var(--ink); }
+.card { position: absolute; left: 1040px; top: 170px; width: 800px; padding: 60px 56px 46px; border-radius: 26px; background: var(--white); border: 2px solid var(--line); box-shadow: 0 2px 4px rgba(35,63,53,.08), 0 50px 80px -36px rgba(35,63,53,.42); }
+.card .tape { position: absolute; left: 50%; top: -22px; width: 190px; height: 44px; margin-left: -95px; background: rgba(247,214,129,.86); transform: rotate(-2.5deg); }
+.card .head { display: flex; align-items: center; gap: 36px; padding-bottom: 40px; border-bottom: 3px dashed #b9bcab; }
+.card .head .h { font-size: 190px; }
+.card .head strong { display: block; font-family: Jua, sans-serif; font-weight: 400; font-size: 60px; }
+.card .head span { display: block; margin-top: 8px; font-size: 32px; color: var(--muted); }
+.cells { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 46px; text-align: center; }
+.cells strong { display: block; margin-top: 20px; font-size: 34px; font-weight: 700; }
+.slot { position: relative; display: grid; place-items: center; aspect-ratio: 1; border: 4px dashed #b9bcab; border-radius: 50%; }
+.slot > * { grid-area: 1 / 1; }
+.slot .wait { font-size: 24px; font-weight: 700; color: var(--muted); }
+.slot .ink { width: calc(100% + 8px); height: calc(100% + 8px); display: grid; place-items: center; border-radius: 50%; border: 6px solid var(--orange); box-shadow: inset 0 0 0 6px var(--white), inset 0 0 0 9px var(--orange); background: var(--white); color: var(--orange); font-family: Jua, sans-serif; font-size: 44px; }
+.slot .re { padding: 7px 12px; border-radius: 10px; background: var(--yellow); font-size: 23px; font-weight: 700; white-space: nowrap; }
+.splat { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--orange); }
+#clock { position: absolute; left: 134px; top: 620px; display: flex; align-items: center; gap: 36px; }
+#clock svg { width: 230px; height: 230px; }
+#clock .count { font-family: Jua, sans-serif; font-size: 150px; color: var(--orange); font-variant-numeric: tabular-nums; }
+#days { position: absolute; left: 134px; top: 630px; width: 820px; }
+#days .dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 16px; }
+#days .dots i { aspect-ratio: 1; border-radius: 50%; border: 4px solid var(--line); }
+#days .dots i.f { background: var(--ink); border-color: var(--ink); }
+#days .dots i.w { background: var(--yellow); border-color: var(--yellow); }
+#days .lab { margin-top: 22px; font-family: Jua, sans-serif; font-size: 62px; font-variant-numeric: tabular-nums; }
+.portrait #s4 .water { right: -330px; top: 560px; font-size: 1500px; }
+.portrait #s4 .heads { left: 70px; top: 130px; width: 940px; }
+.portrait #s4 .heads .j { font-size: 128px; }
+.portrait #s4 .sub { left: 74px; top: 500px; width: 930px; font-size: 58px; }
+.portrait .card { left: 100px; top: 960px; width: 880px; }
+.portrait #clock { left: 74px; top: 500px; }
+.portrait #days { left: 74px; top: 500px; width: 930px; }
+.portrait #days .dots { grid-template-columns: repeat(15, 1fr); gap: 14px; }
+
+/* 6 연결 고리 */
+#s6 { background: var(--ink); color: var(--paper); }
+#s6 .heads { position: absolute; left: 0; right: 0; top: 48px; text-align: center; }
+#s6 .heads .j { font-size: 104px; }
+#s6 .heads .y { color: var(--yellow); }
+#s6 svg.links { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; stroke: #8fae9c; stroke-width: 5; stroke-linecap: round; stroke-dasharray: 2 16; }
+#hub { position: absolute; left: 50%; top: 660px; width: 400px; height: 400px; margin: -200px 0 0 -200px; display: grid; place-items: center; border-radius: 50%; background: var(--paper); color: var(--ink); font-size: 280px; }
+.node { position: absolute; display: flex; align-items: center; gap: 22px; padding: 22px 34px; border-radius: 22px; background: var(--white); color: var(--ink); box-shadow: 0 30px 50px -24px rgba(0,0,0,.5); white-space: nowrap; }
+.node small { display: block; font-size: 34px; font-weight: 700; color: var(--orange); }
+.node b { display: block; font-family: Jua, sans-serif; font-weight: 400; font-size: 68px; line-height: 1.2; }
+.node b.h { font-family: Hanja, serif; font-size: 108px; }
+.node img { width: 160px; height: 160px; object-fit: contain; }
+#n1 { left: 150px; top: 340px; }
+#n2 { left: 1180px; top: 330px; }
+#n3 { left: 70px; top: 810px; }
+#n4 { left: 1190px; top: 800px; }
+.portrait #s6 .heads { top: 150px; padding-inline: 40px; }
+.portrait #s6 .heads .j { font-size: 92px; line-height: 1.3; }
+.portrait #hub { top: 1130px; }
+.portrait #n1 { left: 60px; top: 480px; }
+.portrait #n2 { left: 330px; top: 1400px; }
+.portrait #n3 { left: 380px; top: 730px; }
+.portrait #n4 { left: 60px; top: 1640px; }
+
+/* 7 이야기 */
+#s7 { background: var(--yellow); }
+#s7 .heads { position: absolute; left: 130px; top: 170px; }
+#s7 .heads .j { font-size: 132px; }
+#s7 .books { position: absolute; left: 130px; top: 520px; width: 1000px; display: flex; flex-wrap: wrap; gap: 18px; }
+.book { padding: 20px 34px; border-radius: 16px; background: var(--white); font-family: Jua, sans-serif; font-size: 64px; box-shadow: 0 14px 24px -14px rgba(35,63,53,.5); }
+.book.n { background: var(--ink); color: var(--paper); }
+#s7 .lit { position: absolute; left: 130px; top: 830px; font-size: 68px; font-weight: 700; }
+#s7 .lit u { text-decoration: none; background: linear-gradient(var(--orange), var(--orange)) no-repeat 0 96% / var(--u, 0%) 8px; padding-bottom: 6px; }
+#s7 .phone { left: 1270px; top: 140px; }
+.portrait #s7 .heads { left: 70px; top: 120px; }
+.portrait #s7 .heads .j { font-size: 128px; }
+.portrait #s7 .books { left: 70px; top: 460px; width: 940px; }
+.portrait #s7 .lit { left: 70px; top: 740px; font-size: 60px; }
+.portrait #s7 .phone { left: 315px; top: 850px; width: 450px; height: 900px; }
+
+/* 8 도감과 친구들 */
+#s8 .heads { position: absolute; left: 0; right: 0; top: 80px; text-align: center; }
+#s8 .heads .j { font-size: 112px; }
+#s8 .heads .o { color: var(--orange); }
+#s8 .phone { left: 760px; top: 250px; }
+.friend { position: absolute; width: 300px; text-align: center; }
+.friend img { width: 100%; }
+.friend b { display: block; margin-top: -6px; font-family: Jua, sans-serif; font-weight: 400; font-size: 46px; }
+#f1 { left: 110px; top: 300px; } #f2 { left: 400px; top: 600px; } #f3 { left: 1230px; top: 590px; } #f4 { left: 1520px; top: 290px; }
+.portrait #s8 .heads { top: 120px; }
+.portrait #s8 .heads .j { font-size: 112px; line-height: 1.25; }
+.portrait #s8 .phone { left: 315px; top: 620px; width: 450px; height: 900px; }
+.portrait .friend { width: 270px; }
+.portrait #f1 { left: 30px; top: 520px; } .portrait #f2 { left: 30px; top: 1280px; } .portrait #f3 { left: 780px; top: 1290px; } .portrait #f4 { left: 780px; top: 510px; }
+
+/* 9 엔드 카드 */
+#s9 { background: var(--orange); color: var(--paper); }
+#s9 .lock { position: absolute; left: 0; right: 0; top: 150px; display: flex; flex-direction: column; align-items: center; }
+#s9 .icon { width: 280px; height: 280px; border-radius: 64px; box-shadow: 0 50px 70px -30px rgba(60,10,0,.7); }
+#s9 .name { margin-top: 36px; font-size: 190px; }
+#s9 .cta { margin-top: 14px; font-size: 64px; font-weight: 700; }
+#s9 .url { margin-top: 44px; padding: 20px 48px; border-radius: 999px; background: var(--paper); color: var(--ink); font-size: 54px; font-weight: 700; letter-spacing: 0.01em; }
+#s9 .fine { position: absolute; left: 0; right: 0; bottom: 60px; text-align: center; font-size: 32px; color: #ffe1d2; }
+#s9 .hero { position: absolute; left: 1380px; top: 520px; width: 470px; }
+#s9 .hanja { position: absolute; font-size: 420px; color: #cb5330; }
+#s9 .hanja.x { left: 60px; top: 560px; transform: rotate(-12deg); }
+#s9 .hanja.y { right: 90px; top: -40px; transform: rotate(10deg); }
+.portrait #s9 .lock { top: 330px; }
+.portrait #s9 .icon { width: 340px; height: 340px; border-radius: 78px; }
+.portrait #s9 .name { font-size: 200px; }
+.portrait #s9 .cta { font-size: 62px; }
+.portrait #s9 .hero { left: 330px; top: 1240px; width: 420px; }
+.portrait #s9 .fine { bottom: 80px; font-size: 30px; padding-inline: 50px; }
+.portrait #s9 .hanja.x { left: -40px; top: 1300px; }
+.portrait #s9 .hanja.y { right: -30px; top: 40px; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="cam">
+
+<section class="sc" id="s1" data-start="0" data-end="4.5">
+  <p class="pre j a" data-in="rise" data-at="0.05">한자 공부,</p>
+  <svg class="ring" viewBox="0 0 1280 620"><path id="ringpath" d="M150 330C120 120 420 40 700 50c300 10 480 110 450 290-30 170-300 240-560 230C330 560 170 500 150 330Z"/></svg>
+  <p class="big j a" id="slam1">외웠다!</p>
+  <p class="sub a" data-in="rise" data-at="0.95">오늘 한 번 맞혔으니까.</p>
+  <div class="fill flip" id="flip">
+    <p class="ghost j a" id="ghost">외웠다!</p>
+    <p class="q j" id="typed" data-text="…내일도 기억날까?"></p>
+  </div>
+</section>
+
+<section class="sc" id="s2" data-start="4" data-end="6.5" data-wipe="circle" data-ox="50" data-oy="46">
+  <div class="lock">
+    <img class="icon a" id="icon2" src="/public/assets/icon-512.png" alt="">
+    <p class="name j" id="name2"><i>어</i><i>흥</i><i>!</i><i>한</i><i>자</i><i class="dot">.</i></p>
+  </div>
+  <p class="tag"><span class="mask"><span class="a" data-in="reveal" data-at="5.0">한 번 맞혔다고, <b>익혔다고 하지 않아요.</b></span></span></p>
+</section>
+
+<section class="sc" id="s3" data-start="6" data-end="12.5" data-wipe="up">
+  <div class="disc a" data-in="pop" data-at="6.1"></div>
+  <p class="title j"><span class="mask"><span class="a" data-in="reveal" data-at="6.05"><b>네 가지</b>로 익혀요</span></span></p>
+  <div class="ways">
+    <div class="way a" data-in="rise" data-at="7.0" data-on="7.0,8.0"><strong>읽기</strong><span>소리를 맞히고</span></div>
+    <div class="way a" data-in="rise" data-at="8.0" data-on="8.0,9.0"><strong>뜻</strong><span>뜻을 떠올리고</span></div>
+    <div class="way a" data-in="rise" data-at="9.0" data-on="9.0,10.0"><strong>쓰기</strong><span>획순에 따라 손으로 쓰고</span></div>
+    <div class="way a" data-in="rise" data-at="10.0" data-on="10.0,12.6"><strong>부수</strong><span>부수까지 찾아요</span></div>
+  </div>
+  <div class="persp"><div class="phone a" id="ph3"><canvas width="860" height="1720"></canvas></div></div>
+  <p class="cap a" data-in="rise" data-at="11.0">여기까지가 첫 단계.</p>
+  <p class="note">실제 웹 베타 화면 · 일부 재생 속도 편집</p>
+</section>
+
+<section class="sc" id="s4" data-start="12" data-end="24.5" data-wipe="circle" data-ox="72" data-oy="50">
+  <div class="water h">明</div>
+  <div class="heads">
+    <p class="j a" data-in="rise" data-at="12.3" data-out="13.9">오늘 맞혀도,</p>
+    <p class="j l2 a" data-in="rise" data-at="12.9" data-out="13.9">아직은 <span class="o">빈칸.</span></p>
+    <p class="j a" data-in="rise" data-at="14.0" data-out="17.95">12시간 뒤,</p>
+    <p class="j l2 a" data-in="rise" data-at="16.0" data-out="17.95">다시 떠올려야</p>
+    <p class="j a o" id="slam4" style="font-size:300px;top:-40px">익힘.</p>
+    <p class="j a" data-in="rise" data-at="20.2" data-out="22.9">30일이 다가오면</p>
+    <p class="j l2 a" data-in="rise" data-at="21.5" data-out="22.9"><span class="o">먼저</span> 알려 줘요.</p>
+    <p class="j a" data-in="rise" data-at="23.0">한 번 더 맞히면,</p>
+    <p class="j l2 a o" data-in="rise" data-at="23.3">오래 남는 기억.</p>
+  </div>
+  <p class="sub a" data-in="rise" data-at="13.2" data-out="13.9">읽기·뜻·쓰기·부수.<br><b>네 칸은 아직 켜지지 않아요.</b></p>
+  <div id="clock" class="a">
+    <svg viewBox="0 0 230 230"><circle cx="115" cy="115" r="100" fill="none" stroke="#d5d6c7" stroke-width="12"/><circle id="arc" cx="115" cy="115" r="100" fill="none" stroke="#be411f" stroke-width="12" stroke-linecap="round" transform="rotate(-90 115 115)" stroke-dasharray="628.3" stroke-dashoffset="628.3"/><line id="hand" x1="115" y1="115" x2="115" y2="40" stroke="#233f35" stroke-width="10" stroke-linecap="round"/><circle cx="115" cy="115" r="11" fill="#233f35"/></svg>
+    <span class="count" id="count">0시간</span>
+  </div>
+  <p class="sub a" data-in="rise" data-at="18.3" data-out="19.9" style="margin-top:0">방금 본 답을 되풀이해서는<br><b>켜지지 않아요.</b></p>
+  <div id="days" class="a"><div class="dots"></div><p class="lab" id="daylab">1일째</p></div>
+  <div class="card a" id="card">
+    <i class="tape"></i>
+    <div class="head"><span class="h">明</span><div><strong>밝을 명</strong><span id="cardstat">오늘 맞혔어요</span></div></div>
+    <div class="cells">
+      <div><div class="slot"><i class="wait">12시간 뒤</i><i class="ink a">익힘</i><i class="re a">다시 확인</i></div><strong>읽기</strong></div>
+      <div><div class="slot"><i class="wait">12시간 뒤</i><i class="ink a">익힘</i><i class="re a">다시 확인</i></div><strong>뜻</strong></div>
+      <div><div class="slot"><i class="wait">12시간 뒤</i><i class="ink a">익힘</i><i class="re a">다시 확인</i></div><strong>쓰기</strong></div>
+      <div><div class="slot"><i class="wait">12시간 뒤</i><i class="ink a">익힘</i><i class="re a">다시 확인</i></div><strong>부수</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="sc" id="s6" data-start="24" data-end="28.5" data-wipe="circle" data-ox="50" data-oy="57">
+  <div class="heads">
+    <p class="j"><span class="mask"><span class="a" data-in="reveal" data-at="24.15">연결 고리가 많을수록,</span></span></p>
+    <p class="j y"><span class="mask"><span class="a" data-in="reveal" data-at="26.1">다시 떠올릴 단서도 늘어나요.</span></span></p>
+  </div>
+  <svg class="links"><path id="k1"/><path id="k2"/><path id="k3"/><path id="k4"/></svg>
+  <div id="hub" class="h a" data-in="pop" data-at="24.0">明</div>
+  <div class="node a" id="n1" data-in="pop" data-at="24.0"><div><small>모양</small><b class="h">日 + 月</b></div></div>
+  <div class="node a" id="n2" data-in="pop" data-at="25.0"><img src="/public/assets/gureumi.webp" alt=""><div><small>그림</small><b>뜻을 담은 장면</b></div></div>
+  <div class="node a" id="n3" data-in="pop" data-at="26.0"><div><small>낱말</small><b>설명 · 명확 · 문명</b></div></div>
+  <div class="node a" id="n4" data-in="pop" data-at="27.0"><img src="/public/assets/horang-reading.webp" alt=""><div><small>이야기</small><b>글 속의 한자어</b></div></div>
+</section>
+
+<section class="sc" id="s7" data-start="28" data-end="32.5" data-wipe="right">
+  <div class="heads">
+    <p class="j"><span class="mask"><span class="a" data-in="reveal" data-at="28.1">옛이야기 속에서</span></span></p>
+    <p class="j"><span class="mask"><span class="a" data-in="reveal" data-at="28.3">한자어를 읽어요.</span></span></p>
+  </div>
+  <div class="books">
+    <span class="book a" data-in="pop" data-at="28.9">흥부전</span><span class="book a" data-in="pop" data-at="29.1">심청전</span><span class="book a" data-in="pop" data-at="29.3">홍길동전</span><span class="book a" data-in="pop" data-at="29.5">전우치전</span><span class="book n a" data-in="pop" data-at="29.9">이야기 11편</span>
+  </div>
+  <p class="lit a" data-in="rise" data-at="30.5">국어 <u id="lit">문해력</u>까지 함께 자라도록.</p>
+  <div class="persp"><div class="phone a" id="ph7"><canvas width="860" height="1720"></canvas></div></div>
+  <p class="note">실제 웹 베타 화면 · 일부 재생 속도 편집</p>
+</section>
+
+<section class="sc" id="s8" data-start="32" data-end="34.5" data-wipe="circle" data-ox="50" data-oy="60" style="background:var(--paper)">
+  <div class="heads"><p class="j"><span class="mask"><span class="a" data-in="reveal" data-at="32.05"><span class="o">모으는 재미,</span> 함께하는 친구들.</span></span></p></div>
+  <div class="persp"><div class="phone a" id="ph8"><canvas width="860" height="1720"></canvas></div></div>
+  <div class="friend a" id="f1" data-in="pop" data-at="32.0"><img src="/public/assets/ttotto.webp" alt=""><b>또또</b></div>
+  <div class="friend a" id="f2" data-in="pop" data-at="32.5"><img src="/public/assets/gureumi.webp" alt=""><b>구름이</b></div>
+  <div class="friend a" id="f3" data-in="pop" data-at="33.0"><img src="/public/assets/waewae.webp" alt=""><b>왜왜</b></div>
+  <div class="friend a" id="f4" data-in="pop" data-at="33.5"><img src="/public/assets/atcha.webp" alt=""><b>앗차</b></div>
+  <p class="note">실제 웹 베타 화면</p>
+</section>
+
+<section class="sc" id="s9" data-start="34" data-end="38.1" data-wipe="circle" data-ox="50" data-oy="34">
+  <div class="hanja x h">漢</div><div class="hanja y h">字</div>
+  <img class="hero a" id="hero9" src="/public/assets/horang-celebrate.webp" alt="">
+  <div class="lock">
+    <img class="icon a" id="icon9" src="/public/assets/icon-512.png" alt="">
+    <p class="name j a" data-in="rise" data-at="34.3">어흥!한자</p>
+    <p class="cta a" data-in="rise" data-at="34.7">웹에서 먼저 만나 보세요</p>
+    <p class="url a" data-in="pop" data-at="35.2">hanja-app.sunw.kr</p>
+  </div>
+  <p class="fine a" data-in="rise" data-at="35.8">설치·가입 없이 웹 체험 · iOS·Android 출시 준비 중</p>
+</section>
+
+</div></div>
+<script>
+"use strict";
+const params = new URLSearchParams(location.search);
+const PORTRAIT = params.get("o") === "portrait";
+document.documentElement.classList.toggle("portrait", PORTRAIT);
+const DURATION = 38, FPS = 30;
+const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+const prog = (t, at, d) => clamp((t - at) / d);
+const out = (t) => 1 - Math.pow(1 - t, 4);
+const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const back = (t) => 1 + 2.4 * Math.pow(t - 1, 3) + 1.4 * Math.pow(t - 1, 2);
+function tf(el, { x = 0, y = 0, s = 1, r = 0, o = 1, b = 0, ry = 0, rx = 0 }) {
+  el.style.transform = `translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotateY(${ry}deg) rotateX(${rx}deg) rotate(${r.toFixed(3)}deg) scale(${s.toFixed(4)})`;
+  el.style.opacity = o.toFixed(3);
+  el.style.filter = b > 0.1 ? `blur(${b.toFixed(1)}px)` : "";
+}
+// 선언형 등장: data-in 종류와 data-at 시각만 적으면 seek가 계산한다.
+const ENTER = {
+  rise: (el, t, at) => { const q = out(prog(t, at, 0.55)); return { y: (1 - q) * 70, o: prog(t, at, 0.22) }; },
+  reveal: (el, t, at) => { const q = out(prog(t, at, 0.6)); return { y: (1 - q) * el.offsetHeight * 1.15, o: t >= at ? 1 : 0 }; },
+  pop: (el, t, at) => { const q = prog(t, at, 0.5); return { s: q <= 0 ? 0.3 : back(q), o: prog(t, at, 0.14) }; },
+};
+const declared = $$("[data-in]").map((el) => ({ el, kind: el.dataset.in, at: +el.dataset.at, out: el.dataset.out ? +el.dataset.out : null }));
+const toggles = $$("[data-on]").map((el) => ({ el, on: el.dataset.on.split(",").map(Number) }));
+const scenes = $$(".sc").map((el) => ({ el, start: +el.dataset.start, end: +el.dataset.end, wipe: el.dataset.wipe, ox: el.dataset.ox, oy: el.dataset.oy }));
+scenes.forEach((scene, i) => (scene.el.style.zIndex = i + 1));
+
+// 앱 화면 녹화: 프레임을 미리 읽어 두고 캔버스에 그린다.
+const CLIPS = { recall: 82, strokes: 86, story: 73, collection: 82 };
+const clips = {};
+async function loadClip(name, count) {
+  const times = (await (await fetch(`/.tmp/product-film-captures/${name}/frames.json`)).json()).map((f) => f.t);
+  const frames = await Promise.all(Array.from({ length: count }, (_, i) => new Promise((resolve, reject) => {
+    const im = new Image();
+    im.onload = () => resolve(im);
+    im.onerror = reject;
+    im.src = `/.tmp/product-film-captures/${name}/${String(i).padStart(4, "0")}.jpg`;
+  })));
+  clips[name] = { times, frames };
+}
+function drawClip(canvas, name, t) {
+  const { times, frames } = clips[name];
+  let i = 0;
+  while (i + 1 < times.length && times[i + 1] <= t) i++;
+  canvas.getContext("2d").drawImage(frames[i], 0, 0, 860, 1720);
+}
+
+// 도장판과 달력 준비
+const inks = $$("#card .ink"), waits = $$("#card .wait"), res = $$("#card .re");
+const STAMP_AT = [16.0, 16.5, 17.0, 17.5], STAMP_ROT = [-9, 6, -4, 10];
+const dots = Array.from({ length: 30 }, () => $("#days .dots").appendChild(document.createElement("i")));
+const HITS = [0.0, 16.0, 16.5, 17.0, 17.5, 18.0, 23.0, 34.0];
+const ringLen = $("#ringpath").getTotalLength();
+$("#ringpath").style.strokeDasharray = ringLen;
+const nameLetters = $$("#name2 i");
+let linkEnds = null;
+function measureLinks() {
+  // 변형을 적용하기 전에 한 번만 잰다.
+  const stage = $("#stage").getBoundingClientRect();
+  const mid = (el) => { const r = el.getBoundingClientRect(); return [r.left - stage.left + r.width / 2, r.top - stage.top + r.height / 2]; };
+  const hub = mid($("#hub"));
+  linkEnds = ["#n1", "#n2", "#n3", "#n4"].map((id) => ({ from: hub, to: mid($(id)) }));
+}
+
+function seek(T) {
+  T = clamp(T, 0, DURATION);
+  // 장면 전환: 다음 장면이 앞 장면을 덮으며 열린다.
+  for (const sc of scenes) {
+    const visible = T >= sc.start && T < sc.end;
+    sc.el.style.visibility = visible ? "visible" : "hidden";
+    if (!visible || !sc.wipe) continue;
+    const q = out(prog(T, sc.start, 0.55));
+    sc.el.style.clipPath = q >= 1 ? "none"
+      : sc.wipe === "circle" ? `circle(${(q * 135).toFixed(2)}% at ${sc.ox}% ${sc.oy}%)`
+      : sc.wipe === "up" ? `inset(${((1 - q) * 100).toFixed(2)}% 0 0 0)`
+      : `inset(0 0 0 ${((1 - q) * 100).toFixed(2)}%)`;
+  }
+  for (const d of declared) {
+    const v = ENTER[d.kind](d.el, T, d.at);
+    if (d.out !== null && T >= d.out) { const q = out(prog(T, d.out, 0.3)); v.o = 1 - q; v.y = (v.y || 0) - q * 50; }
+    tf(d.el, v);
+  }
+  for (const g of toggles) g.el.classList.toggle("on", T >= g.on[0] && T < g.on[1]);
+
+  // 타격 순간의 화면 흔들림
+  let shakeX = 0, shakeY = 0;
+  for (const hit of HITS) {
+    const dt = T - hit;
+    if (dt >= 0 && dt < 0.4) { const amp = 13 * Math.exp(-dt * 11); shakeX += Math.sin(dt * 95) * amp; shakeY += Math.cos(dt * 80) * amp * 0.7; }
+  }
+  $("#cam").style.transform = `translate(${shakeX.toFixed(2)}px,${shakeY.toFixed(2)}px)`;
+
+  // 1 훅
+  { const q = prog(T, 0, 0.17); tf($("#slam1"), { s: lerp(2.6, 1, out(q)), o: clamp(q * 4), b: (1 - q) * 16, r: lerp(-5, -2, q) }); }
+  $("#ringpath").style.strokeDashoffset = ringLen * (1 - inOut(prog(T, 0.42, 0.5)));
+  { const q = out(prog(T, 2.0, 0.5)); $("#flip").style.clipPath = `circle(${(q * 135).toFixed(2)}% at 50% 50%)`;
+    const g = inOut(prog(T, 2.0, 1.6)); tf($("#ghost"), { y: g * 90, r: lerp(-2, 7, g), o: 1 - g * 0.55 });
+    const text = $("#typed").dataset.text, n = Math.floor(prog(T, 2.3, 1.0) * text.length);
+    $("#typed").innerHTML = text.slice(0, n).replace("?", "<em>?</em>");
+    $("#typed").style.transform = `translateY(${(Math.sin(T * 3) * 5).toFixed(2)}px)`; }
+
+  // 2 브랜드
+  { const q = prog(T, 4.05, 0.6); tf($("#icon2"), { y: q <= 0 ? -700 : (1 - back(q)) * -700, r: lerp(-22, -4, out(q)) + Math.sin(T * 2.4) * 1.5, o: q > 0 ? 1 : 0 });
+    nameLetters.forEach((el, i) => { const k = prog(T, 4.3 + i * 0.06, 0.45); tf(el, { y: (1 - back(k)) * 150, o: clamp(k * 4), r: (1 - out(k)) * (i % 2 ? 14 : -14) }); }); }
+
+  // 3 네 가지: 읽기·뜻은 퀴즈 녹화, 쓰기·부수는 획순 녹화
+  if (T >= 5.5 && T < 13) {
+    const q = out(prog(T, 6.15, 0.8));
+    tf($("#ph3"), { y: (1 - q) * 900, ry: lerp(-34, -12, inOut(prog(T, 6.1, 5.9))) + Math.sin(T * 1.3) * 2, rx: 4, r: lerp(8, 3, q), o: 1 });
+    if (T < 9) drawClip($("#ph3 canvas"), "recall", (T - 6.2) * 2.2);
+    else drawClip($("#ph3 canvas"), "strokes", (T - 9) * 2.7);
+  }
+
+  // 4·5 도장판
+  if (T >= 11.5 && T < 25) {
+    const enter = out(prog(T, 12.15, 0.75));
+    let cx = (1 - enter) * 1100, cy = 0, cr = lerp(14, 2.2, enter) + Math.sin(T * 1.1) * 0.5;
+    for (const hit of [...STAMP_AT, 23.0]) { const dt = T - hit; if (dt >= 0 && dt < 0.35) { cy += 16 * Math.exp(-dt * 12) * Math.cos(dt * 40); cr += 1.2 * Math.exp(-dt * 12); } }
+    tf($("#card"), { x: cx, y: cy, r: cr });
+    inks.forEach((el, i) => {
+      const first = prog(T, STAMP_AT[i], 0.13), again = prog(T, 23.0, 0.13), fade = inOut(prog(T, 21.5, 0.6));
+      let o = clamp(first * 4), s = lerp(2.8, 1, out(first)), b = (1 - first) * 14;
+      if (T >= 21.5 && T < 23.0) o = lerp(1, 0.26, fade);
+      if (T >= 23.0) { o = lerp(0.26, 1, clamp(again * 4)); s = lerp(2.4, 1, out(again)); b = (1 - again) * 12; }
+      tf(el, { s, o, b, r: STAMP_ROT[i] });
+      waits[i].style.opacity = T < STAMP_AT[i] ? 1 : 0;
+      const tag = T >= 21.5 && T < 23.0 ? back(prog(T, 21.6 + i * 0.07, 0.4)) : 0;
+      tf(res[i], { s: tag, o: clamp(tag), r: i % 2 ? 3 : -3 });
+    });
+    $("#cardstat").textContent = T < 16 ? "오늘 맞혔어요" : T < 17.6 ? "다시 맞히는 중" : T < 21.5 ? "네 칸이 모두 켜졌어요" : T < 23 ? "다시 확인할 때예요" : "다시 또렷해졌어요";
+    // 12시간 시계
+    { const cin = out(prog(T, 14.0, 0.45)), cout = out(prog(T, 16.0, 0.3)), q = Math.pow(prog(T, 14.15, 1.8), 1.7);
+      tf($("#clock"), { y: (1 - cin) * 60 - cout * 40, o: prog(T, 14.0, 0.2) * (1 - cout) });
+      $("#arc").style.strokeDashoffset = 628.3 * (1 - q);
+      $("#hand").setAttribute("transform", `rotate(${(q * 360).toFixed(2)} 115 115)`);
+      $("#count").textContent = `${Math.round(q * 12)}시간`; }
+    // 익힘 한 방
+    { const q = prog(T, 18.0, 0.16), gone = out(prog(T, 19.9, 0.3)); tf($("#slam4"), { s: lerp(2.6, 1, out(q)), o: clamp(q * 4) * (1 - gone), b: (1 - q) * 16, r: -4, y: -gone * 50 }); }
+    // 30일 달력
+    { const din = out(prog(T, 20.5, 0.45)), dout = out(prog(T, 22.9, 0.3)), day = Math.max(1, Math.round(inOut(prog(T, 20.6, 0.9)) * 23));
+      tf($("#days"), { y: (1 - din) * 60 - dout * 40, o: prog(T, 20.5, 0.2) * (1 - dout) });
+      dots.forEach((el, i) => { el.className = i < day ? (i >= 22 && T >= 21.5 ? "w" : "f") : ""; });
+      $("#daylab").textContent = `${day}일째`; }
+  }
+
+  // 6 연결 고리
+  if (T >= 23.5 && T < 29) {
+    linkEnds.forEach((link, i) => {
+      const q = out(prog(T, 24.0 + i - 0.02, 0.5)), [x1, y1] = link.from, [x2, y2] = link.to;
+      $(`#k${i + 1}`).setAttribute("d", `M${x1} ${y1}L${lerp(x1, x2, q).toFixed(1)} ${lerp(y1, y2, q).toFixed(1)}`);
+    });
+    const pulse = [24, 25, 26, 27].reduce((sum, at) => sum + (T >= at ? Math.exp(-(T - at) * 7) : 0), 0);
+    $("#hub").style.boxShadow = `0 0 0 ${(pulse * 34).toFixed(1)}px rgba(247,214,129,${(0.5 * Math.min(1, pulse)).toFixed(3)})`;
+  }
+
+  // 7 이야기
+  if (T >= 27.5 && T < 33) {
+    const q = out(prog(T, 28.15, 0.8));
+    tf($("#ph7"), { y: (1 - q) * 900, ry: lerp(-30, -10, inOut(prog(T, 28.1, 4))), rx: 4, r: lerp(9, 3, q) });
+    drawClip($("#ph7 canvas"), "story", (T - 28.3) * 1.75);
+    $("#lit").style.setProperty("--u", `${(out(prog(T, 30.9, 0.5)) * 100).toFixed(1)}%`);
+  }
+
+  // 8 도감과 친구들
+  if (T >= 31.5 && T < 35) {
+    const q = out(prog(T, 32.05, 0.7));
+    tf($("#ph8"), { y: (1 - q) * 800, ry: Math.sin(T * 1.6) * 6, rx: 3, r: lerp(-8, -2, q) });
+    drawClip($("#ph8 canvas"), "collection", 0);
+  }
+
+  // 9 엔드 카드
+  { const q = prog(T, 34.05, 0.6); tf($("#icon9"), { s: q <= 0 ? 0.2 : back(q), r: lerp(-16, -3, out(q)), o: clamp(q * 5) });
+    const h = out(prog(T, 34.9, 0.7)); tf($("#hero9"), { y: (1 - h) * 520 + Math.abs(Math.sin((T - 35) * 4.2)) * -26 * h, r: lerp(18, 6, h), o: T >= 34.9 ? 1 : 0 }); }
+}
+
+async function init() {
+  await Promise.all([document.fonts.load("100px Jua"), document.fonts.load("100px Hanja"), document.fonts.load("400 40px Body"), document.fonts.load("700 40px Body"), document.fonts.ready]);
+  await Promise.all(Object.entries(CLIPS).map(([name, count]) => loadClip(name, count)));
+  await Promise.all($$("img").map((im) => im.decode().catch(() => {})));
+  measureLinks();
+  seek(+params.get("t") || 0);
+  if (params.get("play")) { const t0 = performance.now(); (function loop() { seek(((performance.now() - t0) / 1000) % DURATION); requestAnimationFrame(loop); })(); }
+  window.filmReady = true;
+}
+window.seek = seek;
+window.FILM = { DURATION, FPS };
+init();
+</script>
+</body>
+</html>

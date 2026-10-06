@@ -1,8 +1,9 @@
 {
-  "prompt": "Original kinetic typography, perspective camera motion and character animation composed around unmodified actual app captures. Original synthesized 120 BPM music and effects; no external stock footage or music.",
+  "prompt": "Original motion film authored as a deterministic HTML timeline (scripts/product-film/film.html) and captured frame by frame. Kinetic typography, the mastery stamp card, clock and calendar are explanatory graphics; phone screens show unmodified actual app captures. Original synthesized 120 BPM music and effects (scripts/product-film/audio.py); no external stock footage or music.",
   "source": "https://bryannamd.github.io/hanja-web/",
   "captured": "2026-10-03",
-  "duration": 32,
+  "rendered": "2026-10-06",
+  "duration": 38,
   "format": "landscape",
-  "script": "scripts/build-product-film.py"
+  "script": "scripts/product-film/film.html"
 }

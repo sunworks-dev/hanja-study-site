@@ -4,7 +4,26 @@ mode: persuade
 target: public/assets/video/hanja-motion-landscape.mp4
 ---
 
-# 2026-10-03 제품 필름 재제작
+# 2026-10-06 제품 필름 재제작 (현재 판)
+
+사용자가 사이트의 컨셉과 핵심 내용을 대본으로 삼아 훨씬 세련된 소개 영상으로 다시 만들 것을 요청했다. 아래 2026-10-03 판을 대체한다.
+
+THESIS: “한 번 맞혔다고, 익혔다고 하지 않아요.” 네 칸을 익히고 12시간 뒤 다시 떠올려야 도장이 찍히는 과정을 38초에 보여 준다.
+OWN-WORLD: 사이트의 문방구 학습 놀이터와 익힘 도장판을 그대로 옮긴다. 크림·먹빛 초록·주홍·노랑, Jua 제목, 주홍 도장, 노란 테이프, 새 앱 아이콘.
+STORY(초): 0–2 “외웠다!” → 2–4 “…내일도 기억날까?” → 4–6 아이콘과 이름, 핵심 문장 → 6–12 네 가지로 익히기(실제 퀴즈·획순 녹화) → 12–14 오늘은 빈칸 → 14–18 12시간 시계와 도장 네 번 → 18–20 “익힘.” → 20–24 30일 달력, 다시 확인, 다시 도장 → 24–28 연결 고리(모양·그림·낱말·이야기) → 28–32 옛이야기 녹화와 이야기 11편 → 32–34 도감과 친구들 → 34–38 아이콘·이름·주소.
+FORM: 가로 1920×1080, 세로 1080×1920, 30fps, 38초. 120 BPM이라 2초마다 장면이 바뀌고 도장은 박자에 맞춰 찍힌다. 세로는 따로 배치한다.
+사실 경계: 휴대폰 안의 화면은 실제 앱 녹화를 고치지 않고 쓴다. 도장판·시계·달력·연결 그림은 원리 설명용 그림이며 앱 화면으로 보이게 만들지 않는다. 12시간·23일·30일은 앱 `lib/srs/hanja_mastery.dart` 기준이다.
+
+## 만드는 방법 (2026-10-06 판)
+
+- 장면 원본은 `scripts/product-film/film.html` 하나다. 모든 움직임을 `seek(초)`가 계산하므로 같은 프레임을 언제든 똑같이 다시 그린다. `?t=16.6`으로 한 장면을, `?play=1`로 미리보기를 본다.
+- 음악·효과음은 `scripts/product-film/audio.py --out film.wav`가 수식으로 합성한다(numpy만 사용, 외부 음원 없음).
+- 촬영: 저장소 루트에서 `python3 -m http.server 4323`을 켜고 `FILM_O=landscape FILM_OUT=<폴더> node ~/.claude/skills/phi-browser/scripts/runner.mjs < scripts/product-film/capture.js`. 세로는 `FILM_O=portrait`. 각 1,140장.
+- 인코딩: `ffmpeg -framerate 30 -i <폴더>/%05d.jpg -i film.wav -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -af loudnorm=I=-16:TP=-1.5:LRA=9 -c:a aac -b:a 160k -t 38 -movflags +faststart <출력>.mp4`.
+- 필요한 로컬 자료(git 제외): `.tmp/product-film-captures/`의 녹화 4종·Jua 원본과 `fonts/`(앱 `flutter_app/assets/fonts`의 Pretendard Medium·Bold, NotoSerifKR SemiBold 복사본).
+- `scripts/build-product-film.py`는 2026-10-03 판을 만든 이전 스크립트다. 현재 영상에는 쓰지 않는다.
+
+# 2026-10-03 제품 필름 재제작 (이전 판)
 
 사용자는 이전 고정 레이아웃 시연 영상을 거절하고, 감각적인 앱 광고 수준의 모션 그래픽을 명확히 요청했다. 단순 자막/배경 교체가 아니라 시간축의 연출을 교체한다. 기존 사이트·제품 사실·캐릭터·크림/초록/주홍/Jua 정체성은 보존한다.
 

@@ -233,3 +233,73 @@
   .film-section, .hero-actions, .hero-stage-horang { display: none; }
   .product-hero, .showcase-layout, .pricing-section { break-inside: avoid; }
 }
+
+/* 익힘 도장판: 시간에 따라 칸이 켜지고 흐려지는 원리를 보여 준다. */
+.brand img, .closing-lockup img { outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; }
+.mastery-section { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 84px; align-items: center; }
+.mastery-lead { color: var(--muted); margin-top: 26px; }
+.mastery-steps { display: grid; margin-top: 40px; border-top: 1px solid var(--line); }
+.mastery-steps button { position: relative; display: grid; grid-template-columns: 172px minmax(0, 1fr); gap: 20px; align-items: baseline; padding: 20px 8px 20px 0; border-bottom: 1px solid var(--line); background: none; color: var(--muted); text-align: left; transition: padding-left 260ms var(--ease), color 180ms; }
+.mastery-steps button::before { content: ""; position: absolute; left: 0; top: 33px; width: 9px; height: 9px; border-radius: 50%; background: var(--orange); opacity: 0; transform: scale(0.25); transition: opacity 180ms, transform 260ms var(--ease); }
+.mastery-steps strong { font-family: Jua, SUIT, sans-serif; font-size: 22px; font-weight: 400; line-height: 1.3; color: var(--ink); }
+.mastery-steps span { font-size: 15px; line-height: 1.75; }
+.mastery-steps button:hover strong { color: var(--orange); }
+.mastery-steps button[aria-pressed="true"] { padding-left: 22px; color: var(--ink); }
+.mastery-steps button[aria-pressed="true"]::before { opacity: 1; transform: scale(1); }
+.mastery-steps button[aria-pressed="true"] strong { color: var(--orange); }
+.mastery-copy > .text-link { display: inline-block; margin-top: 28px; }
+.stamp-card { position: relative; padding: 36px 36px 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--white); rotate: 1.4deg; box-shadow: 0 1px 2px rgba(35, 63, 53, 0.06), 0 22px 44px -22px rgba(35, 63, 53, 0.34); }
+.stamp-card::before { content: ""; position: absolute; top: -13px; left: 50%; width: 112px; height: 26px; translate: -50% 0; rotate: -2.5deg; background: rgba(247, 214, 129, 0.82); }
+.stamp-card-head { display: flex; align-items: center; gap: 24px; padding-bottom: 26px; border-bottom: 1px dashed #b9bcab; }
+.stamp-hanja { font-family: "Songti SC", "Noto Serif CJK KR", Batang, serif; font-size: 104px; line-height: 1; }
+.stamp-card-head strong { display: block; font-family: Jua, SUIT, sans-serif; font-size: 28px; font-weight: 400; line-height: 1.3; }
+#mastery-status { display: block; margin-top: 6px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+.stamp-cells { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 30px 0 0; padding: 0; list-style: none; text-align: center; }
+.stamp-cells strong { display: block; margin-top: 14px; font-size: 16px; font-weight: 800; line-height: 1.4; }
+.stamp-cells small { display: block; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.stamp-slot { display: grid; place-items: center; aspect-ratio: 1; border: 2px dashed #b9bcab; border-radius: 50%; transition: border-color 220ms; }
+.stamp-slot i { grid-area: 1 / 1; font-style: normal; transition: opacity 220ms, scale 460ms var(--ease), filter 220ms; }
+.stamp-on { display: grid; place-items: center; width: calc(100% + 4px); height: calc(100% + 4px); border: 3px solid var(--orange); border-radius: 50%; box-shadow: inset 0 0 0 3px var(--white), inset 0 0 0 4.5px var(--orange); background: var(--white); color: var(--orange); font-family: Jua, SUIT, sans-serif; font-size: clamp(17px, 1.7vw, 23px); rotate: -9deg; }
+.stamp-cells li:nth-child(2) .stamp-on { rotate: 6deg; }
+.stamp-cells li:nth-child(3) .stamp-on { rotate: -4deg; }
+.stamp-cells li:nth-child(4) .stamp-on { rotate: 10deg; }
+.stamp-wait, .stamp-recheck { font-size: 12px; font-weight: 800; line-height: 1.3; color: var(--muted); opacity: 0; }
+.stamp-recheck { padding: 4px 8px; border-radius: 6px; background: var(--yellow); color: var(--ink); scale: 0.9; white-space: nowrap; }
+.stamp-card[data-state="today"] .stamp-on { opacity: 0; scale: 1.5; filter: blur(4px); }
+.stamp-card[data-state="today"] .stamp-wait { opacity: 1; }
+.stamp-card[data-state="lit"] .stamp-slot, .stamp-card[data-state="fade"] .stamp-slot { border-color: transparent; }
+.stamp-card[data-state="lit"] li:nth-child(2) .stamp-on { transition-delay: 90ms; }
+.stamp-card[data-state="lit"] li:nth-child(3) .stamp-on { transition-delay: 180ms; }
+.stamp-card[data-state="lit"] li:nth-child(4) .stamp-on { transition-delay: 270ms; }
+.stamp-card[data-state="fade"] .stamp-on { opacity: 0.3; }
+.stamp-card[data-state="fade"] .stamp-recheck { opacity: 1; scale: 1; }
+.stamp-card figcaption { margin-top: 26px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; }
+.closing-lockup { display: flex; align-items: center; gap: 14px; margin: 0 0 22px; }
+.closing-lockup img { border-radius: 15px; }
+.closing-lockup span { text-align: left; font-family: Jua, SUIT, sans-serif; font-size: 24px; line-height: 1.2; }
+.closing-lockup small { display: block; margin-top: 4px; font-family: SUIT, sans-serif; font-size: 13px; font-weight: 600; color: var(--muted); }
+@media (max-width: 960px) {
+  /* 좁은 화면에서는 단계 버튼 바로 위에 도장판을 두어 눌렀을 때 변화가 보이게 한다. */
+  .mastery-section { grid-template-columns: 1fr; gap: 0; }
+  .mastery-copy { display: contents; }
+  .stamp-card { order: 1; max-width: 560px; width: 100%; justify-self: center; margin-block: 52px 12px; rotate: 0.8deg; }
+  .mastery-steps { order: 2; }
+  .mastery-copy > .text-link { order: 3; justify-self: start; }
+}
+@media (max-width: 560px) {
+  .mastery-steps button { grid-template-columns: 1fr; gap: 6px; padding-block: 18px; }
+  .mastery-steps button::before { top: 28px; }
+  .stamp-card { padding: 30px 20px 18px; }
+  .stamp-card-head { gap: 16px; padding-bottom: 20px; }
+  .stamp-hanja { font-size: 76px; }
+  .stamp-card-head strong { font-size: 24px; }
+  .stamp-cells { gap: 8px; margin-top: 24px; }
+  .stamp-cells strong { font-size: 14px; }
+  .stamp-on { font-size: 16px; border-width: 2px; box-shadow: inset 0 0 0 2px var(--white), inset 0 0 0 3px var(--orange); }
+  .stamp-wait, .stamp-recheck { font-size: 10px; }
+  .stamp-recheck { padding: 3px 5px; }
+  .closing-lockup { justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mastery-steps button, .mastery-steps button::before, .stamp-slot, .stamp-slot i { transition: none; }
+}
