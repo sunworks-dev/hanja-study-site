@@ -303,3 +303,44 @@
 @media (prefers-reduced-motion: reduce) {
   .mastery-steps button, .mastery-steps button::before, .stamp-slot, .stamp-slot i { transition: none; }
 }
+
+/* FSRS 설명: 망각곡선 그림과 실제 앱의 자신감 선택 화면. 기억 구간(먹빛 바탕) 안에 놓인다. */
+.fsrs-block { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 64px; align-items: start; margin-top: 88px; padding-top: 64px; border-top: 1px solid #738779; }
+.fsrs-figure svg { width: 100%; height: auto; display: block; font-family: SUIT, sans-serif; }
+.fsrs-figure .axis { stroke: #8fae9c; stroke-width: 2; }
+.fsrs-figure .lab { fill: #d5dfcf; font-size: 15px; }
+.fsrs-figure .target { stroke: var(--yellow); stroke-width: 2; stroke-dasharray: 6 8; }
+.fsrs-figure .target-lab { fill: var(--yellow); font-weight: 700; }
+.fsrs-figure .curve { fill: none; stroke: var(--paper); stroke-width: 4; stroke-linecap: round; }
+.fsrs-figure .curve.ghost { stroke: #8fae9c; stroke-width: 2.5; stroke-dasharray: 5 7; }
+.fsrs-figure .ghost-lab { fill: #a9bfb2; }
+.fsrs-figure .reviews line { stroke: var(--orange-bright); stroke-width: 3; }
+.fsrs-figure .reviews circle { fill: var(--orange-bright); }
+.fsrs-figure .reviews text { fill: var(--orange-bright); font-size: 14px; font-weight: 800; }
+.fsrs-figure .reviews .gap { fill: var(--paper); font-weight: 600; font-size: 14px; }
+.fsrs-figure figcaption { margin-top: 14px; font-size: 13px; color: #c6d5c2; }
+.fsrs-copy h3 { font-size: clamp(26px, 2.6vw, 34px); }
+.fsrs-copy > p { margin-top: 18px; color: #d5dfcf; font-size: 17px; line-height: 1.8; }
+.fsrs-copy > p strong, .fsrs-app strong { color: var(--paper); }
+.fsrs-terms { margin: 26px 0 0; }
+.fsrs-terms > div { display: grid; grid-template-columns: 118px 1fr; gap: 14px; padding-block: 12px; border-top: 1px solid #52685c; }
+.fsrs-terms dt { font-family: Jua, SUIT, sans-serif; font-size: 20px; color: var(--yellow); }
+.fsrs-terms dd { margin: 0; color: #d5dfcf; font-size: 15px; line-height: 1.7; }
+.fsrs-app { display: grid; grid-template-columns: 150px 1fr; gap: 22px; align-items: center; margin-top: 30px; padding: 20px; border-radius: 16px; background: rgba(255, 249, 237, 0.07); }
+.fsrs-app img { width: 150px; height: 300px; object-fit: cover; object-position: 50% 100%; border-radius: 12px; outline: 1px solid rgba(255, 255, 255, 0.12); outline-offset: -1px; }
+.fsrs-app p { color: #d5dfcf; font-size: 15px; line-height: 1.75; }
+@media (max-width: 960px) {
+  .fsrs-block { grid-template-columns: 1fr; gap: 40px; margin-top: 64px; padding-top: 48px; }
+}
+@media (max-width: 560px) {
+  .fsrs-figure .lab, .fsrs-figure .reviews text { font-size: 18px; }
+  .fsrs-terms > div { grid-template-columns: 1fr; gap: 4px; }
+  .fsrs-app { grid-template-columns: 1fr; }
+  .fsrs-app img { width: 100%; max-width: 240px; height: auto; aspect-ratio: 1 / 1; justify-self: center; }
+}
+.hero-proof { display: flex; flex-wrap: wrap; gap: 8px 0; margin: 22px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--muted); }
+.hero-proof li { display: flex; align-items: center; }
+.hero-proof li + li::before { content: ""; width: 4px; height: 4px; margin-inline: 12px; border-radius: 50%; background: var(--orange); }
+.hero-proof strong { color: var(--ink); margin-right: 4px; }
+.real-app-card { width: 250px; }
+.real-app-card img { border-radius: 18px; }

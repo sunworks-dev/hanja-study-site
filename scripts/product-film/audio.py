@@ -58,7 +58,7 @@ def put(bus, t0, x, g=1.0, pan=0.0, send=0.0):
     j = min(N, i + len(x))
     seg = x[: j - i] * g
     th = (pan + 1) * np.pi / 4  # 등전력 팬
-    for tgt, k in ((bus, 1.0), (rev_send, send)):
+    for tgt, k in ((bus, 1.0), (mrev if bus is mus else rev_send, send)):
         if k:
             tgt[i:j, 0] += seg * np.cos(th) * k
             tgt[i:j, 1] += seg * np.sin(th) * k
@@ -167,74 +167,144 @@ PROG = [  # C - Am - F - G (장조 5음 기반)
     dict(pad=[43, 50, 55, 59, 62], root=43, arp=[67, 74, 76, 79], lead=[74, 79, 76, 74]),
 ]
 chord = lambda t: PROG[int(t // 2) % 4]
-ARP = [0, 1, 2, 1, 3, 2, 1, 2]
-
-
 def hit_chord(t, vel=1.0, ms=(72, 76, 79, 84, 88), pan_w=0.5):
     for k, m in enumerate(ms):  # 살짝 펼쳐서 반짝임
         put(mel, t + k * 0.012, pluck(mf(m), 1.4, 1.2), 0.9 * vel, (k - 2) * pan_w * 0.5, 0.5)
 
 
-# ---------- 리듬 구간 ----------
-# (시작, 끝, 킥, 셰이커, 베이스, 아르페지오, 리드) / 킥: 'beat'|'bar'|'half' / 셰이커: 8|16
-SECS = [
-    (4.0, 6.0, "beat", 8, True, None, False),
-    (6.0, 14.0, "beat", 8, True, 8, True),
-    (14.0, 15.0, "beat", 8, True, 4, False),
-    (15.0, 16.0, "bar", 0, False, None, False),
-    (18.0, 20.0, "beat", 16, True, 8, True),
-    (20.0, 22.5, "beat", 8, True, 8, True),
-    (22.5, 23.0, None, 8, False, None, False),
-    (23.0, 28.0, "beat", 8, True, 8, False),
-    (28.0, 32.0, "bar", 8, True, 4, True),
-    (32.0, 34.0, "beat", 16, True, 8, False),
-    (34.0, 36.0, "half", 0, True, None, False),
+# ---------- 어쿠스틱 배경음악 ----------
+# 음악은 별도 버스·별도 난수로 만든다. 효과음의 난수 순서와 소리를 건드리지 않기 위해서다.
+mus, mrev = Z(), Z()
+mr = np.random.default_rng(20261007)
+GTR = [[48, 52, 55, 60, 64], [45, 52, 57, 60, 64], [41, 48, 53, 57, 60], [43, 47, 50, 55, 59]]  # 기타 개방 코드 보이싱
+PICK = [0, 3, 1, 4, 0, 2, 1, None]  # 8분 핑거피킹: 저음 교대 + 고음, 마디 끝은 쉬어 숨을 둔다
+hum = lambda t: t + mr.uniform(-0.009, 0.009)  # 사람 손 타이밍 흔들림
+vj = lambda v: v * mr.uniform(0.82, 1.0)  # 벨로시티 변화
+
+
+def ks(f, dur, tau=1.2, bright=0.5, pick=0.18):
+    """Karplus-Strong 현: 노이즈 버스트를 지연선+평균 필터로 되먹여 줄 소리를 만든다."""
+    P = max(2, int(round(SR / f - 0.5)))  # 평균 필터가 반 샘플 지연을 더한다
+    n = int(dur * SR)
+    exc = smooth(mr.standard_normal(P), 1 + int((1 - bright) * 8))  # 부드러운 손끝 = 고역 적은 버스트
+    exc = exc - np.roll(exc, max(1, int(pick * P)))  # 피킹 위치 콤 필터
+    d = np.exp(-(P + 0.5) / (SR * tau))
+    buf = np.zeros(n + 2 * P + 2)
+    buf[1:P + 1] = exc
+    for s in range(P + 1, len(buf), P):
+        e = min(s + P, len(buf))
+        buf[s:e] = d * 0.5 * (buf[s - P:e - P] + buf[s - P - 1:e - P - 1])
+    y = buf[1:n + 1]
+    y = np.interp(np.arange(n) * f * (P + 0.5) / SR, np.arange(n), y)  # 정수 지연의 음정 오차 보정
+    t = tt(dur)[:n]
+    return y * np.minimum(1, t / 0.002) * np.minimum(1, (dur - t) / 0.03) / (np.std(exc) + 1e-9) * 0.3
+
+
+def gtr(t, m, v, dur=1.6, pan=0.0, tau=1.2, bright=0.45):
+    # 살짝 어긋난 두 현을 좌우로 겹쳐 12현 같은 넓이를 준다
+    t, v = hum(t), vj(v)  # 두 현은 한 손가락이 치므로 같은 시각·세기
+    for dc, p in ((0.04, -0.12), (-0.04, 0.12)):
+        put(mus, t, ks(mf(m) * 2 ** (dc / 12), dur, tau, bright), v * 0.5, pan + p, 0.35)
+
+
+def piano(f, dur=2.0):
+    """비조화 배음 가산 합성 + 해머 노이즈: 따뜻한 업라이트 피아노 느낌."""
+    t = tt(dur)
+    y = np.zeros_like(t)
+    for k in range(1, 9):
+        fk = k * f * np.sqrt(1 + 0.0004 * k * k)  # 현의 강성 때문에 배음이 조금 높아진다
+        if fk > 6000:
+            break
+        y += np.sin(2 * np.pi * fk * t) / k ** 1.4 * np.exp(-t * (0.9 + 0.7 * k))
+    y += 0.4 * np.sin(2 * np.pi * f * t) * np.exp(-t * 0.5)  # 긴 여운(2단 감쇠)
+    y += smooth(mr.standard_normal(len(t)), 12) * np.exp(-t * 90) * 0.15
+    return y * np.minimum(1, t / 0.004) * np.minimum(1, (dur - t) / 0.08) * 0.3
+
+
+def brush(v, swish=False):
+    """브러시: 대역 제한 노이즈. 스위시는 어택을 느리게 해 쓸어내는 소리를 낸다."""
+    dur = 0.4 if swish else 0.16
+    t = tt(dur)
+    x = mr.standard_normal(len(t))
+    x = smooth(x, 5) - smooth(x, 60)
+    env = np.minimum(1, t / (0.07 if swish else 0.004)) * np.exp(-t * (7 if swish else 22))
+    return x * env * v * 0.12
+
+
+def softkick(v):
+    t = tt(0.3)
+    ph = 2 * np.pi * np.cumsum(60 + 15 * np.exp(-t * 30)) / SR
+    return np.sin(ph) * np.minimum(1, t / 0.008) * np.exp(-t * 13) * v * 0.5
+
+
+# 구간별 편성: (시작, 끝, 피킹 'full'|'quarter'|None, 베이스, 브러시, 우쿨렐레, 피아노 선율, 음량)
+ARR = [
+    (0.5, 2.0, "full", True, False, False, False, 0.8),
+    (4.0, 6.0, "full", True, False, False, False, 0.8),
+    (6.0, 14.0, "full", True, True, False, True, 0.9),
+    (14.0, 15.0, "quarter", True, False, False, False, 0.6),
+    (18.0, 22.5, "full", True, True, True, True, 1.0),
+    (23.0, 28.0, "full", True, True, True, True, 1.0),  # 22.5~23은 비워 동시 도장을 또렷하게
+    (28.0, 32.0, "quarter", True, False, False, True, 0.85),
+    (32.0, 34.0, "full", True, True, False, False, 0.85),
+    (34.5, 36.0, "quarter", False, False, False, False, 0.6),
 ]
 
 
-def rhythm():
-    for a, b, kk, sh, bs, ar, ld in SECS:
+def music():
+    for a, b, pk, bs, br, uk, pn, lv in ARR:
         t = a
         while t < b - 1e-9:
-            c = chord(t)
-            bi = round((t % 2) / BEAT)  # 마디 안 박 번호 0~3
-            if kk == "beat" or (kk == "bar" and bi == 0) or (kk == "half" and bi % 2 == 0):
-                vel = 0.55 if kk == "bar" else 0.9
-                put(drm, t, kick(vel))
-                kicks.append(t)
-            if bs:  # 서브 베이스: 1박 길게 + 3·4박 사이 8분 푸시
-                put(bas, t, bass(mf(c["root"] + (12 if bi == 3 else 0)), 0.42), 0.8)
-                if bi in (1, 3) and kk == "beat":
-                    put(bas, t + 0.25, bass(mf(c["root"] + 12), 0.2), 0.45)
-            if sh:
-                steps = 4 if sh == 16 else 2
-                for s in range(steps):
-                    if sh == 8 and s == 0:  # 8분 셰이커는 뒷박 위주
-                        put(drm, t, shaker(0.35), 1, 0.3)
-                    else:
-                        put(drm, t + s * BEAT / steps, shaker(0.9 if s % 2 else 0.5), 1, -0.3 if s % 2 else 0.3)
-            if ar:
-                per = 2 if ar == 8 else 1
-                for s in range(per):
-                    idx = ARP[(bi * per + s) % 8]
-                    tm = t + s * BEAT / per
-                    put(mel, tm, pluck(mf(c["arp"][idx]), 0.7, 0.9, kal=True), 0.6,
-                        0.45 if (bi * per + s) % 2 else -0.45, 0.45)
-            if ld and bi == 0:  # 마디당 한 음 리드(주제 조각)
+            ci = int(t // 2) % 4
+            v, c = GTR[ci], PROG[ci]
+            st = round((t % 2) / 0.25)  # 마디 안 8분 위치 0~7
+            if PICK[st] is not None and (pk == "full" or (pk == "quarter" and st % 2 == 0)):
+                sw = 0.03 if st % 2 else 0.0  # 가벼운 셔플
+                m = v[PICK[st]]
+                # 구간 끝에서 줄을 손으로 막아 다음 효과음 앞을 비운다
+                gtr(t + sw, m, lv * (0.55 if PICK[st] < 2 else 0.4), min(1.8, b - t + 0.12), -0.15 + 0.1 * PICK[st])
+            if bs and st in (0, 4):  # 하프타임: 마디에 두 번만 저음
+                put(mus, hum(t), ks(mf(c["root"] - (0 if c["root"] < 40 else 12) + (7 if st == 4 else 0)), 1.0, 0.5, 0.15, 0.3),
+                    vj(lv) * 0.9, 0, 0.1)
+                if st == 0 and br:
+                    put(mus, hum(t), softkick(vj(lv)), 0.8)
+            if br and st in (2, 6):
+                put(mus, hum(t), brush(vj(lv), swish=True), 1, 0.25, 0.2)
+            if uk and st in (2, 6):  # 우쿨렐레 업스트로크: 높은 음부터 빠르게 긁는다
+                for k, m in enumerate(sorted(c["arp"][:3], reverse=True)):
+                    put(mus, hum(t) + k * 0.014, ks(mf(m - 12), 0.5, 0.35, 0.6), vj(lv) * 0.22, 0.4, 0.3)
+            if pn and st == 0:
                 for s, m in enumerate(c["lead"][:2]):
-                    put(mel, t + s * 0.75 + (0.5 if s else 0), pluck(mf(m - 12 + 12), 1.0, 1.0), 0.55, 0.15, 0.55)
-            t += BEAT
+                    put(mus, hum(t + s * 1.25), piano(mf(m), 1.8), vj(lv) * 0.5, 0.1, 0.45)
+            t += 0.25
+    # 0.0 첫 화음과 2~4 조용한 피아노
+    for k, m in enumerate(GTR[0]):
+        gtr(0.02 + k * 0.022, m, 0.6, 2.2, -0.2 + 0.1 * k)
+    for tm, m in ((2.0, 76), (2.75, 72), (3.5, 67)):
+        put(mus, hum(tm), piano(mf(m), 1.6), 0.35, 0.1, 0.5)
+    put(mus, 15.0, ks(mf(36), 0.95, 0.6, 0.15), 0.6, 0, 0.1)  # 도장 직전 저음 하나로 비운다
+    gtr(15.0, 64, 0.35, 0.95)
+    # 34.0 마무리: 느린 스트럼 + 피아노 주제 + 끝 화음
+    for k, m in enumerate(GTR[0]):
+        gtr(34.02 + k * 0.03, m, 0.7, 2.4, -0.2 + 0.1 * k)
+    for tm, m, d in ((34.5, 79, 1.0), (35.0, 76, 1.0), (35.5, 74, 1.0), (36.0, 72, 2.0)):
+        put(mus, hum(tm), piano(mf(m), d + 0.6), 0.55, 0.0, 0.6)
+    for k, m in enumerate(GTR[0] + [67]):
+        gtr(36.0 + k * 0.045, m, 0.5, 2.0, -0.25 + 0.1 * k, tau=2.0)
+    put(mus, 36.0, ks(mf(36), 2.0, 1.0, 0.15), 0.7, 0, 0.1)
 
 
-PADLEV = [(0, 2, 0.5), (2, 4, 0.55), (4, 14, 0.5), (14, 15.5, 0.4), (18, 34, 0.6), (34, 36.5, 0.7)]
+# 22~24는 패드를 빼 23.0 동시 도장 앞을 비운다
+PADLEV = [(0, 2, 0.4), (2, 4, 0.45), (4, 14, 0.35), (14, 15.5, 0.3), (18, 22, 0.45), (24, 34, 0.45), (34, 36.5, 0.6)]
 
 
 def pads():
     for a, b, lv in PADLEV:
         t = a
         while t < b - 1e-9:
-            put(pad, t, padv(chord(t)["pad"], 2.4), lv, 0, 0.35)
+            put(mus, t, padv(chord(t)["pad"], 2.4), lv, 0, 0.35)
             t += 2.0
+    put(mus, 36.0, padv([48, 55, 60, 64, 67], 2.0), 0.6, 0, 0.5)
 
 
 # ---------- 장면별 이벤트 ----------
@@ -244,9 +314,6 @@ def events():
     put(bas, 0, np.sin(2 * np.pi * 36 * tt(1.4)) * np.exp(-tt(1.4) * 2.2), 1.0)
     put(fxb, 0, crash(1.4, 1.0), 1, 0, 0.4)
     hit_chord(0.0, 1.0)
-    for tm, m, d in ((0.5, 76, .5), (0.75, 79, .5), (1.0, 84, 1.0), (1.5, 88, 1.0)):
-        put(mel, tm, pluck(mf(m), d + 0.4, 1.3), 0.8, 0.2, 0.5)
-    put(bas, 1.0, bass(mf(36), 0.9), 0.8)
     # 2.0 얇아짐: 하강음 + 시계 틱
     put(fxb, 2.0, glide(420, 130, 0.9, 2.0), 0.6, 0, 0.5)
     for k in range(4):
@@ -298,13 +365,30 @@ def events():
     put(bas, 34.0, np.sin(2 * np.pi * 36 * tt(2.0)) * np.exp(-tt(2.0) * 1.8), 1.0)
     put(fxb, 34.0, crash(2.0, 1.0), 1, 0, 0.5)
     hit_chord(34.0, 1.1, (72, 76, 79, 84, 88))
-    for tm, m, d in ((34.5, 79, .4), (35.0, 76, .4), (35.5, 74, .4), (36.0, 72, 2.0)):
-        put(mel, tm, pluck(mf(m + 12), d + 0.8, 1.1), 0.7, 0.0, 0.7)
-    put(pad, 36.0, padv([48, 55, 60, 64, 67], 2.0), 0.7, 0, 0.5)
-    put(pad, 34.0, padv([48, 55, 60, 64, 67, 72], 2.4), 0.5, 0, 0.5)
 
 
 # ---------- 마스터 ----------
+MUS_GAIN = 1.0  # 음악 버스를 효과음보다 약 6dB 낮게 두는 값
+
+
+def music_bus():
+    # 음악 전용 잔향: 짧고 어두운 룸. 효과음 잔향과 따로 둬 효과음 꼬리를 바꾸지 않는다
+    n_ir = int(0.9 * SR)
+    ti = np.arange(n_ir) / SR
+    L = N + n_ir
+    sz = 1 << (L - 1).bit_length()
+    y = mus.copy()
+    for c in (0, 1):
+        ir = smooth(mr.standard_normal(n_ir), 9) * np.exp(-ti * 5.0)
+        ir[: int(0.015 * SR)] *= np.linspace(0, 1, int(0.015 * SR))
+        ir /= np.sqrt(np.sum(ir ** 2))
+        y[:, c] += 0.45 * np.fft.irfft(np.fft.rfft(mrev[:, c], sz) * np.fft.rfft(ir, sz), sz)[:N]
+    # 7kHz 위를 부드럽게 깎아 날카로운 고역을 없앤다
+    fr = np.fft.rfftfreq(N, 1 / SR)
+    lp = 1 / np.sqrt(1 + (fr / 7000) ** 4)
+    return np.stack([np.fft.irfft(np.fft.rfft(y[:, c]) * lp, N) for c in (0, 1)], 1)
+
+
 def master():
     t = np.arange(N) / SR
     # 사이드체인: 킥 직후 패드·베이스를 눌렀다 복귀
@@ -336,6 +420,7 @@ def master():
     send[:, 0] += 0.0
     wetr = np.stack([np.fft.irfft(np.fft.rfft(send[:, c], sz) * np.fft.rfft(irs[c], sz), sz)[:N] for c in (0, 1)], 1)
     x = dry + wetr * 0.55
+    x += music_bus() * MUS_GAIN
     # 끝 페이드(36.5~38) + 시작 0.01초 페이드
     env = np.ones(N)
     m = t >= 36.5
@@ -351,7 +436,7 @@ def main():
     ap.add_argument("--out", required=True)
     out = ap.parse_args().out
     events()
-    rhythm()
+    music()
     pads()
     x = master()
     x *= 10 ** (-1 / 20) / np.max(np.abs(x))  # 최대 피크 -1dBFS

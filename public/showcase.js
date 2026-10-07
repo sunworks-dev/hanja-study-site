@@ -2,10 +2,10 @@
 
 const showcaseContent = {
   learn: {
-    image: "study", alt: "학교 교의 획순·연상·연결 어휘 학습 화면",
+    image: "study", alt: "학교 교의 조각 모아 보기·획순·뜻풀이 학습 화면",
     heading: ["校 하나를 배웠는데,", "학교가 새롭게 보여요."],
-    description: "획순으로 모양을 익히고, 연상으로 뜻을 연결해요. 학교·대학교·중학교처럼 같은 한자를 쓰는 단어를 함께 만나니, 한 글자의 배움이 우리말로 넓어집니다.",
-    benefits: ["획순·훈음·부수·연상 설명을 한곳에서", "뜻을 떠올리기 쉬운 그림과 단어·예문", "정답을 보기 전, 직접 떠올리는 연습"],
+    description: "校는 나무 木과 사귈 交가 만난 글자예요. 조각을 모아 뜻과 소리를 짐작하고, 획순으로 모양을 익혀요. 학교·대학교·중학교처럼 같은 한자를 쓰는 단어로 배움이 우리말까지 넓어집니다.",
+    benefits: ["조각 모아 보기·획순·훈음·부수를 한곳에서", "뜻을 떠올리기 쉬운 그림과 단어·예문", "정답을 보기 전, 직접 떠올리는 연습"],
   },
   story: {
     image: "story", alt: "흥부와 놀부 이야기의 빈칸에 농촌을 맞힌 실제 앱 화면",
@@ -14,13 +14,13 @@ const showcaseContent = {
     benefits: ["흥부전·심청전·홍길동전 등 고전을 바탕으로 한 이야기 11편", "문장 속에서 생각하는 한자어의 뜻", "마당별 진도를 저장해 이어서 학습"],
   },
   collection: {
-    image: "collection", alt: "8급의 읽기·훈음·쓰기·부수 학습 현황과 한자 도감 화면",
+    image: "collection", alt: "8급의 유형별 익힘 정도와 색이 켜진 校·敎·九 카드가 있는 한자 도감 화면",
     heading: ["얼마나 했는지보다,", "무엇을 익혔는지."],
     description: "읽기·뜻·쓰기·부수를 따로 살펴요. 12시간 넘게 지난 뒤 다시 맞혀야 칸이 켜지니, 한 번 본 글자와 정말 익힌 글자가 구분돼요. 만난 한자가 도감에 하나씩 모이는 재미도 있어요.",
     benefits: ["12시간 뒤 다시 맞혀야 켜지는 네 개의 칸", "30일 안에 다시 확인해 오래 남기는 기억", "급수별 도감·모의시험·유형별 연습"],
   },
   home: {
-    image: "home", alt: "새 한자와 복습 분량, 이어서 풀기를 안내하는 앱 홈 화면",
+    image: "home", alt: "연속 학습 일수, 오늘의 새 한자와 복습 분량, 시험 일정을 보여 주는 앱 홈 화면",
     heading: ["오늘 뭘 할지,", "고민은 줄여 주세요."],
     description: "새로 만날 한자와 다시 볼 한자를 오늘의 학습으로 모아 줍니다. 답변 기록에 맞춰 다시 볼 시점을 조절하고, 잠깐 멈춘 공부는 이어서 시작할 수 있어요.",
     benefits: ["내 기록에 맞춰 조절되는 복습 간격", "직접 정하는 하루 신규 학습량", "풀던 학습을 이어 가는 세션 저장"],
@@ -81,8 +81,8 @@ function chooseFilm() {
   // Never swap a loaded film during playback or restart a user's position.
   if (filmStarted) return;
   const orientation = portraitFilm.matches ? "portrait" : "landscape";
-  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4?v=20261006`;
-  productFilm.poster = `assets/video/poster-motion-${orientation}.webp?v=20261006`;
+  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4?v=20261007`;
+  productFilm.poster = `assets/video/poster-motion-${orientation}.webp?v=20261007`;
 }
 chooseFilm();
 portraitFilm.addEventListener("change", chooseFilm);

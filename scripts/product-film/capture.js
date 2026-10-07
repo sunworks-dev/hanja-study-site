@@ -8,7 +8,7 @@ const [width, height] = orientation === 'portrait' ? [1080, 1920] : [1920, 1080]
 await enterContext({ kind: 'agent', name: 'hanja-film-render' })
 await cdp('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: false })
 await goto('http://localhost:4323/scripts/product-film/film.html?o=' + orientation + '&v=' + Date.now())
-await waitForFunction('window.filmReady === true', { timeout: 40 })
+await waitForFunction('window.filmReady === true', { timeout: 180 })
 const { DURATION, FPS } = await js('window.FILM')
 const total = DURATION * FPS
 const started = Date.now()

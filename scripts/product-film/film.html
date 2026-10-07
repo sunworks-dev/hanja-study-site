@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <!--
-  어흥!한자 38초 제품 필름의 원본 장면.
+  어흥!한자 38초 제품 필름의 원본 장면. 녹화 자료는 .tmp/captures-2026-10-07 (2026-10-07 웹 베타 녹화).
   모든 움직임은 seek(초)가 계산한다. CSS 시간 애니메이션을 쓰지 않으므로 프레임 단위로 똑같이 다시 그릴 수 있다.
   저장소 루트를 정적 서버로 열고 /scripts/product-film/film.html?o=landscape|portrait 로 본다.
   ?t=12.5 를 붙이면 그 시각에 멈춘 장면을, ?play=1 을 붙이면 실시간 미리보기를 보여 준다.
@@ -10,10 +10,10 @@
 <meta charset="utf-8">
 <title>어흥!한자 제품 필름</title>
 <style>
-@font-face { font-family: Jua; src: url("/.tmp/product-film-captures/Jua-Regular.ttf"); }
-@font-face { font-family: Body; font-weight: 400; src: url("/.tmp/product-film-captures/fonts/Pretendard-Medium.otf"); }
-@font-face { font-family: Body; font-weight: 700; src: url("/.tmp/product-film-captures/fonts/Pretendard-Bold.otf"); }
-@font-face { font-family: Hanja; src: url("/.tmp/product-film-captures/fonts/NotoSerifKR-SemiBold.otf"); }
+@font-face { font-family: Jua; src: url("/.tmp/captures-2026-10-07/Jua-Regular.ttf"); }
+@font-face { font-family: Body; font-weight: 400; src: url("/.tmp/captures-2026-10-07/fonts/Pretendard-Medium.otf"); }
+@font-face { font-family: Body; font-weight: 700; src: url("/.tmp/captures-2026-10-07/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: Hanja; src: url("/.tmp/captures-2026-10-07/fonts/NotoSerifKR-SemiBold.otf"); }
 :root { --paper: #fff9ed; --ink: #233f35; --muted: #57655a; --orange: #be411f; --mint: #dfead5; --line: #d5d6c7; --white: #fffef9; --yellow: #f7d681; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { background: #111; overflow: hidden; }
@@ -350,15 +350,15 @@ const scenes = $$(".sc").map((el) => ({ el, start: +el.dataset.start, end: +el.d
 scenes.forEach((scene, i) => (scene.el.style.zIndex = i + 1));
 
 // 앱 화면 녹화: 프레임을 미리 읽어 두고 캔버스에 그린다.
-const CLIPS = { recall: 82, strokes: 86, story: 73, collection: 82 };
+const CLIPS = ['recall', 'meaning', 'strokes', 'story', 'collection'];
 const clips = {};
-async function loadClip(name, count) {
-  const times = (await (await fetch(`/.tmp/product-film-captures/${name}/frames.json`)).json()).map((f) => f.t);
-  const frames = await Promise.all(Array.from({ length: count }, (_, i) => new Promise((resolve, reject) => {
+async function loadClip(name) {
+  const times = (await (await fetch(`/.tmp/captures-2026-10-07/${name}/frames.json`)).json()).map((f) => f.t);
+  const frames = await Promise.all(Array.from({ length: times.length }, (_, i) => new Promise((resolve, reject) => {
     const im = new Image();
     im.onload = () => resolve(im);
     im.onerror = reject;
-    im.src = `/.tmp/product-film-captures/${name}/${String(i).padStart(4, "0")}.jpg`;
+    im.src = `/.tmp/captures-2026-10-07/${name}/${String(i).padStart(4, "0")}.jpg`;
   })));
   clips[name] = { times, frames };
 }
@@ -431,8 +431,10 @@ function seek(T) {
   if (T >= 5.5 && T < 13) {
     const q = out(prog(T, 6.15, 0.8));
     tf($("#ph3"), { y: (1 - q) * 900, ry: lerp(-34, -12, inOut(prog(T, 6.1, 5.9))) + Math.sin(T * 1.3) * 2, rx: 4, r: lerp(8, 3, q), o: 1 });
-    if (T < 9) drawClip($("#ph3 canvas"), "recall", (T - 6.2) * 2.2);
-    else drawClip($("#ph3 canvas"), "strokes", (T - 9) * 2.7);
+    // 읽기(퀴즈 정답) → 뜻(훈음 자신감) → 쓰기·부수(획순) 순으로 녹화를 잇는다.
+    if (T < 8) drawClip($("#ph3 canvas"), "recall", (T - 6.2) * 1.6);
+    else if (T < 9) drawClip($("#ph3 canvas"), "meaning", (T - 8) * 2.1);
+    else drawClip($("#ph3 canvas"), "strokes", (T - 9) * 2.8);
   }
 
   // 4·5 도장판
@@ -489,7 +491,7 @@ function seek(T) {
   if (T >= 31.5 && T < 35) {
     const q = out(prog(T, 32.05, 0.7));
     tf($("#ph8"), { y: (1 - q) * 800, ry: Math.sin(T * 1.6) * 6, rx: 3, r: lerp(-8, -2, q) });
-    drawClip($("#ph8 canvas"), "collection", 0);
+    drawClip($("#ph8 canvas"), "collection", (T - 32) * 2);
   }
 
   // 9 엔드 카드
@@ -499,7 +501,7 @@ function seek(T) {
 
 async function init() {
   await Promise.all([document.fonts.load("100px Jua"), document.fonts.load("100px Hanja"), document.fonts.load("400 40px Body"), document.fonts.load("700 40px Body"), document.fonts.ready]);
-  await Promise.all(Object.entries(CLIPS).map(([name, count]) => loadClip(name, count)));
+  await Promise.all(CLIPS.map((name) => loadClip(name)));
   await Promise.all($$("img").map((im) => im.decode().catch(() => {})));
   measureLinks();
   seek(+params.get("t") || 0);

@@ -46,3 +46,6 @@ tmp/
 # Local browser evidence and Impeccable working state
 docs/review/*.png
 .impeccable/build/
+
+# Python 캐시
+__pycache__/

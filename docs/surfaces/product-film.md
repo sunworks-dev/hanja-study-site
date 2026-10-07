@@ -20,8 +20,8 @@ FORM: 가로 1920×1080, 세로 1080×1920, 30fps, 38초. 120 BPM이라 2초마�
 - 음악·효과음은 `scripts/product-film/audio.py --out film.wav`가 수식으로 합성한다(numpy만 사용, 외부 음원 없음).
 - 촬영: 저장소 루트에서 `python3 -m http.server 4323`을 켜고 `FILM_O=landscape FILM_OUT=<폴더> node ~/.claude/skills/phi-browser/scripts/runner.mjs < scripts/product-film/capture.js`. 세로는 `FILM_O=portrait`. 각 1,140장.
 - 인코딩: `ffmpeg -framerate 30 -i <폴더>/%05d.jpg -i film.wav -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -af loudnorm=I=-16:TP=-1.5:LRA=9 -c:a aac -b:a 160k -t 38 -movflags +faststart <출력>.mp4`.
-- 필요한 로컬 자료(git 제외): `.tmp/product-film-captures/`의 녹화 4종·Jua 원본과 `fonts/`(앱 `flutter_app/assets/fonts`의 Pretendard Medium·Bold, NotoSerifKR SemiBold 복사본).
-- `scripts/build-product-film.py`는 2026-10-03 판을 만든 이전 스크립트다. 현재 영상에는 쓰지 않는다.
+- 녹화: 웹 베타를 Phi 에이전트 Space에서 430×860(2배)으로 찍는다. `REC_NAME=recall REC_SECONDS=7.5 REC_ACTIONS='[{"at":2.2,"x":116,"y":608}]' REC_OUT=<폴더> node ~/.claude/skills/phi-browser/scripts/runner.mjs < scripts/product-film/record.js`. 2026-10-07 녹화는 `.tmp/captures-2026-10-07/`(git 제외)에 있다: recall(九 퀴즈 정답), meaning(훈음 자신감 선택), strokes(校 획순), compose(木+交 연결), story(흥부와 놀부 農村), collection(8급 도감과 校 카드 상세). 같은 폴더에 Jua 원본과 `fonts/`(앱 `flutter_app/assets/fonts`의 Pretendard Medium·Bold, NotoSerifKR SemiBold 복사본)를 둔다.
+- 2026-10-03 판의 PIL 렌더 스크립트(`scripts/build-product-film.py`)는 2026-10-07에 삭제했다. git 기록에 남아 있다.
 
 # 2026-10-03 제품 필름 재제작 (이전 판)
 
