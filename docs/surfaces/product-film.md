@@ -17,7 +17,8 @@ FORM: 가로 1920×1080, 세로 1080×1920, 30fps, 38초. 120 BPM이라 2초마�
 ## 만드는 방법 (2026-10-06 판)
 
 - 장면 원본은 `scripts/product-film/film.html` 하나다. 모든 움직임을 `seek(초)`가 계산하므로 같은 프레임을 언제든 똑같이 다시 그린다. `?t=16.6`으로 한 장면을, `?play=1`로 미리보기를 본다.
-- 음악·효과음은 `scripts/product-film/audio.py --out film.wav`가 수식으로 합성한다(numpy만 사용, 외부 음원 없음).
+- 효과음은 `scripts/product-film/audio.py --out sfx.wav --sfx-only --minimal`이 수식으로 합성한다. `--minimal`은 14~16초 시계 틱과 16~17.5초·23초 도장 소리만 남긴다. 로고 히트·전환음 등 효과음이 많고 음악과 따로 논다는 사용자 지적(2026-10-07) 때문이다. 배경음악은 유튜브 오디오 보관함의 ‘With You’(Everet Almond, 표준 라이선스, 약 96 BPM)를 쓴다. 자체 합성 음악이 딱딱하고 ‘Happy Tails’는 어색하다는 사용자 선택이다. 원본 MP3는 `.tmp/With You - Everet Almond.mp3`(git 제외)에 두고, ffmpeg로 38초로 자른 뒤 도장 구간(15.8~17.9초)만 0.55배로 낮추고 효과음(0.75배)과 섞은 다음 loudnorm(I=-16)을 별도 패스로 건다.
+- 유튜브 도움말은 보관함 음악을 유튜브 밖에서 쓰는 경우의 법적 안내를 제공하지 않는다고 적고 있다. 소개 사이트에 올리는 사용은 사용자 결정이다.
 - 촬영: 저장소 루트에서 `python3 -m http.server 4323`을 켜고 `FILM_O=landscape FILM_OUT=<폴더> node ~/.claude/skills/phi-browser/scripts/runner.mjs < scripts/product-film/capture.js`. 세로는 `FILM_O=portrait`. 각 1,140장.
 - 인코딩: `ffmpeg -framerate 30 -i <폴더>/%05d.jpg -i film.wav -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p -af loudnorm=I=-16:TP=-1.5:LRA=9 -c:a aac -b:a 160k -t 38 -movflags +faststart <출력>.mp4`.
 - 녹화: 웹 베타를 Phi 에이전트 Space에서 430×860(2배)으로 찍는다. `REC_NAME=recall REC_SECONDS=7.5 REC_ACTIONS='[{"at":2.2,"x":116,"y":608}]' REC_OUT=<폴더> node ~/.claude/skills/phi-browser/scripts/runner.mjs < scripts/product-film/record.js`. 2026-10-07 녹화는 `.tmp/captures-2026-10-07/`(git 제외)에 있다: recall(九 퀴즈 정답), meaning(훈음 자신감 선택), strokes(校 획순), compose(木+交 연결), story(흥부와 놀부 農村), collection(8급 도감과 校 카드 상세). 같은 폴더에 Jua 원본과 `fonts/`(앱 `flutter_app/assets/fonts`의 Pretendard Medium·Bold, NotoSerifKR SemiBold 복사본)를 둔다.

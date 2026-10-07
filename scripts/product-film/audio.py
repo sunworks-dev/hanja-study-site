@@ -367,6 +367,22 @@ def events():
     hit_chord(34.0, 1.1, (72, 76, 79, 84, 88))
 
 
+def events_minimal():
+    # 외부 배경음악 위에 얹는 최소 효과음(2026-10-07). 시간 흐름과 도장만 남기고 로고·전환음은 뺀다.
+    # 14~16 시계 틱: 반복 간격이 줄며 12시간이 지나가는 느낌
+    tm, iv = 14.0, 0.5
+    while tm < 16.0:
+        put(fxb, tm, tick(2200, 0.4 + 0.3 * (tm - 14) / 2), 0.7, 0.2, 0.08)
+        iv = max(0.09, iv * 0.84)
+        tm += iv
+    # 16~17.5 도장 4번(음높이 상승)
+    for k, tm in enumerate((16.0, 16.5, 17.0, 17.5)):
+        put(fxb, tm, stamp(70 * 2 ** (k * 1.5 / 12)), 1.2, (k - 1.5) * 0.15, 0.1)
+    # 23.0 도장 동시 4개, 앞보다 약하게
+    for k in range(4):
+        put(fxb, 23.0, stamp(70 * 2 ** (k * 1.5 / 12)), 0.4, (k - 1.5) * 0.25, 0.12)
+
+
 # ---------- 마스터 ----------
 MUS_GAIN = 1.0  # 음악 버스를 효과음보다 약 6dB 낮게 두는 값
 
@@ -434,10 +450,16 @@ def master():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    out = ap.parse_args().out
-    events()
-    music()
-    pads()
+    # 외부 배경음악 위에 효과음만 얹을 때 쓴다(2026-10-07, 유튜브 오디오 보관함 곡 사용).
+    ap.add_argument("--sfx-only", action="store_true")
+    # 시계 틱·도장만 남긴 최소 효과음. --sfx-only와 함께 쓴다.
+    ap.add_argument("--minimal", action="store_true")
+    args = ap.parse_args()
+    out = args.out
+    events_minimal() if args.minimal else events()
+    if not args.sfx_only:
+        music()
+        pads()
     x = master()
     x *= 10 ** (-1 / 20) / np.max(np.abs(x))  # 최대 피크 -1dBFS
     pcm = np.round(x * 32767).astype("<i2")

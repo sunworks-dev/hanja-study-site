@@ -1,9 +1,16 @@
 {
-  "prompt": "Original motion film authored as a deterministic HTML timeline (scripts/product-film/film.html) and captured frame by frame. Kinetic typography, the mastery stamp card, clock and calendar are explanatory graphics; phone screens show unmodified actual app captures. Original synthesized acoustic-style 120 BPM music (Karplus-Strong guitar, piano, brush) and effects (scripts/product-film/audio.py); no external stock footage or music.",
+  "prompt": "Original motion film authored as a deterministic HTML timeline (scripts/product-film/film.html) and captured frame by frame. Kinetic typography, the mastery stamp card, clock and calendar are explanatory graphics; phone screens show unmodified actual app captures (web beta, 2026-10-07). Sound effects synthesized in scripts/product-film/audio.py (--sfx-only --minimal: clock ticks and stamps only). Background music: 'With You' by Everet Almond from the YouTube Audio Library (standard YouTube Audio Library license, downloaded 2026-10-07), trimmed to 38 s and mixed with ffmpeg (slight dip under the stamps).",
   "source": "https://bryannamd.github.io/hanja-web/",
   "captured": "2026-10-07",
   "rendered": "2026-10-07",
   "duration": 38,
   "format": "landscape",
-  "script": "scripts/product-film/film.html"
+  "script": "scripts/product-film/film.html",
+  "music": {
+    "title": "With You",
+    "artist": "Everet Almond",
+    "source": "YouTube Audio Library",
+    "license": "YouTube Audio Library standard license",
+    "downloaded": "2026-10-07"
+  }
 }

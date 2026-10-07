@@ -42,10 +42,10 @@
       crossorigin
     />
     <link rel="stylesheet" href="styles.css?v=20261006-mastery" />
-    <link rel="stylesheet" href="showcase.css?v=20261006-mastery" />
+    <link rel="stylesheet" href="showcase.css?v=20261007-feedback" />
     <link rel="stylesheet" href="legal.css?v=20261003" />
     <script src="app.js?v=20261006-mastery" defer></script>
-    <script src="showcase.js?v=20261006-mastery" defer></script>
+    <script src="showcase.js?v=20261007-feedback" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -114,10 +114,10 @@
         <div class="section-wrap">
           <div class="film-heading"><h2 id="film-title">공부가 이렇게 생겼다면.</h2><p>맞히고, 쓰고, 12시간 뒤 다시 떠올리기까지.<br>어흥!한자의 공부를 38초에 담았어요.</p></div>
           <div class="film-player" id="film-player">
-            <video id="product-film" playsinline controls preload="none" poster="assets/video/poster-motion-landscape.webp?v=20261007" aria-label="어흥!한자 실제 웹 앱 소개 영상, 약 38초" aria-describedby="film-description">
-              <source src="assets/video/hanja-motion-landscape.mp4?v=20261007" type="video/mp4">
-              <track kind="captions" src="assets/video/hanja-motion-ko.vtt?v=20261007" srclang="ko" label="한국어 장면 설명">
-              <p>이 브라우저에서는 영상을 재생할 수 없습니다. <a href="assets/video/hanja-motion-landscape.mp4?v=20261007">시연 영상 내려받기</a></p>
+            <video id="product-film" playsinline controls preload="none" poster="assets/video/poster-motion-landscape.webp?v=20261007c" aria-label="어흥!한자 실제 웹 앱 소개 영상, 약 38초" aria-describedby="film-description">
+              <source src="assets/video/hanja-motion-landscape.mp4?v=20261007c" type="video/mp4">
+              <track kind="captions" src="assets/video/hanja-motion-ko.vtt?v=20261007c" srclang="ko" label="한국어 장면 설명">
+              <p>이 브라우저에서는 영상을 재생할 수 없습니다. <a href="assets/video/hanja-motion-landscape.mp4?v=20261007c">시연 영상 내려받기</a></p>
             </video>
             <button class="film-cover" type="button" id="film-play" aria-label="38초 앱 소개 영상 재생"><span class="film-play-symbol"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 10 7-10 7z"/></svg></span><span>어흥!한자 만나보기 <small>00:38</small></span></button>
           </div>
@@ -914,13 +914,55 @@
             </summary>
             <div>
               <p>
+                아래 <a href="#feedback">의견 보내기</a>에 사용 기기와 불편했던
+                화면을 적어 주세요. 메일은
                 <a href="mailto:support@sunworks.kr">support@sunworks.kr</a>로
-                사용 기기와 불편했던 화면을 알려 주세요. 실제로 쓰는 사람의
-                피드백을 받아 고치는 일은, 이 앱이 처음 시작된 방식이기도 해요.
+                도착해요. 실제로 쓰는 사람의 피드백을 받아 고치는 일은, 이 앱이
+                처음 시작된 방식이기도 해요.
               </p>
             </div>
           </details>
         </div>
+      </section>
+      <section id="feedback" class="feedback-section section-wrap section-space" aria-labelledby="feedback-title">
+        <div>
+          <h2 id="feedback-title">써 보고 느낀 점,<br />그대로 보내 주세요.</h2>
+          <p>
+            잘못된 뜻, 불편한 화면, 있으면 좋을 기능. 무엇이든 괜찮아요. 보내기를
+            누르면 메일 앱이 열리고 내용이 채워져 있어요. 받는 주소는
+            <a href="mailto:support@sunworks.kr">support@sunworks.kr</a>입니다.
+          </p>
+        </div>
+        <!-- JS 없이도 동작하도록 mailto GET 폼. subject·body 필드명은 메일 앱이 그대로 읽는다. -->
+        <form id="feedback-form" class="feedback-form" action="mailto:support@sunworks.kr" method="get" enctype="text/plain">
+          <input type="hidden" name="subject" value="[어흥!한자] 의견" />
+          <div class="feedback-row">
+            <label for="feedback-kind">어떤 의견인가요?</label>
+            <select id="feedback-kind" name="kind">
+              <option>잘못된 내용</option>
+              <option>불편한 화면·동작</option>
+              <option>기능 제안</option>
+              <option>구매·결제 문의</option>
+              <option>그 외</option>
+            </select>
+          </div>
+          <div class="feedback-row">
+            <label for="feedback-device">사용 기기 <small>(선택)</small></label>
+            <input id="feedback-device" name="device" type="text" autocomplete="off" placeholder="예: 아이패드 사파리, 갤럭시 크롬" />
+          </div>
+          <div class="feedback-row">
+            <label for="feedback-body">내용</label>
+            <textarea id="feedback-body" name="body" rows="6" required minlength="5" placeholder="어느 화면에서, 무엇이 어땠는지 적어 주세요."></textarea>
+          </div>
+          <div class="feedback-row">
+            <label for="feedback-reply">답장 받을 메일 <small>(선택)</small></label>
+            <input id="feedback-reply" name="reply" type="email" autocomplete="email" placeholder="보내는 메일 주소와 다르면 적어 주세요" />
+          </div>
+          <div class="feedback-actions">
+            <button type="submit" class="button button-primary">메일 앱으로 보내기</button>
+            <p id="feedback-status" class="feedback-status"></p>
+          </div>
+        </form>
       </section>
       <section class="closing-section" aria-labelledby="closing-title">
         <div class="section-wrap closing-content">
@@ -978,7 +1020,7 @@
         </div>
         <div>
           <dt>문의</dt>
-          <dd><a href="mailto:support@sunworks.kr">support@sunworks.kr</a></dd>
+          <dd><a href="mailto:support@sunworks.kr">support@sunworks.kr</a> · <a href="#feedback">의견 보내기</a></dd>
         </div>
         <div>
           <dt>호스팅 제공자</dt>

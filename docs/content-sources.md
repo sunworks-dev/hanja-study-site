@@ -13,6 +13,7 @@
 - [FSRS 공식 설명](https://github.com/open-spaced-repetition/awesome-fsrs/wiki/ABC-of-FSRS): 학습 기록으로 기억 상태를 추정해 복습 시점을 정한다. 특정 알고리즘 버전을 ‘최신’이라고 단정하거나 시뮬레이션 효율 수치를 앱의 효과로 전용하지 않았다.
 - [Roediger & Karpicke, 2006](https://pubmed.ncbi.nlm.nih.gov/16507066/): 회상 연습과 지연된 기억 검사에 관한 연구. 앱 자체를 검증한 연구가 아니다.
 - 익힘 판정(2026-10-06 확인): 앱 `lib/srs/hanja_mastery.dart`(12시간 이상 떨어진 정답 2건으로 칸 점등, 마지막 강한 정답 후 30일이 지나면 소등)와 `lib/widgets/collection_card_detail.dart`의 안내 문구. 이야기 11편은 `content/stories/stories.json`의 흥부전·심청전·홍길동전·전우치전·삼국유사·삼국사기·구전설화를 바탕으로 새로 쓴 글이다.
+- 소개 영상 배경음악(2026-10-07): ‘With You’ — Everet Almond, YouTube 오디오 보관함(표준 라이선스, 저작자 표시 불필요). 효과음은 자체 합성(시계 틱·도장만). 상세는 [영상 기획 문서](surfaces/product-film.md).
 - FSRS 쉬운 설명(2026-10-07 추가): [ABC of FSRS](https://github.com/open-spaced-repetition/awesome-fsrs/wiki/ABC-of-FSRS)의 세 변수 정의(난이도 D, 안정성 S=기억날 확률이 90%로 떨어지기까지의 날수, 회상 확률 R)와 “목표 기억률에 닿을 때 복습” 원리를 쉬운 말로 옮겼다. 망각곡선 그림의 1일·3일·일주일·보름 간격은 원리 예시이며 개인 예측값이 아니다. 자신감 4단계(잘 몰라요·가물가물·알 것 같아요·확실해요)는 2026-10-07 웹 베타 훈음 카드 화면에서 직접 확인했다.
 - 앱 화면 이미지(2026-10-07 갱신): `public/assets/screens/*.webp`는 2026-10-06 배포된 웹 베타를 Phi 에이전트 Space에서 430×860(2배)으로 찍은 실제 화면이다. 조각 모아 보기(木+交), 자신감 선택, 도감 카드 상세(12시간 뒤 표식)를 새로 담았다.
 - [Craik & Tulving (1975)](https://doi.org/10.1037/0096-3445.104.3.268): 의미를 깊이 처리하고 연결한 정보가 더 잘 기억된다는 일반 원리의 근거. ‘최신 뇌과학’이나 앱의 효과로 표현하지 않았다. 문해력은 제작 의도로만 적었다.

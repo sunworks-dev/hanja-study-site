@@ -81,8 +81,8 @@ function chooseFilm() {
   // Never swap a loaded film during playback or restart a user's position.
   if (filmStarted) return;
   const orientation = portraitFilm.matches ? "portrait" : "landscape";
-  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4?v=20261007`;
-  productFilm.poster = `assets/video/poster-motion-${orientation}.webp?v=20261007`;
+  productFilm.querySelector("source").src = `assets/video/hanja-motion-${orientation}.mp4?v=20261007c`;
+  productFilm.poster = `assets/video/poster-motion-${orientation}.webp?v=20261007c`;
 }
 chooseFilm();
 portraitFilm.addEventListener("change", chooseFilm);
@@ -191,3 +191,25 @@ document.addEventListener("click", (event) => {
   if (link && link.hash === location.hash) revealLinkedDetail();
 });
 revealLinkedDetail();
+
+// 의견 폼: 필드를 한 통의 메일 본문으로 묶어 메일 앱을 연다. JS 없이도 폼 자체가 mailto로 보낸다.
+const feedbackForm = document.querySelector("#feedback-form");
+feedbackForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(feedbackForm);
+  const kind = data.get("kind");
+  const lines = [
+    `[종류] ${kind}`,
+    `[기기] ${data.get("device") || "(미기재)"}`,
+    `[답장 주소] ${data.get("reply") || "(보내는 주소로)"}`,
+    "",
+    data.get("body"),
+    "",
+    `— 보낸 곳: ${location.origin}${location.pathname}`,
+  ];
+  const subject = `[어흥!한자] ${kind}`;
+  const status = document.querySelector("#feedback-status");
+  status.setAttribute("role", "status");
+  status.textContent = "메일 앱을 여는 중이에요. 열리지 않으면 support@sunworks.kr로 직접 보내 주세요.";
+  location.href = `mailto:support@sunworks.kr?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+});

@@ -344,3 +344,99 @@
 .hero-proof strong { color: var(--ink); margin-right: 4px; }
 .real-app-card { width: 250px; }
 .real-app-card img { border-radius: 18px; }
+
+/* 의견 보내기: 왼쪽 안내, 오른쪽 폼. 보내기는 사용자의 메일 앱으로 넘긴다. */
+.feedback-section {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 85px;
+  align-items: start;
+}
+.feedback-section > div > p {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+.feedback-section > div a {
+  font-weight: 700;
+}
+.feedback-form {
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  border-radius: 20px;
+  background: var(--white);
+  box-shadow:
+    0 1px 2px #23403518,
+    0 10px 30px #4b281210;
+}
+.feedback-row {
+  display: grid;
+  gap: 8px;
+}
+.feedback-row label {
+  font-weight: 750;
+  font-size: 15px;
+}
+.feedback-row label small {
+  font-weight: 500;
+  color: var(--muted);
+}
+.feedback-row input,
+.feedback-row select,
+.feedback-row textarea {
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 15px;
+  min-height: 50px;
+  width: 100%;
+  transition: border-color 160ms, box-shadow 160ms;
+}
+.feedback-row textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+.feedback-row :is(input, select, textarea):focus-visible {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px #ec653933;
+}
+.feedback-row :is(input, textarea)::placeholder {
+  color: #7d887f;
+}
+.feedback-row :is(input, textarea):user-invalid {
+  border-color: var(--orange);
+}
+.feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+.feedback-actions .button {
+  border: 0;
+  cursor: pointer;
+}
+.feedback-status {
+  font-size: 14px;
+  color: var(--muted);
+}
+.feedback-status:empty {
+  display: none;
+}
+@media (max-width: 900px) {
+  .feedback-section {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .feedback-form {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
