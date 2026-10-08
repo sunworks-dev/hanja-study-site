@@ -2,7 +2,7 @@
 
 ## 제품과 목적
 
-썬웍스(Sunworks)의 한자 학습 앱 **어흥!한자**를 소개하고, 방문자가 실제 웹 베타를 시작하도록 돕는다. 소개 사이트는 `hanja-app.sunw.kr`, 기존 웹앱은 `https://bryannamd.github.io/hanja-web/`이다. 기존 웹앱의 저장소와 배포는 변경하지 않는다.
+썬웍스(Sunworks)의 한자 학습 앱 **어흥!한자**를 소개하고, 방문자가 실제 웹 베타를 시작하도록 돕는다. 소개 사이트는 `hanja.sunw.kr`, 웹앱은 `https://hanja-app.sunw.kr/`이다(2026-10-08 주소 변경. 이전에는 소개 사이트가 `hanja-app.sunw.kr`, 웹앱이 `bryannamd.github.io/hanja-web/`였다). 웹앱의 빌드와 배포는 앱 저장소(`hanja-study-app`)가 맡는다.
 
 ## 사용자 확인 사항 · 2026-10-02
 

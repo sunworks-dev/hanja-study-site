@@ -288,7 +288,7 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "실제 웹 베타를 여는 기본 주 행동.",
-      "html": "<a class=\"ds-button-primary\" href=\"https://bryannamd.github.io/hanja-web/\">웹에서 체험하기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "html": "<a class=\"ds-button-primary\" href=\"https://hanja-app.sunw.kr/\">웹에서 체험하기<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
       "css": ".ds-button-primary{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:58px;padding:14px 25px;border:0;border-radius:12px;text-decoration:none;font-family:SUIT,\"Apple SD Gothic Neo\",\"Malgun Gothic\",sans-serif;font-size:17px;font-weight:800;line-height:1.4;cursor:pointer;touch-action:manipulation;transition:background-color 180ms,transform 180ms var(--ease,cubic-bezier(0.16,1,0.3,1)),box-shadow 180ms;background:var(--orange,#be411f);color:var(--white,#fffef9);}.ds-button-primary:hover{background:#a33416;transform:translateY(-2px);box-shadow:0 6px 15px #4b28121c;}.ds-button-primary:active{transform:scale(0.96);}.ds-button-primary:focus-visible{outline:3px solid var(--orange,#be411f);outline-offset:5px;}.ds-button-primary svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}.ds-button-primary:disabled{cursor:wait;opacity:0.65;}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none;}.ds-button-primary:hover{transform:none;}}"
     },
     {

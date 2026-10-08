@@ -8,8 +8,8 @@ Sunworks에서 새로 만드는 서비스와 소개 사이트는 `sunw.kr`의 �
 
 | 대상                | 주소                                                                    | 상태                  |
 | ------------------- | ----------------------------------------------------------------------- | --------------------- |
-| 한자 앱 소개 사이트 | [hanja-app.sunw.kr](https://hanja-app.sunw.kr/)                         | 공식 소개·학습 맛보기 |
-| 기존 한자 웹 앱     | [bryannamd.github.io/hanja-web](https://bryannamd.github.io/hanja-web/) | 현재 배포 유지        |
+| 한자 앱 소개 사이트 | [hanja.sunw.kr](https://hanja.sunw.kr/)         | 공식 소개·학습 맛보기 |
+| 한자 웹 앱          | [hanja-app.sunw.kr](https://hanja-app.sunw.kr/) | 웹 베타(앱 저장소 배포) |
 
 소개 사이트의 **웹에서 시작하기** 링크는 기존 한자 웹 앱으로 연결합니다.
 웹 앱 빌드 결과물은 계속 [`bryannamd/hanja-web`](https://github.com/bryannamd/hanja-web)에 배포합니다.
@@ -64,8 +64,8 @@ python3 -m venv /tmp/hanja-fonts
 
 - `main`에 푸시하면 GitHub Actions가 `public/`을 GitHub Pages로 배포합니다.
 - 커스텀 도메인은 저장소의 GitHub Pages 설정에서 관리합니다. `public/CNAME`은 도메인 기록용이며, Actions 배포에서는 이 파일만 바꿔도 설정이 변경되지는 않습니다.
-- 아이티이지 DNS: `sunw.kr`의 `hanja-app` CNAME은 `sunworks-dev.github.io`를 가리킵니다.
-- 기존 한자 웹 앱의 저장소와 배포 주소는 유지합니다.
+- 아이티이지 DNS: `sunw.kr`의 `hanja`(소개 사이트)와 `hanja-app`(웹 앱) CNAME은 모두 `sunworks-dev.github.io`를 가리킵니다. 2026-10-08에 소개 사이트를 `hanja-app`에서 `hanja`로 옮겼습니다.
+- 한자 웹 앱은 앱 저장소(`hanja-study-app`)가 `sunworks-dev/hanja-web`으로 배포합니다. 옛 주소 `bryannamd.github.io/hanja-web/`은 마지막 빌드로 남아 있습니다.
 - 앱 아이콘은 앱의 최신 `flutter_app/web/icons/Icon-512.png`를 WebP로 변환한 자산입니다.
 
 ## 작업 규칙
