@@ -928,41 +928,19 @@
         <div>
           <h2 id="feedback-title">써 보고 느낀 점,<br />그대로 보내 주세요.</h2>
           <p>
-            잘못된 뜻, 불편한 화면, 있으면 좋을 기능. 무엇이든 괜찮아요. 보내기를
-            누르면 메일 앱이 열리고 내용이 채워져 있어요. 받는 주소는
+            잘못된 뜻, 불편한 화면, 있으면 좋을 기능. 무엇이든 괜찮아요.
+            보안 문의폼에서 내용을 직접 작성하면 접수 확인 메일을 보내드려요.
+            이메일로 직접 보내실 때의 주소는
             <a href="mailto:support@sunworks.kr">support@sunworks.kr</a>입니다.
           </p>
         </div>
-        <!-- JS 없이도 동작하도록 mailto GET 폼. subject·body 필드명은 메일 앱이 그대로 읽는다. -->
-        <form id="feedback-form" class="feedback-form" action="mailto:support@sunworks.kr" method="get" enctype="text/plain">
-          <input type="hidden" name="subject" value="[어흥!한자] 의견" />
-          <div class="feedback-row">
-            <label for="feedback-kind">어떤 의견인가요?</label>
-            <select id="feedback-kind" name="kind">
-              <option>잘못된 내용</option>
-              <option>불편한 화면·동작</option>
-              <option>기능 제안</option>
-              <option>구매·결제 문의</option>
-              <option>그 외</option>
-            </select>
-          </div>
-          <div class="feedback-row">
-            <label for="feedback-device">사용 기기 <small>(선택)</small></label>
-            <input id="feedback-device" name="device" type="text" autocomplete="off" placeholder="예: 아이패드 사파리, 갤럭시 크롬" />
-          </div>
-          <div class="feedback-row">
-            <label for="feedback-body">내용</label>
-            <textarea id="feedback-body" name="body" rows="6" required minlength="5" placeholder="어느 화면에서, 무엇이 어땠는지 적어 주세요."></textarea>
-          </div>
-          <div class="feedback-row">
-            <label for="feedback-reply">답장 받을 메일 <small>(선택)</small></label>
-            <input id="feedback-reply" name="reply" type="email" autocomplete="email" placeholder="보내는 메일 주소와 다르면 적어 주세요" />
-          </div>
-          <div class="feedback-actions">
-            <button type="submit" class="button button-primary">메일 앱으로 보내기</button>
-            <p id="feedback-status" class="feedback-status"></p>
-          </div>
-        </form>
+        <div class="feedback-form">
+          <a class="button button-primary" href="https://sunworks-formmail.quiet-poetry-c5be.workers.dev/form" target="_blank" rel="noopener noreferrer">보안 문의폼 열기 (새 탭)</a>
+          <p>문의폼에서 이름 또는 별칭, 이메일, 제목과 내용을 직접 입력해 주세요.
+            이 사이트의 체험·학습 기록은 문의폼에 자동 전달하지 않습니다.</p>
+          <p>만 14세 미만 어린이의 개인정보가 포함된 문의는 보호자가 대신 보내 주세요.
+            <a href="privacy.html#inquiry-data">문의 정보 처리 안내</a></p>
+        </div>
       </section>
       <section class="closing-section" aria-labelledby="closing-title">
         <div class="section-wrap closing-content">

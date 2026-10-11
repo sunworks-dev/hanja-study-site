@@ -194,7 +194,7 @@ revealLinkedDetail();
 
 // 의견 폼: 필드를 한 통의 메일 본문으로 묶어 메일 앱을 연다. JS 없이도 폼 자체가 mailto로 보낸다.
 const feedbackForm = document.querySelector("#feedback-form");
-feedbackForm.addEventListener("submit", (event) => {
+feedbackForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const data = new FormData(feedbackForm);
   const kind = data.get("kind");
