@@ -66,6 +66,7 @@ python3 -m venv /tmp/hanja-fonts
 - 배포에는 저장소 secret `CLOUDFLARE_API_TOKEN`(Pages 편집 권한만)과 `CLOUDFLARE_ACCOUNT_ID`가 필요합니다.
 - `sunw.kr` DNS는 2026-10-16부터 Cloudflare에서 관리합니다. `hanja`는 Pages 커스텀 도메인입니다. 2026-10-08에 소개 사이트를 `hanja-app`에서 `hanja`로 옮겼습니다.
 - Cloudflare Pages는 `.html` 주소를 확장자 없는 주소로 308 리디렉트합니다(`/privacy.html` → `/privacy`).
+- `public/privacy.html` 1부는 앱 저장소 `docs/PRIVACY_POLICY.md`(v1.4)의 사본입니다. 앱 처리방침을 고치면 이 페이지도 함께 고칩니다.
 - 한자 웹 앱은 앱 저장소(`hanja-study-app`)가 `sunworks-dev/hanja-web`으로 배포합니다. 옛 주소 `bryannamd.github.io/hanja-web/`은 마지막 빌드로 남아 있습니다.
 - 앱 아이콘은 앱의 최신 `flutter_app/web/icons/Icon-512.png`를 WebP로 변환한 자산입니다.
 
