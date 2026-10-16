@@ -62,9 +62,10 @@ python3 -m venv /tmp/hanja-fonts
 
 ## 배포와 도메인
 
-- `main`에 푸시하면 GitHub Actions가 `public/`을 GitHub Pages로 배포합니다.
-- 커스텀 도메인은 저장소의 GitHub Pages 설정에서 관리합니다. `public/CNAME`은 도메인 기록용이며, Actions 배포에서는 이 파일만 바꿔도 설정이 변경되지는 않습니다.
-- 아이티이지 DNS: `sunw.kr`의 `hanja`(소개 사이트)와 `hanja-app`(웹 앱) CNAME은 모두 `sunworks-dev.github.io`를 가리킵니다. 2026-10-08에 소개 사이트를 `hanja-app`에서 `hanja`로 옮겼습니다.
+- `main`에 푸시하면 GitHub Actions가 `wrangler pages deploy`로 `public/`을 Cloudflare Pages(`hanja-study-site` 프로젝트)에 배포합니다.
+- 배포에는 저장소 secret `CLOUDFLARE_API_TOKEN`(Pages 편집 권한만)과 `CLOUDFLARE_ACCOUNT_ID`가 필요합니다.
+- `sunw.kr` DNS는 2026-10-16부터 Cloudflare에서 관리합니다. `hanja`는 Pages 커스텀 도메인입니다. 2026-10-08에 소개 사이트를 `hanja-app`에서 `hanja`로 옮겼습니다.
+- Cloudflare Pages는 `.html` 주소를 확장자 없는 주소로 308 리디렉트합니다(`/privacy.html` → `/privacy`).
 - 한자 웹 앱은 앱 저장소(`hanja-study-app`)가 `sunworks-dev/hanja-web`으로 배포합니다. 옛 주소 `bryannamd.github.io/hanja-web/`은 마지막 빌드로 남아 있습니다.
 - 앱 아이콘은 앱의 최신 `flutter_app/web/icons/Icon-512.png`를 WebP로 변환한 자산입니다.
 
