@@ -106,6 +106,9 @@ python3 scripts/build-pages.py
 
 앱에서 가져온 明·木 획순과 같은 채점 기준을 사용합니다. 입력·재생은 `public/writing-demo.mjs`, 순수 채점은 `public/stroke-scorer.mjs`입니다.
 
+- 획순 보기: 재생 버튼 하나로 획순을 차례로 보여 줍니다.
+- 직접 쓰기: 앱 「유형별 연습 → 획순 쓰기」처럼 옅은 글자 윤곽만 보입니다. 맞게 쓴 획만 나타나고, 세 번 틀린 획은 주황색으로 보여 줍니다. 끝나면 전체 획 중 맞게 쓴 획 수를 결과 카드에 보여 줍니다.
+
 ```sh
 node --test tests/writing.test.mjs
 ```

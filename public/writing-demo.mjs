@@ -5,20 +5,20 @@ const canvas = document.querySelector('#writing-canvas');
 const context = canvas.getContext('2d');
 const status = document.querySelector('#writing-status');
 const progress = document.querySelector('#writing-progress');
-const nextButton = document.querySelector('#stroke-button');
 const playButton = document.querySelector('#writing-play');
 const clearButton = document.querySelector('#clear-button');
-const speed = document.querySelector('#writing-speed');
+const result = document.querySelector('#writing-result');
 const modes = [...document.querySelectorAll('[data-writing-mode]')];
 const characters = [...document.querySelectorAll('[data-writing-char]')];
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const size = canvas.width;
-const colors = { ink: '#233f35', hint: '#be411f', outline: '#e9ebdf', assisted: '#899184' };
+const strokeMs = 800;
+const colors = { ink: '#233f35', missed: '#be411f', outline: '#e9ebdf' };
 let glyph, paths, medians, session;
-let mode = 'guide';
+let mode = 'write';
 let character = '明';
 let frame = 0, playing = false, shown = 0, partial = 0;
-let pointer = null, points = [], userStrokes = [];
+let pointer = null, points = [];
 let loadVersion = 0;
 const cache = new Map();
 
@@ -28,15 +28,16 @@ function updateControls() {
   const watching = mode === 'watch';
   board.dataset.mode = mode;
   modes.forEach((b) => { b.disabled = !ready; b.setAttribute('aria-pressed', String(b.dataset.writingMode === mode)); });
-  nextButton.hidden = playButton.hidden = speed.parentElement.hidden = !watching;
-  nextButton.disabled = !ready || Boolean(frame);
+  playButton.hidden = !watching;
+  // The result card has its own retry button.
+  clearButton.hidden = watching || Boolean(ready && session.done);
   playButton.disabled = clearButton.disabled = !ready;
-  playButton.textContent = playing ? '잠깐 멈추기' : '이어서 보기';
-  playButton.setAttribute('aria-pressed', String(playing));
-  nextButton.textContent = ready && shown >= medians.length ? '처음 획 보기' : '다음 획 보기';
+  const finished = ready && shown >= medians.length;
+  playButton.querySelector('span').textContent = playing ? '멈춤' : finished ? '다시 재생' : shown || partial ? '이어서 재생' : '획순 재생';
+  playButton.dataset.playing = String(playing);
   const count = ready ? medians.length : 0;
-  progress.textContent = !ready ? '준비 중' : watching ? `${shown} / ${count}획 살펴봄` : `${session.index} / ${count}획 진행`;
-  canvas.setAttribute('aria-label', `${glyph?.reading ?? '한자'} 연습장. ${watching ? '아래 버튼으로 획순을 살펴보세요.' : `${mode === 'guide' ? '시작점에서 선을 따라' : '힌트 없이'} 마우스나 손가락으로 한 획씩 써 보세요. 키보드로는 획순 보기 버튼을 이용하세요.`}`);
+  progress.textContent = !ready ? '준비 중' : watching ? `${shown} / ${count}획` : `${session.index} / ${count}획 진행`;
+  canvas.setAttribute('aria-label', `${glyph?.reading ?? '한자'} 연습장. ${watching ? '재생 버튼을 누르면 획순이 차례로 나타나요.' : '획순 안내 없이 마우스나 손가락으로 한 획씩 써 보세요. 맞게 쓴 획은 화면에 나타나요. 키보드로는 획순 보기의 재생 버튼을 이용하세요.'}`);
 }
 
 function stopAnimation() {
@@ -52,10 +53,11 @@ function cancelPointer() {
 }
 function reset() {
   stopAnimation(); cancelPointer();
-  shown = 0; partial = 0; userStrokes = [];
+  shown = 0; partial = 0;
   session = new TraceSession(medians, size);
+  result.hidden = true;
   updateControls(); render();
-  announce(mode === 'watch' ? '버튼을 눌러 한 획씩 살펴보세요.' : mode === 'guide' ? '숫자가 있는 시작점에서 화살표까지 그어 보세요.' : '글자 모양을 떠올려 한 획씩 써 보세요. 막히면 따라 쓰기로 돌아가도 괜찮아요.');
+  announce(mode === 'watch' ? '재생 버튼을 누르면 획순이 차례로 나타나요.' : '획순 안내 없이 한 획씩 써 보세요. 맞게 쓴 획은 화면에 나타나요.');
 }
 
 function transform() {
@@ -75,63 +77,66 @@ function fillStroke(index, color, fraction = 1) {
   } else { context.fillStyle = color; context.fill(paths[index]); }
   context.restore();
 }
-function line(path, color, width, dashed = false) {
+function line(path, color, width) {
   if (!path.length) return;
   context.save(); context.beginPath(); context.moveTo(...path[0]);
   path.slice(1).forEach((p) => context.lineTo(...p));
   context.strokeStyle = color; context.lineWidth = width;
   context.lineCap = context.lineJoin = 'round';
-  if (dashed) context.setLineDash([10, 9]);
   context.stroke(); context.restore();
 }
 function render() {
   context.clearRect(0, 0, size, size);
   if (!glyph) return;
-  if (mode !== 'blind') paths.forEach((_, i) => fillStroke(i, colors.outline));
+  // Like the app's practice screen: a faint whole-glyph silhouette, no order or path hints.
+  paths.forEach((_, i) => fillStroke(i, colors.outline));
   if (mode === 'watch') {
     for (let i = 0; i < shown; i++) fillStroke(i, colors.ink);
-    if (partial > 0 && shown < paths.length) fillStroke(shown, colors.ink, partial);
+    // Reduced motion: each stroke appears whole instead of being drawn.
+    if (partial > 0 && shown < paths.length && !reducedMotion.matches) fillStroke(shown, colors.ink, partial);
   } else {
-    session.results.forEach((result, i) => fillStroke(i, result.passed ? colors.ink : colors.assisted));
-    if (mode === 'guide' && !session.done) {
-      const median = medians[session.index];
-      line(median, colors.hint, 4, true);
-      const start = median[0], end = median.at(-1), before = median.at(-2);
-      const angle = Math.atan2(end[1] - before[1], end[0] - before[0]);
-      line([[end[0] - 17 * Math.cos(angle - .5), end[1] - 17 * Math.sin(angle - .5)], end,
-        [end[0] - 17 * Math.cos(angle + .5), end[1] - 17 * Math.sin(angle + .5)]], colors.hint, 5);
-      context.beginPath(); context.arc(...start, 19, 0, Math.PI * 2);
-      context.fillStyle = colors.hint; context.fill();
-      context.fillStyle = '#fffef9'; context.font = 'bold 24px sans-serif';
-      context.textAlign = 'center'; context.textBaseline = 'middle';
-      context.fillText(String(session.index + 1), ...start);
-    }
-    userStrokes.forEach((path) => line(path, colors.ink, 5));
+    session.results.forEach((r, i) => fillStroke(i, r.passed ? colors.ink : colors.missed));
     line(points, colors.ink, 9);
   }
 }
 
-function showNext(continuous = false) {
+function play() {
   if (!glyph || mode !== 'watch') return;
-  cancelAnimationFrame(frame);
   if (shown >= medians.length) { shown = 0; partial = 0; }
-  playing = continuous;
-  const start = performance.now();
-  const from = partial;
+  playing = true;
+  let last = performance.now();
   function paint(now) {
-    partial = reducedMotion.matches ? 1 : Math.min(1, from + (now - start) / (800 / Number(speed.value)));
-    render();
-    if (partial < 1) frame = requestAnimationFrame(paint);
-    else {
-      shown++; partial = 0; frame = 0;
-      announce(`${shown} / ${medians.length}획. ${glyph.descriptions[shown - 1]}${shown === medians.length ? ' 획순을 모두 살펴봤어요. 따라 쓰기도 해 볼까요?' : ''}`);
-      render();
-      if (playing && shown < medians.length && !reducedMotion.matches) showNext(true);
-      else { playing = false; updateControls(); }
+    partial += (now - last) / strokeMs;
+    last = now;
+    if (partial >= 1) {
+      shown++; partial = 0;
+      updateControls();
+      announce(`${shown} / ${medians.length}획. ${glyph.descriptions[shown - 1]}${shown === medians.length ? ' 획순을 모두 봤어요. 직접 쓰기도 해 볼까요?' : ''}`);
     }
+    render();
+    if (shown < medians.length) frame = requestAnimationFrame(paint);
+    else { frame = 0; playing = false; updateControls(); }
   }
   frame = requestAnimationFrame(paint);
   updateControls();
+}
+
+function reason(score) {
+  return !score.directionOk ? '방향이 반대였어요' : !score.startPointOk ? '시작 위치가 달랐어요' : '모양이 조금 어긋났어요';
+}
+function showResult() {
+  const total = medians.length;
+  const missed = session.results.flatMap((r, i) => (r.passed ? [] : [`${i + 1}번째 획: ${reason(r)}`]));
+  result.querySelector('[data-result="score"]').textContent = `${session.passed} / ${total}획`;
+  result.querySelector('[data-result="summary"]').textContent = session.allPassed
+    ? '모든 획을 획순대로 맞게 썼어요!'
+    : `${missed.length}획은 세 번 안에 맞히지 못해 주황색으로 보여 드렸어요.`;
+  result.querySelector('[data-result="accuracy"]').textContent = `획 정확도 ${Math.round(session.accuracy * 100)}%`;
+  const list = result.querySelector('[data-result="missed"]');
+  list.replaceChildren(...missed.map((text) => Object.assign(document.createElement('li'), { textContent: text })));
+  list.parentElement.hidden = !missed.length;
+  result.hidden = false;
+  announce(`${glyph.reading} 완성! 전체 ${total}획 중 ${session.passed}획을 맞게 썼어요. 획 정확도 ${Math.round(session.accuracy * 100)}%.`);
 }
 
 function pointFor(event) {
@@ -141,16 +146,13 @@ function pointFor(event) {
 function finishStroke() {
   const input = points;
   cancelPointer();
-  const result = session.submit(input);
-  if (!result) { render(); return; }
-  if (result.advanced && mode === 'guide') userStrokes.push(input);
-  if (session.done) {
-    const helped = medians.length - session.passed;
-    announce(`${glyph.reading} 완성! ${session.allPassed ? `${session.passed}획 모두 스스로 썼어요.` : `${session.passed}획은 스스로, ${helped}획은 도움을 받아 썼어요.`} 획 정확도 ${Math.round(session.accuracy * 100)}%. ${mode === 'guide' ? '이번엔 혼자 쓰기에 도전해 볼까요?' : '다시 쓰기로 한 번 더 연습할 수 있어요.'}`);
-  } else if (result.advanced) {
-    announce(`${result.assisted ? '이 획은 함께 완성했어요.' : '잘 그었어요!'} 이제 ${session.index + 1}번째 획이에요.`);
+  const scored = session.submit(input);
+  if (!scored) { render(); return; }
+  if (session.done) showResult();
+  else if (scored.advanced) {
+    announce(`${scored.assisted ? '세 번 안에 맞히지 못해 이 획을 보여 드렸어요.' : '맞았어요!'} 이제 ${session.index + 1}번째 획이에요.`);
   } else {
-    announce(`${!result.directionOk ? '시작점에서 끝점 방향으로 그어 보세요.' : !result.startPointOk ? '획의 시작 위치를 다시 살펴보세요.' : '획의 모양을 따라 끝까지 그어 보세요.'} ${session.attempts} / 3번 시도했어요.`);
+    announce(`${!scored.directionOk ? '획을 쓰는 방향을 다시 떠올려 보세요.' : !scored.startPointOk ? '획의 시작 위치를 다시 살펴보세요.' : '획의 모양을 다시 떠올려 보세요.'} ${session.attempts} / 3번 시도했어요.`);
   }
   updateControls(); render();
 }
@@ -159,6 +161,7 @@ async function loadCharacter(value) {
   const version = ++loadVersion;
   character = value; stopAnimation(); cancelPointer();
   glyph = null; context.clearRect(0, 0, size, size);
+  result.hidden = true;
   characters.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.writingChar === value)));
   board.setAttribute('aria-busy', 'true'); updateControls();
   announce('획순을 준비하고 있어요.');
@@ -188,19 +191,18 @@ async function loadCharacter(value) {
 
 if (context && typeof Path2D === 'function') {
   document.querySelectorAll('a[href="#writing-demo"]').forEach((link) => link.addEventListener('click', async () => {
-    mode = 'guide';
+    mode = 'write';
     await loadCharacter('明');
     canvas.focus({ preventScroll: true });
   }));
   characters.forEach((b) => b.addEventListener('click', () => loadCharacter(b.dataset.writingChar)));
   modes.forEach((b) => b.addEventListener('click', () => { mode = b.dataset.writingMode; reset(); }));
   clearButton.addEventListener('click', reset);
-  nextButton.addEventListener('click', () => showNext());
+  result.querySelector('[data-result="retry"]').addEventListener('click', () => { reset(); canvas.focus({ preventScroll: true }); });
   playButton.addEventListener('click', () => {
-    if (playing) { stopAnimation(); updateControls(); announce('잠깐 멈췄어요. 이어서 볼 수 있어요.'); }
-    else showNext(true);
+    if (playing) { stopAnimation(); updateControls(); announce('잠깐 멈췄어요. 다시 누르면 이어서 재생해요.'); }
+    else play();
   });
-  speed.addEventListener('change', () => { if (frame) showNext(playing); });
   canvas.addEventListener('pointerdown', (event) => {
     if (!glyph || mode === 'watch' || session.done || !event.isPrimary || event.button !== 0 || pointer !== null) return;
     pointer = event.pointerId; points = [pointFor(event)];
@@ -228,11 +230,8 @@ if (context && typeof Path2D === 'function') {
   document.addEventListener('visibilitychange', () => { if (document.hidden) suspend(); });
   window.addEventListener('blur', suspend);
   new IntersectionObserver(([entry]) => { if (!entry.isIntersecting) suspend(); }).observe(canvas);
-  reducedMotion.addEventListener('change', () => {
-    if (reducedMotion.matches && frame) { stopAnimation(); partial = 0; shown++; updateControls(); render(); announce('움직임을 줄여 현재 획을 바로 보여 드렸어요. 다음 획 보기로 이어 가세요.'); }
-  });
   loadCharacter(character);
 } else {
-  board.querySelectorAll('button, select').forEach((b) => { b.disabled = true; });
+  board.querySelectorAll('button').forEach((b) => { b.disabled = true; });
   announce('이 브라우저에서는 손글씨 체험을 열 수 없어요. 웹앱에서 다른 학습을 만나 보세요.');
 }

@@ -143,7 +143,7 @@ def shell(path, title, description, h1, lead, body, ld_json, noindex=False):
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/styles.css?v=20261006-mastery" />
+    <link rel="stylesheet" href="/styles.css?v=20261021-write" />
     <link rel="stylesheet" href="/legal.css?v=20261003" />
     <link rel="stylesheet" href="/guide.css?v=20261017" />
     <script src="/analytics.js?v=20261016" defer></script>
@@ -438,13 +438,14 @@ home_ld = ld({'@context': 'https://schema.org', '@graph': [
     {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': f'{SITE}/', 'name': '어흥!한자', 'inLanguage': 'ko',
      'description': '한자 공부 앱 어흥!한자의 소개 사이트', 'publisher': {'@id': ORG['@id']}},
     {'@type': 'SoftwareApplication', '@id': f'{SITE}/#app', 'name': '어흥!한자',
-     'applicationCategory': 'EducationalApplication', 'operatingSystem': '웹 브라우저(베타). iOS·Android 정식 출시 준비 중',
-     'inLanguage': 'ko', 'url': f'{SITE}/', 'sameAs': [APP], 'image': f'{SITE}/assets/icon-512.png',
+     'applicationCategory': 'EducationalApplication', 'operatingSystem': 'Web browser',
+     'inLanguage': 'ko', 'url': f'{SITE}/', 'installUrl': APP, 'image': f'{SITE}/assets/icon-512.png',
      'screenshot': f'{SITE}/assets/video/poster-motion-landscape.webp',
      'description': '한자능력검정시험 8급부터 1급까지 한자 3,500자를 읽기·뜻·쓰기·부수로 나눠 익히는 한자 공부 앱. '
-                    '12시간 넘게 지난 뒤 다시 맞혀야 익힘으로 판정하고, FSRS로 복습 간격을 조절합니다.',
+                    '12시간 넘게 지난 뒤 다시 맞혀야 익힘으로 판정하고, FSRS로 복습 간격을 조절합니다. '
+                    '지금은 웹 베타로 쓸 수 있고, iOS·Android 앱은 Google Play·App Store 출시를 준비 중입니다.',
      'featureList': ['8급~1급 한자 3,500자, 단어 14,425개 항목', '읽기·뜻·쓰기·부수 네 칸 익힘 판정',
-                     '손글씨와 획순 연습', 'FSRS 간격 반복 복습', '연상 그림과 옛이야기', '모바일 시험 일정 알림(앱 출시 준비 중)'],
+                     '손글씨 획순 쓰기와 획별 채점', 'FSRS 간격 반복 복습', '연상 그림과 옛이야기(일부 급수)'],
      'audience': {'@type': 'EducationalAudience', 'educationalRole': 'student'},
      'author': {'@id': ORG['@id']}, 'publisher': {'@id': ORG['@id']}},
     {'@type': 'VideoObject', '@id': f'{SITE}/#film', 'name': '어흥!한자 소개 영상',
@@ -463,8 +464,8 @@ index_path.write_text(index)
 
 # ---------- 사이트맵 ----------
 # 정적 문서의 lastmod는 내용을 고친 날짜로 직접 맞춘다.
-static_pages = [('/', '2026-10-17'), ('/support', '2026-10-16'), ('/privacy', '2026-10-16'),
-                ('/terms', '2026-10-21'), ('/app-terms', '2026-10-21'), ('/refund', '2026-10-08')]
+static_pages = [('/', '2026-10-21'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
+                ('/terms', '2026-10-21'), ('/app-terms', '2026-10-21'), ('/refund', '2026-10-21')]
 generated = [('/grades/', CHECKED), ('/exam-schedule/', EXAM_CHANGED)] + [(f'/grades/{SLUG[g["grade"]]}/', CHECKED) for g in GRADES]
 urls = ''.join(f'  <url><loc>{SITE}{p}</loc><lastmod>{d}</lastmod></url>\n' for p, d in static_pages + generated)
 (PUBLIC / 'sitemap.xml').write_text(
