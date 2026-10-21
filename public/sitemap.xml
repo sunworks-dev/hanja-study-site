@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- scripts/build-pages.py가 만든다. 직접 고치지 않는다. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hanja.sunw.kr/</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://hanja.sunw.kr/support</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://hanja.sunw.kr/privacy</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://hanja.sunw.kr/terms.html</loc><lastmod>2026-10-08</lastmod></url>
-  <url><loc>https://hanja.sunw.kr/refund.html</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/support</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/privacy</loc><lastmod>2026-10-16</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/terms</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/app-terms</loc><lastmod>2026-10-21</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/refund</loc><lastmod>2026-10-08</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/exam-schedule/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/8/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/7-2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/7/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/6-2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/6/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/5-2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/5/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/4-2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/4/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/3-2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/3/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/2/</loc><lastmod>2026-10-17</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/grades/1/</loc><lastmod>2026-10-17</lastmod></url>
 </urlset>

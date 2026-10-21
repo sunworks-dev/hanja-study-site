@@ -1,0 +1,6 @@
+{
+  "purpose": "공유 미리보기(og:image) 1200x630",
+  "made": "2026-10-17",
+  "sources": ["assets/hanja-icon.webp", "assets/horang-welcome.webp", "assets/fonts/Jua-subset.woff2", "assets/fonts/SUIT-subset.woff2"],
+  "method": "기존 앱 그림과 사이트 글꼴로 HTML을 짜서 Chrome headless로 캡처했다. 새 그림을 그리지 않았다."
+}

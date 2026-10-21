@@ -52,6 +52,22 @@ python3 -m venv /tmp/hanja-fonts
 
 `scripts/product-film/`에 장면 원본(`film.html`), 음악 합성(`audio.py`), 앱 화면 녹화(`record.js`), 프레임 촬영(`capture.js`)이 있습니다. 절차는 [영상 기획 문서](docs/surfaces/product-film.md)에 적었습니다.
 
+## 급수 안내 페이지와 검색 노출
+
+`/grades/`(급수별 배정한자 수·합격 기준), `/grades/8/`~`/grades/1/`(급수별 한자 목록), `/exam-schedule/`(시험 일정)은 `scripts/build-pages.py`가 만듭니다. 같은 스크립트가 `sitemap.xml`, `llms.txt`, `llms-full.txt`, 홈의 구조화 데이터(화면의 FAQ 글자 그대로)도 다시 씁니다. 이 파일들은 직접 고치지 않습니다.
+
+```sh
+python3 scripts/build-pages.py
+```
+
+- 배포 워크플로가 배포 직전에 이 스크립트를 실행하고, 매주 월요일에도 다시 배포합니다. 시험 일정 페이지의 "다음 시험"은 빌드한 날 기준이라 지난 회차가 자동으로 내려갑니다.
+- `data/kccpt-official.json`: 한국어문회 누리집 표를 옮긴 값입니다. 새 회차 공고(다음 해 일정)가 나오면 공식 페이지를 확인해 고치고 `checked` 날짜를 바꾼 뒤 다시 실행합니다.
+- `data/hanja-by-grade.json`: 앱 `flutter_app/assets/seed/hanja_seed.json`의 사본입니다. 앱 seed가 바뀌면 다시 복사합니다. 누적 한자 수가 공식 배정한자 수와 다르면 스크립트가 멈춥니다.
+- 홈 FAQ 문구를 바꾸면 스크립트를 다시 실행해 구조화 데이터를 맞춥니다.
+- 급수 안내 페이지는 시스템 글꼴을 쓰므로 `subset-fonts.py`가 읽지 않습니다.
+- `public/404.html`이 있어야 없는 주소가 404로 응답합니다(없으면 Cloudflare Pages가 홈을 200으로 돌려줍니다).
+- IndexNow 키 파일은 `public/4e828a4d8a641ec6a64c8b45c419fdf8.txt`입니다.
+
 ## 근거와 검수
 
 - [제품 기준](docs/PRODUCT.md), [콘텐츠 출처](docs/content-sources.md), [첫 화면 방향](docs/surfaces/home.md)
@@ -67,6 +83,7 @@ python3 -m venv /tmp/hanja-fonts
 - `sunw.kr` DNS는 2026-10-16부터 Cloudflare에서 관리합니다. `hanja`는 Pages 커스텀 도메인입니다. 2026-10-08에 소개 사이트를 `hanja-app`에서 `hanja`로 옮겼습니다.
 - Cloudflare Pages는 `.html` 주소를 확장자 없는 주소로 308 리디렉트합니다(`/privacy.html` → `/privacy`).
 - `public/privacy.html` 1부는 앱 저장소 `docs/PRIVACY_POLICY.md`(v1.4)의 사본입니다. 앱 처리방침을 고치면 이 페이지도 함께 고칩니다.
+- `public/app-terms.html`은 앱 저장소 `flutter_app/web/terms.html`(v1.0)의 사본입니다. 앱 약관을 고치면 이 페이지도 함께 고칩니다.
 - 한자 웹 앱은 앱 저장소(`hanja-study-app`)가 `sunworks-dev/hanja-web`으로 배포합니다. 옛 주소 `bryannamd.github.io/hanja-web/`은 마지막 빌드로 남아 있습니다.
 - 앱 아이콘은 앱의 최신 `flutter_app/web/icons/Icon-512.png`를 WebP로 변환한 자산입니다.
 

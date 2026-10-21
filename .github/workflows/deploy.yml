@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # 시험 일정 페이지의 '다음 시험'을 지난 회차에서 다음 회차로 넘기려고 매주 월요일 다시 배포한다.
+  schedule:
+    - cron: "0 0 * * 1"
 
 permissions:
   contents: read
@@ -20,6 +23,8 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 24
+      - name: Build guide pages
+        run: python3 scripts/build-pages.py
       - name: Deploy site
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

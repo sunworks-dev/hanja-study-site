@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "publisher": "사단법인 한국어문회",
+    "exam": "전국한자능력검정시험",
+    "checked": "2026-10-17",
+    "note": "한국어문회 누리집의 표를 그대로 옮겼다. 추측한 날짜·숫자를 넣지 않는다. 새 회차·기준이 나오면 공식 페이지를 다시 확인해 고치고 checked를 바꾼 뒤 scripts/build-pages.py를 실행한다.",
+    "sources": {
+      "schedule": "https://www.hanja.re.kr/kccpt/exam/examInfo.do",
+      "levels": "https://www.hanja.re.kr/kccpt/exam/levelConfirm.do",
+      "questions": "https://www.hanja.re.kr/kccpt/exam/questInfo.do",
+      "passRule": "https://www.hanja.re.kr/kccpt/exam/successRule.do",
+      "examTime": "https://www.hanja.re.kr/kccpt/exam/examTime.do",
+      "fee": "https://www.hanja.re.kr/kccpt/exam/examFeeInfo.do",
+      "cert": "https://www.hanja.re.kr/kccpt/exam/certInfo.do"
+    }
+  },
+  "schedule": {
+    "year": 2026,
+    "kind": "정기시험",
+    "startTimes": { "4급~8급": "11:00", "특급~3급II": "15:00" },
+    "notice": "고사장 운영, 대입 일정, 감염병 상황, 방역대책 등의 사유로 변경될 수 있습니다.",
+    "rounds": [
+      { "round": 112, "applyStart": "2026-01-19", "applyEnd": "2026-01-23", "examDate": "2026-02-28", "resultDate": "2026-03-27" },
+      { "round": 113, "applyStart": "2026-04-20", "applyEnd": "2026-04-24", "examDate": "2026-05-23", "resultDate": "2026-06-19" },
+      { "round": 114, "applyStart": "2026-07-13", "applyEnd": "2026-07-17", "examDate": "2026-08-22", "resultDate": "2026-09-18" },
+      { "round": 115, "applyStart": "2026-10-19", "applyEnd": "2026-10-23", "examDate": "2026-11-21", "resultDate": "2026-12-18" }
+    ]
+  },
+  "grades": [
+    { "grade": "특급", "read": 5978, "write": 3500, "questions": 200, "pass": 160, "minutes": 100, "fee": 50000, "cert": "공인", "level": "국한혼용 고전을 불편 없이 읽고 연구할 수 있는 고급 수준" },
+    { "grade": "특급II", "read": 4918, "write": 2355, "questions": 200, "pass": 160, "minutes": 100, "fee": 50000, "cert": "공인", "level": "국한혼용 고전을 불편 없이 읽고 연구할 수 있는 중급 수준" },
+    { "grade": "1급", "read": 3500, "write": 2005, "questions": 200, "pass": 160, "minutes": 90, "fee": 50000, "cert": "공인", "level": "국한혼용 고전을 불편 없이 읽고 연구할 수 있는 초급 수준" },
+    { "grade": "2급", "read": 2355, "write": 1817, "questions": 150, "pass": 105, "minutes": 60, "fee": 30000, "cert": "공인", "level": "상용한자를 활용하는 것은 물론 인명·지명용 기초한자 활용 단계" },
+    { "grade": "3급", "read": 1817, "write": 1000, "questions": 150, "pass": 105, "minutes": 60, "fee": 30000, "cert": "공인", "level": "고급 상용한자 활용의 중급 단계" },
+    { "grade": "3급II", "read": 1500, "write": 750, "questions": 150, "pass": 105, "minutes": 60, "fee": 30000, "cert": "공인", "level": "고급 상용한자 활용의 초급 단계" },
+    { "grade": "4급", "read": 1000, "write": 500, "questions": 100, "pass": 70, "minutes": 50, "fee": 25000, "cert": "민간", "level": "중급 상용한자 활용의 고급 단계" },
+    { "grade": "4급II", "read": 750, "write": 400, "questions": 100, "pass": 70, "minutes": 50, "fee": 25000, "cert": "민간", "level": "중급 상용한자 활용의 중급 단계" },
+    { "grade": "5급", "read": 500, "write": 300, "questions": 100, "pass": 70, "minutes": 50, "fee": 25000, "cert": "민간", "level": "중급 상용한자 활용의 초급 단계" },
+    { "grade": "5급II", "read": 400, "write": 225, "questions": 100, "pass": 70, "minutes": 50, "fee": 25000, "cert": "민간", "level": "중급 상용한자 활용의 초급 단계" },
+    { "grade": "6급", "read": 300, "write": 150, "questions": 90, "pass": 63, "minutes": 50, "fee": 25000, "cert": "민간", "level": "기초 상용한자 활용의 고급 단계" },
+    { "grade": "6급II", "read": 225, "write": 50, "questions": 80, "pass": 56, "minutes": 50, "fee": 25000, "cert": "민간", "level": "기초 상용한자 활용의 중급 단계" },
+    { "grade": "7급", "read": 150, "write": 0, "questions": 70, "pass": 49, "minutes": 50, "fee": 25000, "cert": "민간", "level": "기초 상용한자 활용의 초급 단계" },
+    { "grade": "7급II", "read": 100, "write": 0, "questions": 60, "pass": 42, "minutes": 50, "fee": 25000, "cert": "민간", "level": "기초 상용한자 활용의 초급 단계" },
+    { "grade": "8급", "read": 50, "write": 0, "questions": 50, "pass": 35, "minutes": 50, "fee": 25000, "cert": "민간", "level": "한자 학습 동기 부여를 위한 급수" }
+  ],
+  "questionTypes": {
+    "columns": ["특급", "특급II", "1급", "2급", "3급", "3급II", "4급", "4급II", "5급", "5급II", "6급", "6급II", "7급", "7급II", "8급"],
+    "rows": [
+      ["독음(讀音)", 45, 45, 50, 45, 45, 45, 32, 35, 35, 35, 33, 32, 32, 22, 24],
+      ["훈음(訓音)", 27, 27, 32, 27, 27, 27, 22, 22, 23, 23, 22, 29, 30, 30, 24],
+      ["장단음(長短音)", 10, 10, 10, 5, 5, 5, 3, 0, 0, 0, 0, 0, 0, 0, 0],
+      ["반의어·상대어(反義語·相對語)", 10, 10, 10, 10, 10, 10, 3, 3, 3, 3, 3, 2, 2, 2, 0],
+      ["완성형(成語)", 10, 10, 15, 10, 10, 10, 5, 5, 4, 4, 3, 2, 2, 2, 0],
+      ["부수(部首)", 10, 10, 10, 5, 5, 5, 3, 3, 0, 0, 0, 0, 0, 0, 0],
+      ["동의어·유의어(同義語·類義語)", 10, 10, 10, 5, 5, 5, 3, 3, 3, 3, 2, 0, 0, 0, 0],
+      ["동음이의어(同音異義語)", 10, 10, 10, 5, 5, 5, 3, 3, 3, 3, 2, 0, 0, 0, 0],
+      ["뜻풀이", 5, 5, 10, 5, 5, 5, 3, 3, 3, 3, 2, 2, 2, 2, 0],
+      ["약자(略字)", 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 0, 0, 0, 0, 0],
+      ["한자 쓰기", 40, 40, 40, 30, 30, 30, 20, 20, 20, 20, 20, 10, 0, 0, 0],
+      ["필순(筆順)", 0, 0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 2, 2, 2],
+      ["한문(漢文)", 20, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+  },
+  "passRuleNote": "특급·특급II·1급은 출제 문항의 80% 이상, 2급~8급은 70% 이상 득점하면 합격입니다. 1문항당 1점입니다.",
+  "certNote": "특급·특급II·1급·2급·3급·3급II는 공인민간자격(교육부 제2023-11호, 공인기간 2024년 1월 1일~2026년 12월 31일), 4급~8급은 등록 민간자격(제2008-0645호)입니다.",
+  "certNoteRecheck": "공인기간이 2026-12-31에 끝난다. 2027년 1월에 certInfo 페이지에서 재공인 번호·기간을 다시 확인한다.",
+  "recommendation": "초등학생은 4급, 중·고등학생은 3급, 대학생은 2급과 1급 취득을 목표로 학습하길 권합니다.",
+  "inclusionNote": "상위 급수 한자는 하위 급수 한자를 모두 포함합니다.",
+  "refundRule": "응시료는 접수 마감일까지 100%, 시험일 5일 전까지 50% 환불되고, 시험일 4일 전부터는 환불되지 않습니다.",
+  "arrival": "응시자는 시험 시작 20분 전까지 고사실에 들어가야 합니다."
+}
