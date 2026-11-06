@@ -1,71 +1,41 @@
 "use strict";
 
-const showcaseContent = {
-  learn: {
-    image: "study", alt: "학교 교의 조각 모아 보기·획순·뜻풀이 학습 화면",
-    heading: ["校 하나를 배웠는데,", "학교가 새롭게 보여요."],
-    description: "校는 나무 木과 사귈 交가 만난 글자예요. 조각을 모아 뜻과 소리를 짐작하고, 획순으로 모양을 익혀요. 학교·대학교·중학교처럼 같은 한자를 쓰는 단어로 배움이 우리말까지 넓어집니다.",
-    benefits: ["조각 모아 보기·획순·훈음·부수를 한곳에서", "뜻을 떠올리기 쉬운 그림과 단어·예문", "정답을 보기 전, 직접 떠올리는 연습"],
-  },
-  story: {
-    image: "story", alt: "흥부와 놀부 이야기의 빈칸에 농촌을 맞힌 실제 앱 화면",
-    heading: ["한자를 맞혔더니,", "이야기가 이어져요."],
-    description: "흥부와 놀부, 해와 달이 된 오누이. 익숙한 옛이야기 속 빈칸을 채우며 한자를 문맥으로 만나요. 한자어를 글 속에서 많이 읽을수록 기억의 연결 고리가 늘어나요. 국어 문해력까지 함께 자라도록 만들었습니다.",
-    benefits: ["흥부전·심청전·홍길동전 등 고전을 바탕으로 한 이야기 11편", "문장 속에서 생각하는 한자어의 뜻", "마당별 진도를 저장해 이어서 학습"],
-  },
-  collection: {
-    image: "collection", alt: "8급의 유형별 익힘 정도와 색이 켜진 校·敎·九 카드가 있는 한자 도감 화면",
-    heading: ["얼마나 했는지보다,", "무엇을 익혔는지."],
-    description: "읽기·뜻·쓰기·부수를 따로 살펴요. 12시간 넘게 지난 뒤 다시 맞혀야 칸이 켜지니, 한 번 본 글자와 정말 익힌 글자가 구분돼요. 만난 한자가 도감에 하나씩 모이는 재미도 있어요.",
-    benefits: ["12시간 뒤 다시 맞혀야 켜지는 네 개의 칸", "30일 안에 다시 확인해 오래 남기는 기억", "급수별 도감·모의시험·유형별 연습"],
-  },
-  home: {
-    image: "home", alt: "연속 학습 일수, 오늘의 새 한자와 복습 분량, 시험 일정을 보여 주는 앱 홈 화면",
-    heading: ["오늘 뭘 할지,", "고민은 줄여 주세요."],
-    description: "새로 만날 한자와 다시 볼 한자를 오늘의 학습으로 모아 줍니다. 답변 기록에 맞춰 다시 볼 시점을 조절하고, 잠깐 멈춘 공부는 이어서 시작할 수 있어요.",
-    benefits: ["내 기록에 맞춰 조절되는 복습 간격", "직접 정하는 하루 신규 학습량", "풀던 학습을 이어 가는 세션 저장"],
-  },
-};
-
-const showcaseTabs = [...document.querySelectorAll("[data-showcase]")];
-const showcaseImage = document.querySelector("#showcase-image");
-function showFeature(tab, focus = false) {
-  const item = showcaseContent[tab.dataset.showcase];
-  showcaseTabs.forEach((button) => {
-    const selected = button === tab;
-    button.setAttribute("aria-selected", String(selected));
-    button.tabIndex = selected ? 0 : -1;
+// 모바일 하단 고정 안내: 히어로를 지난 뒤에만 보이고, 가격 카드·마지막 안내가 보이면 숨긴다.
+(() => {
+  const bar = document.querySelector("#sticky-cta");
+  const hero = document.querySelector(".product-hero");
+  if (!bar || !hero || !("IntersectionObserver" in window)) return;
+  try {
+    if (sessionStorage.getItem("sticky-cta-closed") === "1") return;
+  } catch (error) {
+    // 저장소를 못 써도 안내는 그대로 보여 준다.
+  }
+  document.documentElement.classList.add("has-sticky");
+  let heroPassed = false;
+  const covered = new Set();
+  const update = () => bar.classList.toggle("is-visible", heroPassed && covered.size === 0);
+  const heroObserver = new IntersectionObserver(([entry]) => {
+    heroPassed = !entry.isIntersecting && entry.boundingClientRect.bottom < 0;
+    update();
   });
-  showcaseImage.src = `assets/screens/${item.image}.webp`;
-  showcaseImage.alt = item.alt;
-  const enlarge = document.querySelector("#showcase-enlarge");
-  enlarge.href = showcaseImage.src;
-  enlarge.setAttribute("aria-label", `${item.alt} 크게 보기, 새 탭`);
-  const title = document.querySelector("#showcase-heading");
-  title.replaceChildren(document.createTextNode(item.heading[0]), document.createElement("br"), document.createTextNode(item.heading[1]));
-  document.querySelector("#showcase-description").textContent = item.description;
-  document.querySelector("#showcase-benefits").replaceChildren(...item.benefits.map((text) => {
-    const li = document.createElement("li");
-    li.textContent = text;
-    return li;
-  }));
-  document.querySelector("#showcase-panel").setAttribute("aria-labelledby", tab.id);
-  if (focus) tab.focus();
-}
-showcaseTabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => showFeature(tab));
-  tab.addEventListener("keydown", (event) => {
-    let next;
-    if (event.key === "ArrowRight") next = (index + 1) % showcaseTabs.length;
-    if (event.key === "ArrowLeft") next = (index - 1 + showcaseTabs.length) % showcaseTabs.length;
-    if (event.key === "Home") next = 0;
-    if (event.key === "End") next = showcaseTabs.length - 1;
-    if (next !== undefined) {
-      event.preventDefault();
-      showFeature(showcaseTabs[next], true);
+  const coverObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => (entry.isIntersecting ? covered.add(entry.target) : covered.delete(entry.target)));
+    update();
+  });
+  heroObserver.observe(hero);
+  document.querySelectorAll(".price-offer, .closing-section").forEach((el) => coverObserver.observe(el));
+  document.querySelector("#sticky-cta-close").addEventListener("click", () => {
+    heroObserver.disconnect();
+    coverObserver.disconnect();
+    bar.classList.remove("is-visible");
+    document.documentElement.classList.remove("has-sticky");
+    try {
+      sessionStorage.setItem("sticky-cta-closed", "1");
+    } catch (error) {
+      // 이번 방문에서만 닫힌 채로 둔다.
     }
   });
-});
+})();
 
 const productFilm = document.querySelector("#product-film");
 const filmPlayer = document.querySelector("#film-player");

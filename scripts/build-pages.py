@@ -115,7 +115,7 @@ CTA = (f'<aside class="guide-cta" aria-label="어흥!한자 소개"><div>'
        f'<p class="guide-cta-title">목록을 읽는 데서 끝내지 않게.</p>'
        f'<p>어흥!한자는 읽기·뜻·쓰기·부수를 따로 확인하고, 12시간 뒤 다시 맞혀야 익힘으로 칩니다. '
        f'급수에 따라 제공되는 학습 유형·삽화·음성 범위는 다릅니다.</p></div>'
-       f'<a class="button button-primary" href="{APP}">웹에서 체험하기</a></aside>')
+       f'<a class="button button-primary" href="{APP}">8급~7급 웹에서 체험하기</a></aside>')
 
 
 def shell(path, title, description, h1, lead, body, ld_json, noindex=False):
@@ -156,7 +156,7 @@ def shell(path, title, description, h1, lead, body, ld_json, noindex=False):
     <header class="site-header legal-header">
       <div class="nav-wrap">
         <a class="brand" href="/"><img src="/assets/hanja-icon.webp?v=20261006b" width="42" height="42" alt="" /><span>어흥!한자<span class="brand-dot">.</span></span></a>
-        <a class="button button-small button-ink" href="{APP}">웹에서 체험하기</a>
+        <a class="button button-small button-ink" href="{APP}">8급~7급 웹 체험</a>
       </div>
     </header>
     <main id="main" class="section-wrap guide-main">
@@ -410,7 +410,7 @@ body = f'''      <section class="guide-block" aria-labelledby="rounds-title">
         <h2 id="next-title">시험 전에 확인할 것</h2>
         <ul class="guide-list">
           <li>내 급수의 배정한자와 합격 기준: <a href="/grades/">급수별 한자 목록</a></li>
-          <li>어흥!한자 모바일 앱은 접수·시험 일정 알림을 준비하고 있습니다. 웹 베타에서는 푸시 알림을 제공하지 않습니다.</li>
+          <li>어흥!한자 앱은 알림을 허용하면 접수와 시험 날을 알려 줍니다. 웹 체험판에서는 푸시 알림을 제공하지 않습니다.</li>
         </ul>
       </section>
       {CTA}
@@ -426,6 +426,8 @@ index = index_path.read_text()
 
 def text_of(fragment):
     fragment = re.sub(r'<span aria-hidden="true">.*?</span>', '', fragment, flags=re.S)
+    # 기기별 문구(data-os) 중 PC용은 플랫폼 이름이 들어가므로 빼고, 이름 없는 모바일용 문구만 남긴다.
+    fragment = re.sub(r'<span data-os="desktop">.*?</span>', '', fragment, flags=re.S)
     return re.sub(r'\s+', ' ', html.unescape(re.sub(r'<[^>]+>', '', fragment))).strip()
 
 
@@ -438,12 +440,15 @@ home_ld = ld({'@context': 'https://schema.org', '@graph': [
     {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': f'{SITE}/', 'name': '어흥!한자', 'inLanguage': 'ko',
      'description': '한자 공부 앱 어흥!한자의 소개 사이트', 'publisher': {'@id': ORG['@id']}},
     {'@type': 'SoftwareApplication', '@id': f'{SITE}/#app', 'name': '어흥!한자',
-     'applicationCategory': 'EducationalApplication', 'operatingSystem': 'Web browser',
-     'inLanguage': 'ko', 'url': f'{SITE}/', 'installUrl': APP, 'image': f'{SITE}/assets/icon-512.png',
+     'applicationCategory': 'EducationalApplication', 'operatingSystem': 'iOS, Android, Web browser',
+     'inLanguage': 'ko', 'url': f'{SITE}/', 'installUrl': 'https://apps.apple.com/kr/app/id6823980453',
+     'downloadUrl': ['https://apps.apple.com/kr/app/id6823980453', 'https://play.google.com/store/apps/details?id=kr.sunworks.hanja'], 'softwareVersion': '1.0.0',
+     'offers': {'@type': 'Offer', 'price': '29900', 'priceCurrency': 'KRW'},
+     'image': f'{SITE}/assets/icon-512.png',
      'screenshot': f'{SITE}/assets/video/poster-motion-landscape.webp',
      'description': '한자능력검정시험 8급부터 1급까지 한자 3,500자를 읽기·뜻·쓰기·부수로 나눠 익히는 한자 공부 앱. '
                     '12시간 넘게 지난 뒤 다시 맞혀야 익힘으로 판정하고, FSRS로 복습 간격을 조절합니다. '
-                    '지금은 웹 베타로 쓸 수 있고, iOS·Android 앱은 Google Play·App Store 출시를 준비 중입니다.',
+                    'iOS·Android 앱은 App Store·Google Play에서 내려받을 수 있고, 8급~7급은 웹 체험판으로 먼저 써 볼 수 있습니다.',
      'featureList': ['8급~1급 한자 3,500자, 단어 14,425개 항목', '읽기·뜻·쓰기·부수 네 칸 익힘 판정',
                      '손글씨 획순 쓰기와 획별 채점', 'FSRS 간격 반복 복습', '연상 그림과 옛이야기(일부 급수)'],
      'audience': {'@type': 'EducationalAudience', 'educationalRole': 'student'},
@@ -464,7 +469,7 @@ index_path.write_text(index)
 
 # ---------- 사이트맵 ----------
 # 정적 문서의 lastmod는 내용을 고친 날짜로 직접 맞춘다.
-static_pages = [('/', '2026-10-21'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
+static_pages = [('/', '2026-11-06'), ('/changelog', '2026-11-06'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
                 ('/terms', '2026-10-21'), ('/app-terms', '2026-10-21'), ('/refund', '2026-10-21')]
 generated = [('/grades/', CHECKED), ('/exam-schedule/', EXAM_CHANGED)] + [(f'/grades/{SLUG[g["grade"]]}/', CHECKED) for g in GRADES]
 urls = ''.join(f'  <url><loc>{SITE}{p}</loc><lastmod>{d}</lastmod></url>\n' for p, d in static_pages + generated)
@@ -480,15 +485,15 @@ llms = f'''# 어흥!한자
 
 > 한자능력검정시험 8급~1급 한자 3,500자를 읽기·뜻·쓰기·부수로 나눠 익히는 한자 공부 앱의 소개 사이트입니다. 만든 곳은 썬웍스(SunWorks)입니다. 이 사이트는 한국어문회가 공개한 시험 기준(급수별 배정한자 수, 합격 기준, 시험 일정)을 출처와 확인 날짜를 붙여 정리합니다. 어흥!한자는 사단법인 한국어문회와 제휴·인증 관계가 없는 자체 제작 학습 앱입니다.
 
-- 앱 상태: 웹 베타 공개({APP}), iOS·Android 정식 출시 준비 중
-- 출시 예정 가격: 3일 체험 후 29,900원 한 번 구매, 자동 갱신 구독 없음(결제는 출시 준비 중)
+- 앱 상태: iOS·Android 1.0.0 출시(2026-11-06). App Store https://apps.apple.com/kr/app/id6823980453 · Google Play https://play.google.com/store/apps/details?id=kr.sunworks.hanja · 웹 체험판(8급~7급만) {APP}
+- 가격: 3일 체험 후 29,900원 한 번 구매, 자동 갱신 구독 없음, 결제는 앱을 내려받은 스토어에서. 버전별 변경 사항 {SITE}/changelog
 - 익힘 기준: 12시간 넘게 지난 뒤 다시 맞혀야 그 칸(읽기·뜻·쓰기·부수)을 익힘으로 표시하고, 30일 동안 다시 맞히지 않으면 끕니다.
 - 한국어문회 자료 확인일: {CHECKED}
 
 ## 앱 소개
 
 - [어흥!한자 소개]({SITE}/): 학습 방식, 익힘 기준, FSRS 복습, 가격·이용 안내, 자주 묻는 질문
-- [웹 베타]({APP}): 설치·가입 없이 브라우저에서 쓰는 앱. 학습 기록은 그 기기·브라우저에 저장됩니다.
+- [웹 체험판]({APP}): 설치·가입 없이 브라우저에서 8급~7급을 공부하는 체험판. 그 위 급수는 앱에서 열립니다. 학습 기록은 그 기기·브라우저에 저장됩니다.
 
 ## 한자능력검정시험 정보 (한국어문회 공개 자료 기준)
 
