@@ -2419,3 +2419,35 @@ canvas:focus-visible {
 @media (prefers-reduced-motion: reduce) { .writing-workspace button:active { transform: none; } }
 
 #writing-demo { scroll-margin-top: 110px; }
+
+/* 스토어 배지·버전 칩 (2026-11-06 앱 출시). 배지는 Apple·Google 공식 이미지를 그대로 쓴다. */
+a.store-soon { text-decoration: none; border-radius: 999px; }
+a.store-soon:hover .store-soon-label { background: var(--yellow); }
+a.store-soon:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.store-badge { display: inline-flex; border-radius: 10px; transition: transform 180ms var(--ease), box-shadow 180ms; }
+.store-badge img { display: block; height: 52px; width: auto; }
+.store-badge:hover { transform: translateY(-2px); box-shadow: 0 8px 18px #233f3526; }
+.store-badge:active { transform: scale(0.97); }
+.store-badge:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.store-badges-fill { gap: 10px; }
+.store-badges-fill .store-badge img { height: 48px; }
+.release-chip {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 18px;
+  padding: 6px 14px 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+  background: var(--white); font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: border-color 180ms, background-color 180ms;
+}
+.release-chip strong { font-family: Jua, SUIT, sans-serif; font-weight: 400; font-size: 17px; margin-right: 4px; }
+.release-chip-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f9e62; box-shadow: 0 0 0 4px #2f9e6226; flex: none; }
+.release-chip-more { color: var(--orange); }
+.release-chip svg { width: 17px; height: 17px; fill: none; stroke: var(--orange); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.release-chip:hover { border-color: var(--ink); background: var(--paper); }
+.release-chip:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.closing-content .store-badges { margin-top: 22px; }
+.closing-content .cta-note a { color: inherit; }
+@media (max-width: 560px) {
+  .store-badge img { height: 46px; }
+  .store-badges-fill .store-badge img { height: 44px; }
+  .release-chip { font-size: 13px; gap: 8px; }
+}
