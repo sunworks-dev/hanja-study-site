@@ -24,7 +24,8 @@
     <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="styles.css?v=20261106-launch" />
+    <script>/* 기기 스토어만 보이기: iOS 앱 안에서 다른 플랫폼 이름이 보이지 않게 한다(앱 저장소 CLAUDE.md §12.7) */(function(){var u=navigator.userAgent,c=/Android/i.test(u)?'os-android':(/iPhone|iPad|iPod/.test(u)||(/Macintosh/.test(u)&&navigator.maxTouchPoints>1))?'os-ios':'';if(c)document.documentElement.classList.add(c)})();</script>
+    <link rel="stylesheet" href="styles.css?v=20261106-os" />
     <link rel="stylesheet" href="legal.css?v=20261106-launch" />
     <script src="analytics.js?v=20261016" defer></script>
   </head>
@@ -60,7 +61,7 @@
             <div class="release-meta">
               <span class="release-tag release-tag-latest">최신</span>
               <time datetime="2026-11-06">2026년 11월 6일 출시</time>
-              <span class="release-platforms">iOS · Android</span>
+              <span class="release-platforms"><span data-os="ios">iOS</span><span data-os-sep> · </span><span data-os="android">Android</span></span>
             </div>
           </header>
           <h2>어흥!한자를 처음 선보여요</h2>
@@ -89,7 +90,7 @@
           </div>
           <footer class="release-card-foot">
             <div class="store-badges">
-              <a class="store-badge" href="https://apps.apple.com/kr/app/id6823980453" target="_blank" rel="noopener"><img src="assets/stores/appstore-ko-black.svg" width="130" height="40" alt="App Store에서 다운로드" /></a><a class="store-badge" href="https://play.google.com/store/apps/details?id=kr.sunworks.hanja" target="_blank" rel="noopener"><img src="assets/stores/googleplay-ko.png" width="646" height="192" alt="Google Play에서 다운로드" /></a>
+              <a class="store-badge" data-os="ios" href="https://apps.apple.com/kr/app/id6823980453" target="_blank" rel="noopener"><img src="assets/stores/appstore-ko-black.svg" width="130" height="40" alt="App Store에서 다운로드" /></a><a class="store-badge" data-os="android" href="https://play.google.com/store/apps/details?id=kr.sunworks.hanja" target="_blank" rel="noopener"><img src="assets/stores/googleplay-ko.png" width="646" height="192" alt="Google Play에서 다운로드" /></a>
             </div>
             <p>정책 문서: <a href="/privacy">개인정보 처리방침 1.7</a> · <a href="/app-terms">앱 이용약관 1.2</a></p>
           </footer>

@@ -2420,6 +2420,11 @@ canvas:focus-visible {
 
 #writing-demo { scroll-margin-top: 110px; }
 
+/* 기기별 스토어 표시: <head> 스크립트가 html에 os-ios·os-android를 단다. PC는 둘 다 보인다. */
+.os-ios [data-os="android"], .os-ios [data-os="desktop"], .os-ios [data-os-sep],
+.os-android [data-os="ios"], .os-android [data-os="desktop"], .os-android [data-os-sep],
+html:not(.os-ios):not(.os-android) [data-os="mobile"] { display: none !important; }
+
 /* 스토어 배지·버전 칩 (2026-11-06 앱 출시). 배지는 Apple·Google 공식 이미지를 그대로 쓴다. */
 a.store-soon { text-decoration: none; border-radius: 999px; }
 a.store-soon:hover .store-soon-label { background: var(--yellow); }
@@ -2432,22 +2437,28 @@ a.store-soon:focus-visible { outline: 3px solid var(--orange); outline-offset: 3
 .store-badge:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
 .store-badges-fill { gap: 10px; }
 .store-badges-fill .store-badge img { height: 48px; }
-.release-chip {
-  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 18px;
-  padding: 6px 14px 6px 12px; border: 1px solid var(--line); border-radius: 999px;
-  background: var(--white); font-size: 14px; font-weight: 700; text-decoration: none;
-  transition: border-color 180ms, background-color 180ms;
-}
-.release-chip strong { font-family: Jua, SUIT, sans-serif; font-weight: 400; font-size: 17px; margin-right: 4px; }
-.release-chip-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f9e62; box-shadow: 0 0 0 4px #2f9e6226; flex: none; }
-.release-chip-more { color: var(--orange); }
-.release-chip svg { width: 17px; height: 17px; fill: none; stroke: var(--orange); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.release-chip:hover { border-color: var(--ink); background: var(--paper); }
-.release-chip:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+/* 히어로 가격·체험 한 줄과 보조 링크, 사실 띠 (2026-11-06 스토어·사이트 보강 계획 4.1) */
+.hero-offer { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; width: fit-content; min-height: 44px; margin-top: 18px; padding: 10px 16px; border-radius: 14px; background: var(--white); border: 1px solid var(--line); font-size: 15px; text-decoration: none; transition: border-color 180ms; }
+.hero-offer strong { font-weight: 800; }
+.hero-offer-arrow { color: var(--orange); font-weight: 800; }
+.hero-offer-sub { flex-basis: 100%; font-size: 13px; color: var(--muted); }
+.hero-offer:hover { border-color: var(--ink); }
+.hero-offer:focus-visible, .hero-links a:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+.hero-links { display: flex; flex-wrap: wrap; gap: 0 18px; margin-top: 10px; font-size: 13px; }
+.hero-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted); text-underline-offset: 4px; }
+.hero-links a:hover { color: var(--orange); }
+.fact-strip { padding-bottom: 56px; }
+.fact-strip ul { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 8px 0 0; padding: 0; list-style: none; }
+.fact-strip li { display: grid; gap: 6px; padding: 18px 20px; border-radius: 18px; background: var(--white); border: 1px solid var(--line); }
+.fact-strip strong { font-size: 17px; font-weight: 800; }
+.fact-strip span { font-size: 14px; line-height: 1.6; color: var(--muted); }
 .closing-content .store-badges { margin-top: 22px; }
 .closing-content .cta-note a { color: inherit; }
 @media (max-width: 560px) {
   .store-badge img { height: 46px; }
   .store-badges-fill .store-badge img { height: 44px; }
-  .release-chip { font-size: 13px; gap: 8px; }
+  .store-soon { display: none; }
+  .hero-offer { font-size: 14px; }
+  .fact-strip ul { grid-template-columns: 1fr; gap: 10px; }
+  .fact-strip li { padding: 14px 16px; }
 }
