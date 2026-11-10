@@ -281,3 +281,5 @@
     flex-wrap: wrap;
   }
 }
+
+.guide-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; flex-shrink: 0; }

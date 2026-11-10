@@ -26,6 +26,8 @@ WEEKDAY = '월화수목금토일'
 hanja_data = json.loads((ROOT / 'data/hanja-by-grade.json').read_text())
 official = json.loads((ROOT / 'data/kccpt-official.json').read_text())
 CHECKED = official['_meta']['checked']
+# 안내 페이지의 설치 안내를 실제 변경한 날짜. 데이터 확인일과 구분한다.
+GUIDE_UPDATED = '2026-11-10'
 # '다음 시험'은 빌드한 날 기준으로 고른다. 배포 워크플로가 매주 다시 빌드해 지난 회차를 내린다.
 TODAY = os.environ.get('BUILD_DATE') or dt.date.today().isoformat()
 SRC = official['_meta']['sources']
@@ -78,7 +80,7 @@ def ld(obj):
 def page_ld(url, name, description, crumbs, faqs, extra=(), modified=CHECKED):
     graph = [
         {'@type': 'WebPage', '@id': f'{url}#webpage', 'url': url, 'name': name,
-         'description': description, 'inLanguage': 'ko', 'dateModified': modified,
+         'description': description, 'inLanguage': 'ko', 'dateModified': max(modified, GUIDE_UPDATED),
          'isPartOf': {'@id': WEBSITE_ID}, 'publisher': {'@id': ORG['@id']},
          'breadcrumb': {'@id': f'{url}#breadcrumb'}},
         {'@type': 'BreadcrumbList', '@id': f'{url}#breadcrumb', 'itemListElement': [
@@ -115,7 +117,8 @@ CTA = (f'<aside class="guide-cta" aria-label="어흥!한자 소개"><div>'
        f'<p class="guide-cta-title">목록을 읽는 데서 끝내지 않게.</p>'
        f'<p>어흥!한자는 읽기·뜻·쓰기·부수를 따로 확인하고, 12시간 뒤 다시 맞혀야 익힘으로 칩니다. '
        f'급수에 따라 제공되는 학습 유형·삽화·음성 범위는 다릅니다.</p></div>'
-       f'<a class="button button-primary" href="{APP}">8급~7급 웹에서 체험하기</a></aside>')
+       f'<div class="guide-actions"><a class="button button-primary" href="{SITE}/#download">어흥!한자 앱 설치 안내</a>'
+       f'<a href="{APP}">8급~7급 웹에서 체험하기</a></div></aside>')
 
 
 def shell(path, title, description, h1, lead, body, ld_json, noindex=False):
@@ -143,9 +146,9 @@ def shell(path, title, description, h1, lead, body, ld_json, noindex=False):
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/assets/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/styles.css?v=20261021-write" />
+    <link rel="stylesheet" href="/styles.css?v=20261110-seo" />
     <link rel="stylesheet" href="/legal.css?v=20261003" />
-    <link rel="stylesheet" href="/guide.css?v=20261017" />
+    <link rel="stylesheet" href="/guide.css?v=20261110" />
     <script src="/analytics.js?v=20261016" defer></script>
     <script type="application/ld+json">
 {ld_json}
@@ -422,6 +425,32 @@ write(path, shell(path, title, description, f'{sched["year"]} 한자능력검정
 # ---------- 홈 구조화 데이터: 화면의 FAQ 글자 그대로 ----------
 index_path = PUBLIC / 'index.html'
 index = index_path.read_text()
+# 홈의 급수 비교표도 공식 자료를 원본으로 쓴다. 준급은 전체 급수 안내로 연결한다.
+rows = ''.join(
+    f'<tr><th scope="row"><a href="/grades/{SLUG[name]}/">{name}</a></th>'
+    f'<td>{OFFICIAL[name]["read"]:,}자</td>'
+    f'<td>{OFFICIAL[name]["write"]:,}자</td>'
+    f'<td>{OFFICIAL[name]["questions"]}문항 중 {OFFICIAL[name]["pass"]}문항</td></tr>'
+    for name in ('8급', '7급', '6급', '5급', '4급', '3급', '2급'))
+guide = f'''<!-- build-pages:home-guide -->
+      <section id="study-guide" class="search-guide section-wrap section-space" aria-labelledby="study-guide-title">
+        <h2 id="study-guide-title">한자 급수 정보부터,<br />내게 맞는 공부까지.</h2>
+        <p>어흥!한자는 8급부터 1급까지 한자 3,500자를 다루는 한자 공부 앱이에요. 목표 급수의 배정한자와 합격 기준을 살펴보고 시작해 보세요.</p>
+        <div class="search-table-wrap" role="region" aria-label="급수별 배정한자 비교" tabindex="0">
+          <table>
+            <caption>한국어문회 한자능력검정시험 주요 급수 비교 · {CHECKED} 자료 확인</caption>
+            <thead><tr><th scope="col">급수</th><th scope="col">읽기 배정</th><th scope="col">쓰기 배정</th><th scope="col">합격 기준</th></tr></thead>
+            <tbody>{rows}</tbody>
+          </table>
+        </div>
+        <p class="search-guide-note">상위 급수는 하위 급수 한자를 포함해요. 쓰기 배정 0자는 한자 쓰기 문제가 없다는 뜻이에요. 준급(II)과 1급 이상은 <a href="/grades/">전체 급수별 배정한자·출제 기준</a>에서 확인할 수 있어요. 원출처: <a href="{SRC['levels']}">한국어문회 급수 배정</a> · <a href="{SRC['passRule']}">합격 기준</a>.</p>
+        <p class="hero-links"><a href="/grades/8/">초등학생 8급 독학 시작</a><a href="/grades/2/">2급 배정한자·합격 기준</a><a href="/exam-schedule/">한국어문회 한자 시험 일정</a><a href="#download">어흥!한자 앱 받기</a></p>
+      </section>
+      <!-- /build-pages:home-guide -->'''
+assert '<!-- build-pages:home-guide -->' in index and '<!-- /build-pages:home-guide -->' in index
+index = re.sub(r'<!-- build-pages:home-guide -->.*?<!-- /build-pages:home-guide -->',
+               lambda _: guide, index, flags=re.S)
+
 
 
 def text_of(fragment):
@@ -439,6 +468,10 @@ home_ld = ld({'@context': 'https://schema.org', '@graph': [
     ORG,
     {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': f'{SITE}/', 'name': '어흥!한자', 'inLanguage': 'ko',
      'description': '한자 공부 앱 어흥!한자의 소개 사이트', 'publisher': {'@id': ORG['@id']}},
+    {'@type': 'WebPage', '@id': f'{SITE}/#webpage', 'url': f'{SITE}/',
+     'name': text_of(re.search(r'<title>(.*?)</title>', index).group(1)),
+     'inLanguage': 'ko', 'isPartOf': {'@id': WEBSITE_ID},
+     'about': {'@id': f'{SITE}/#app'}, 'publisher': {'@id': ORG['@id']}},
     {'@type': 'SoftwareApplication', '@id': f'{SITE}/#app', 'name': '어흥!한자',
      'applicationCategory': 'EducationalApplication', 'operatingSystem': 'iOS, Android, Web browser',
      'inLanguage': 'ko', 'url': f'{SITE}/', 'installUrl': 'https://apps.apple.com/kr/app/id6823980453',
@@ -469,9 +502,9 @@ index_path.write_text(index)
 
 # ---------- 사이트맵 ----------
 # 정적 문서의 lastmod는 내용을 고친 날짜로 직접 맞춘다.
-static_pages = [('/', '2026-11-06'), ('/changelog', '2026-11-06'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
+static_pages = [('/', '2026-11-10'), ('/changelog', '2026-11-06'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
                 ('/terms', '2026-10-21'), ('/app-terms', '2026-10-21'), ('/refund', '2026-10-21')]
-generated = [('/grades/', CHECKED), ('/exam-schedule/', EXAM_CHANGED)] + [(f'/grades/{SLUG[g["grade"]]}/', CHECKED) for g in GRADES]
+generated = [('/grades/', max(CHECKED, GUIDE_UPDATED)), ('/exam-schedule/', max(EXAM_CHANGED, GUIDE_UPDATED))] + [(f'/grades/{SLUG[g["grade"]]}/', max(CHECKED, GUIDE_UPDATED)) for g in GRADES]
 urls = ''.join(f'  <url><loc>{SITE}{p}</loc><lastmod>{d}</lastmod></url>\n' for p, d in static_pages + generated)
 (PUBLIC / 'sitemap.xml').write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -512,6 +545,7 @@ llms = f'''# 어흥!한자
 - 시험 기준과 일정의 원출처는 사단법인 한국어문회(https://www.hanja.re.kr)입니다. 인용할 때 확인 날짜를 함께 적어 주세요.
 - 한자의 훈음·부수·총획은 어흥!한자 앱 수록 데이터입니다.
 '''
+llms += '\n## 자주 묻는 질문\n\n' + '\n\n'.join(f'### {q}\n{a}' for q, a in home_faqs) + '\n'
 (PUBLIC / 'llms.txt').write_text(llms)
 
 full = [llms, '\n# 전체 데이터\n',
