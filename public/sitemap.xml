@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- scripts/build-pages.py가 만든다. 직접 고치지 않는다. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hanja.sunw.kr/</loc><lastmod>2026-11-10</lastmod></url>
+  <url><loc>https://hanja.sunw.kr/</loc><lastmod>2026-11-11</lastmod></url>
   <url><loc>https://hanja.sunw.kr/changelog</loc><lastmod>2026-11-06</lastmod></url>
   <url><loc>https://hanja.sunw.kr/support</loc><lastmod>2026-10-21</lastmod></url>
   <url><loc>https://hanja.sunw.kr/privacy</loc><lastmod>2026-10-21</lastmod></url>

@@ -450,3 +450,43 @@
 @media (max-width: 600px) {
   .search-guide th, .search-guide td { padding: 12px 6px; font-size: 13px; }
 }
+/* 제작 이야기와 실제 학습 내용을 기존 쇼케이스 흐름에 연결한다. */
+.story-reading-note {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 32px;
+  margin-top: 32px;
+  padding-block: 28px;
+  border-block: 1px solid #d9d3c5;
+}
+.story-reading-note h3,
+.founder-letter h3 {
+  font-family: Jua, SUIT, sans-serif;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 1.4;
+}
+.story-reading-note p {
+  margin: 0 0 12px;
+  line-height: 1.8;
+}
+.story-reading-note p:last-child {
+  margin-bottom: 0;
+  color: #596052;
+  font-size: 14px;
+}
+.founder-letter h3 {
+  margin-top: 36px;
+}
+.founder-letter h3 + p {
+  margin-top: 12px;
+}
+@media (max-width: 640px) {
+  .story-reading-note {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .founder-letter h3 {
+    font-size: 23px;
+  }
+}

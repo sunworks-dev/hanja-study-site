@@ -28,6 +28,7 @@ official = json.loads((ROOT / 'data/kccpt-official.json').read_text())
 CHECKED = official['_meta']['checked']
 # 안내 페이지의 설치 안내를 실제 변경한 날짜. 데이터 확인일과 구분한다.
 GUIDE_UPDATED = '2026-11-10'
+HOME_UPDATED = '2026-11-11'
 # '다음 시험'은 빌드한 날 기준으로 고른다. 배포 워크플로가 매주 다시 빌드해 지난 회차를 내린다.
 TODAY = os.environ.get('BUILD_DATE') or dt.date.today().isoformat()
 SRC = official['_meta']['sources']
@@ -470,6 +471,8 @@ home_ld = ld({'@context': 'https://schema.org', '@graph': [
      'description': '한자 공부 앱 어흥!한자의 소개 사이트', 'publisher': {'@id': ORG['@id']}},
     {'@type': 'WebPage', '@id': f'{SITE}/#webpage', 'url': f'{SITE}/',
      'name': text_of(re.search(r'<title>(.*?)</title>', index).group(1)),
+     'description': html.unescape(re.search(r'name="description"\s+content="([^"]+)"', index).group(1)),
+     'dateModified': HOME_UPDATED,
      'inLanguage': 'ko', 'isPartOf': {'@id': WEBSITE_ID},
      'about': {'@id': f'{SITE}/#app'}, 'publisher': {'@id': ORG['@id']}},
     {'@type': 'SoftwareApplication', '@id': f'{SITE}/#app', 'name': '어흥!한자',
@@ -482,8 +485,11 @@ home_ld = ld({'@context': 'https://schema.org', '@graph': [
      'description': '한자능력검정시험 8급부터 1급까지 한자 3,500자를 읽기·뜻·쓰기·부수로 나눠 익히는 한자 공부 앱. '
                     '12시간 넘게 지난 뒤 다시 맞혀야 익힘으로 판정하고, FSRS로 복습 간격을 조절합니다. '
                     'iOS·Android 앱은 App Store·Google Play에서 내려받을 수 있고, 8급~7급은 웹 체험판으로 먼저 써 볼 수 있습니다.',
-     'featureList': ['8급~1급 한자 3,500자, 단어 14,425개 항목', '읽기·뜻·쓰기·부수 네 칸 익힘 판정',
-                     '손글씨 획순 쓰기와 획별 채점', 'FSRS 간격 반복 복습', '연상 그림과 옛이야기(일부 급수)'],
+     'featureList': ['8급~1급 한자 3,500자, 단어 1만 4천여 개 항목', '읽기·뜻·쓰기·부수 네 칸 익힘 판정',
+                     '손글씨 획순 쓰기와 획별 채점', 'FSRS 간격 반복 복습', '한자·낱말·예문 연결 학습',
+                     '고전·설화를 바탕으로 새로 쓴 이야기 11편(급수별 제공 범위 다름)', '일러스트 카드 도감(급수별 삽화 범위 다름)'],
+     'creator': {'@type': 'Person', '@id': f'{SITE}/#creator', 'name': '남선',
+                 'url': f'{SITE}/#story', 'worksFor': {'@id': ORG['@id']}},
      'audience': {'@type': 'EducationalAudience', 'educationalRole': 'student'},
      'author': {'@id': ORG['@id']}, 'publisher': {'@id': ORG['@id']}},
     {'@type': 'VideoObject', '@id': f'{SITE}/#film', 'name': '어흥!한자 소개 영상',
@@ -502,7 +508,7 @@ index_path.write_text(index)
 
 # ---------- 사이트맵 ----------
 # 정적 문서의 lastmod는 내용을 고친 날짜로 직접 맞춘다.
-static_pages = [('/', '2026-11-10'), ('/changelog', '2026-11-06'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
+static_pages = [('/', HOME_UPDATED), ('/changelog', '2026-11-06'), ('/support', '2026-10-21'), ('/privacy', '2026-10-21'),
                 ('/terms', '2026-10-21'), ('/app-terms', '2026-10-21'), ('/refund', '2026-10-21')]
 generated = [('/grades/', max(CHECKED, GUIDE_UPDATED)), ('/exam-schedule/', max(EXAM_CHANGED, GUIDE_UPDATED))] + [(f'/grades/{SLUG[g["grade"]]}/', max(CHECKED, GUIDE_UPDATED)) for g in GRADES]
 urls = ''.join(f'  <url><loc>{SITE}{p}</loc><lastmod>{d}</lastmod></url>\n' for p, d in static_pages + generated)
@@ -526,6 +532,9 @@ llms = f'''# 어흥!한자
 ## 앱 소개
 
 - [어흥!한자 소개]({SITE}/): 학습 방식, 익힘 기준, FSRS 복습, 가격·이용 안내, 자주 묻는 질문
+- [개발자 아빠가 중2 아들과 만든 이야기]({SITE}/#story): 썬웍스 개발자 남선이 아들의 한자 공부를 돕기 위해 시작하고, 아들의 피드백을 받아 개선한 제작 이야기
+- [한자와 어휘 연결 학습]({SITE}/#learn): 한국어기초사전·표준국어대사전의 한자어를 바탕으로 단어 1만 4천여 개 항목 수록. 학습용 예문·기억법은 자체 제작
+- [이야기 속 한자 학습]({SITE}/#story-reading): 고전·설화를 바탕으로 새로 쓴 이야기 11편. 원작 발췌문이 아니며 급수별 제공 범위가 다름
 - [웹 체험판]({APP}): 설치·가입 없이 브라우저에서 8급~7급을 공부하는 체험판. 그 위 급수는 앱에서 열립니다. 학습 기록은 그 기기·브라우저에 저장됩니다.
 
 ## 한자능력검정시험 정보 (한국어문회 공개 자료 기준)
